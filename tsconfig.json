@@ -13,24 +13,9 @@
     "inlineSourceMap": false,
     "declaration": true
   },
-  "files": [
-    "./lib/component-renderer.ts",
-    "./lib/guard.ts",
-    "./lib/index.ts",
-    "./lib/location.ts",
-    "./lib/match-pattern.ts",
-    "./lib/match-route.ts",
-    "./lib/middleware.ts",
-    "./lib/redirect.ts",
-    "./lib/route-params.ts",
-    "./lib/route-set.ts",
-    "./lib/route-view.ts",
-    "./lib/route.ts",
-    "./lib/util.ts",
-    "./typings/main.d.ts"
-  ],
   "exclude": [
     "node_modules",
-    "test"
+    "typings/browser.d.ts",
+    "typings/browser"
   ]
 }

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp build",
-    "test": "karma start"
+    "test": "karma start",
+    "postinstall": "typings install"
   },
   "author": "",
   "license": "MIT",
@@ -34,6 +35,7 @@
     "rxjs": "^5.0.0-beta.4",
     "ts-loader": "^0.8.1",
     "typescript": "^1.8.9",
+    "typings": "^0.7.9",
     "webpack": "^1.12.14"
   },
   "babel": {
