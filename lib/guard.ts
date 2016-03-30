@@ -30,7 +30,7 @@ export const createGuard = createFactoryProvider<Guard>('@ngrx/router Guard');
 const guardMiddleware = createMiddleware(function(injector: Injector) {
   return (route$: Observable<Route>) => route$
     .mergeMap(route => {
-      if( !!route.guards ) {
+      if( !!route.guards && Array.isArray(route.guards) && route.guards.length > 0 ) {
         const resolved: Guard[] = route.guards.map(provider =>
           injector.resolveAndInstantiate(provider));
 
