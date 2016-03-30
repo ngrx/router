@@ -7,6 +7,8 @@ import { ROUTE_SET_PROVIDERS } from './route-set';
 import { ROUTE_VIEW_PROVIDERS } from './route-view';
 import { REDIRECT_PROVIDERS } from './redirect';
 import { ROUTES, Routes } from './route';
+import { GUARD_PROVIDERS } from './guard';
+import { MATCH_ROUTE_PROVIDERS } from './match-route';
 
 export function provideRouter(routes: Routes) {
   return [
@@ -16,7 +18,9 @@ export function provideRouter(routes: Routes) {
     ROUTE_PARAMS_PROVIDERS,
     ROUTE_SET_PROVIDERS,
     ROUTE_VIEW_PROVIDERS,
-    REDIRECT_PROVIDERS
+    REDIRECT_PROVIDERS,
+    GUARD_PROVIDERS,
+    MATCH_ROUTE_PROVIDERS
   ];
 }
 
@@ -28,3 +32,4 @@ export { RouteParams } from './route-params';
 export { useLocationMiddleware, useRouteSetMiddleware, RouteSet, NextRoute } from './route-set';
 export { useRenderMiddleware, RenderInstruction } from './route-view';
 export { Routes, Route, IndexRoute } from './route';
+export { useTraversalMiddleware } from './match-route';

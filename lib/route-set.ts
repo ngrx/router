@@ -15,7 +15,7 @@ import { provide, Provider, Injector, OpaqueToken } from 'angular2/core';
 import { compose } from './util';
 import { Location, LocationChange } from './location';
 import { Routes, Route, ROUTES } from './route';
-import { matchRoutes, Match } from './match-route';
+import { RouteTraverser, Match } from './match-route';
 import { Middleware, provideMiddlewareForToken, identity } from './middleware';
 
 const LOCATION_MIDDLEWARE = new OpaqueToken('@ngrx/router Location Middleware');
@@ -37,16 +37,16 @@ export class RouteSet extends Observable<NextRoute>{ }
 function createRouteSet(
   routes: Routes,
   location$: Location,
-  injector: Injector,
+  traverser: RouteTraverser,
   locationMiddleware: Middleware[],
   routeSetMiddleware: Middleware[]
-) {
+): RouteSet {
   return location$
     .observeOn(queue)
     .distinctUntilChanged((prev, next) => prev.url === next.url)
     .let<LocationChange>(compose(...locationMiddleware))
     .switchMap(change => {
-      return matchRoutes(injector, routes, change.url)
+      return traverser.matchRoutes(routes, change.url)
         .map(set => {
           return {
             url: change.url,
@@ -64,7 +64,7 @@ function createRouteSet(
 
 export const ROUTE_SET_PROVIDERS = [
   provide(RouteSet, {
-    deps: [ ROUTES, Location, Injector, LOCATION_MIDDLEWARE, ROUTE_SET_MIDDLEWARE ],
+    deps: [ ROUTES, Location, RouteTraverser, LOCATION_MIDDLEWARE, ROUTE_SET_MIDDLEWARE ],
     useFactory: createRouteSet
   }),
   useLocationMiddleware(identity),
