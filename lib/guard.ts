@@ -11,7 +11,7 @@
  * For more powerful injection, consider looking at render middleware
  */
 import 'rxjs/add/operator/every';
-import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { provide, Provider, OpaqueToken, Injector } from 'angular2/core';
@@ -35,8 +35,8 @@ const guardMiddleware = createMiddleware(function(injector: Injector) {
           injector.resolveAndInstantiate(provider));
 
         return Observable
-          .forkJoin<boolean[]>(...resolved.map(guard => guard()))
-          .map(values => values.every(value => value));
+          .merge<boolean>(...resolved.map(guard => guard()))
+          .every(signal => signal);
       }
 
       return Observable.of(true);
