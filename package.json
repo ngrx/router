@@ -28,6 +28,7 @@
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
     "karma-jasmine": "^0.3.8",
+    "karma-sourcemap-loader": "^0.3.7",
     "karma-typescript-preprocessor": "0.0.21",
     "karma-webpack": "^1.7.0",
     "merge2": "^1.0.0",
@@ -36,7 +37,8 @@
     "ts-loader": "^0.8.1",
     "typescript": "^1.8.9",
     "typings": "^0.7.9",
-    "webpack": "^1.12.14"
+    "webpack": "^1.12.14",
+    "zone.js": "^0.6.8"
   },
   "babel": {
     "presets": [

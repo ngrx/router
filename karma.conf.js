@@ -16,7 +16,7 @@ module.exports = function(karma) {
     exclude: [],
 
     preprocessors: {
-      'tests.js': ['webpack']
+      'tests.js': ['webpack', 'sourcemap']
     },
 
     reporters: ['progress'],
@@ -32,13 +32,14 @@ module.exports = function(karma) {
 
     webpack: {
       resolve: {
-        root: __dirname
+        root: __dirname,
+        extensions: ['', '.ts', '.js']
       },
       module: {
         loaders: [
           {
-            test: /\.spec\.ts?$/,
-            exclude: /node_modules/,
+            test: /\.ts?$/,
+            exclude: /(node_modules)/,
             loader: 'ts-loader'
           }
         ]
