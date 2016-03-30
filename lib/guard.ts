@@ -1,5 +1,6 @@
 /**
- * Guards are simple services that can protect routes from being traversed.
+ * Guards are simple services that can protect routes from being traversed. They
+ * are implemented using traversal middleware
  *
  * A guard is called when the router begins traversing a route configuration file.
  * It returns `true` or `false` to let the router know if it should consider
@@ -17,6 +18,8 @@ import { provide, Provider, OpaqueToken, Injector } from 'angular2/core';
 
 import { createFactoryProvider } from './util';
 import { Route } from './route';
+import { useTraversalMiddleware } from './match-route';
+import { createMiddleware } from './middleware';
 
 export interface Guard {
   (): Observable<boolean>;
@@ -24,16 +27,22 @@ export interface Guard {
 
 export const createGuard = createFactoryProvider<Guard>('@ngrx/router Guard');
 
+const guardMiddleware = createMiddleware(function(injector: Injector) {
+  return (route$: Observable<Route>) => route$
+    .mergeMap(route => {
+      if( !!route.guards ) {
+        const resolved: Guard[] = route.guards.map(provider =>
+          injector.resolveAndInstantiate(provider));
 
-export function runGuards(injector: Injector, route: Route): Observable<boolean> {
-  if( !!route.guards ) {
-    const resolved: Guard[] = route.guards.map(provider =>
-      injector.resolveAndInstantiate(provider));
+        return Observable
+          .forkJoin<boolean[]>(...resolved.map(guard => guard()))
+          .map(values => values.every(value => value));
+      }
 
-    return Observable
-      .forkJoin<boolean[]>(...resolved.map(guard => guard()))
-      .map(values => values.every(value => value));
-  }
+      return Observable.of(true);
+    });
+}, [ Injector ]);
 
-  return Observable.of(true);
-}
+export const GUARD_PROVIDERS = [
+  useTraversalMiddleware(guardMiddleware)
+];
