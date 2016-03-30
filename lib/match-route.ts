@@ -9,6 +9,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { OpaqueToken, Provider, Inject, Injectable } from 'angular2/core';
 
@@ -74,7 +75,13 @@ export class RouteTraverser {
     return Observable
       .merge(...seekers)
       .toArray()
-      .map(matches => matches.filter(match => !!match)[0]);
+      .map(matches => {
+        const valid = matches
+          .filter(match => !!match)
+          .sort((first, second) => second.routes.length - first.routes.length);
+
+        return valid[0];
+      });
   }
 
   private _matchRouteDeep(
