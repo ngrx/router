@@ -28,8 +28,8 @@ export function createFactoryProvider<T>(
 }
 
 
-export const compose = (...funcs) => {
-  return (...args) => {
+export function compose(...funcs) {
+  return function(...args) {
     if (funcs.length === 0) {
       return args[0];
     }
