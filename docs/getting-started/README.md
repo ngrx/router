@@ -10,4 +10,5 @@ Then read these guides to learn how to use the router:
 2. [Index Routes](index-route.md)
 3. [Redirects](redirect.md)
 4. [Code Splitting](code-splitting.md)
-4. [Guarding Routes](guards.md)
+5. [Route Parameters](route-params.md)
+6. [Guarding Routes](guards.md)
