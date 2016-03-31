@@ -14,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: ':id',
-        redirectTo: '/post:id'
+        redirectTo: '/post/:id'
       }
     ]
   },
