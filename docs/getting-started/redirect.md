@@ -1,6 +1,6 @@
 # Redirect Routes
 
-Continuing from the example in the [Route]('./route.md') guide, imagine if we wanted to change `/blog/:id` to `/post`. Unlike other routers, ngrx/router does not have named routes. Instead, we would change the the path in our route configuration and setup a _Redirect Route_:
+Continuing from the example in the [Route](route.md) guide, imagine if we wanted to change `/blog/:id` to `/post`. Unlike other routers, ngrx/router does not have named routes. Instead, we would change the the path in our route configuration and setup a _Redirect Route_:
 
 ```ts
 const routes: Routes = [

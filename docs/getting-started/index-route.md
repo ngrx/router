@@ -1,6 +1,6 @@
 # Index Routes
 
-Continuing from the example in the [Route]('./route.md') guide, imagine if you wanted to show a list of posts when the user is just on `/blog`. When the user is on `/blog/:id`, don't show the list of posts and instead just show a single post. This can be accomplished using _Index Routes_.
+Continuing from the example in the [Route](route.md) guide, imagine if you wanted to show a list of posts when the user is just on `/blog`. When the user is on `/blog/:id`, don't show the list of posts and instead just show a single post. This can be accomplished using _Index Routes_.
 
 First we need to write a new `BlogPostsPage` component:
 
