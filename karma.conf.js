@@ -31,6 +31,7 @@ module.exports = function(karma) {
     singleRun: false,
 
     webpack: {
+      devtool: 'source-map',
       resolve: {
         root: __dirname,
         extensions: ['', '.ts', '.js']
