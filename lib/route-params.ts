@@ -1,23 +1,23 @@
 /**
  * Route params are just a projection of the current RouteSet. Exposed
  * as a BehaviorSubject to allow for sync access to route params and
- * replayability 
+ * replayability
  */
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/subject/ReplaySubject';
 import { provide, Provider } from 'angular2/core';
 
 import { RouteSet } from './route-set';
 
-export class RouteParams extends BehaviorSubject<{ [param: string]: any }>{
+export class RouteParams extends ReplaySubject<{ [param: string]: any }>{
   constructor(){
-    super({});
+    super(1);
   }
 
-  select(selected: string) {
-    return this.map(params => params[selected]).distinctUntilChanged();
+  select<T>(selected: string) {
+    return this.map<T>(params => params[selected]).distinctUntilChanged();
   }
 }
 
