@@ -10,6 +10,7 @@ import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/every';
 import { Observable } from 'rxjs/Observable';
 import { OpaqueToken, Provider, Inject, Injectable } from 'angular2/core';
 
@@ -52,7 +53,13 @@ export class RouteTraverser {
     paramValues = []
   ): Observable<Match> {
     const seekers = routes.map<Observable<Match>>(route => Observable.of(route)
-      .let<boolean>(compose(...this._middleware))
+      .let(route$ => {
+        const resolved = this._middleware.map(m => m(route$));
+
+        return Observable
+          .merge(...resolved)
+          .every(signal => !!signal);
+      })
       .mergeMap(canTraverse => {
         if( canTraverse ) {
           return this._matchRouteDeep(
