@@ -47,7 +47,7 @@ function createRouteSet(
     .let<LocationChange>(compose(...locationMiddleware))
     .switchMap(change => {
       return traverser.matchRoutes(routes, change.url)
-        .map(set => {
+        .map<NextRoute>(set => {
           return {
             url: change.url,
             routes: set.routes,
@@ -56,7 +56,7 @@ function createRouteSet(
         });
     })
     .filter(match => !!match)
-    .let(compose(...routeSetMiddleware))
+    .let<NextRoute>(compose(...routeSetMiddleware))
     .publishReplay(1)
     .refCount();
 }
