@@ -22,7 +22,7 @@ export const redirectMiddleware = createMiddleware(function(location: Location) 
       }
 
       return true;
-    })
+    });
 }, [ Location ]);
 
 function handleRedirect(location: Location, route: Route, next: NextRoute) {

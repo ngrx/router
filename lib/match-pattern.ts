@@ -215,7 +215,7 @@ export function formatPattern(pattern: string, params: Params = {}) {
       paramName = token.substring(1);
       paramValue = params[paramName];
 
-      if( paramValue != null || parenCount > 0 ) {
+      if( !(paramValue != null || parenCount > 0) ) {
         console.error('Missing "%s" parameter for path "%s"',
         paramName, pattern);
       }
