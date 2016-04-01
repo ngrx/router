@@ -33,7 +33,7 @@ gulp.task('babel', ['ts'], function(){
     .pipe(babel({
       presets: ['es2015']
     }))
-    .pipe(sourcemaps.write('.'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./release/cjs'));
 });
 
