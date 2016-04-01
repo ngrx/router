@@ -21,12 +21,20 @@ import { fromCallback, compose } from './util';
 import { Route } from './route';
 import { Middleware, identity, provideMiddlewareForToken } from './middleware';
 
-export const RENDER_MIDDLEWARE = new OpaqueToken(
-  '@ngrx/router Render Middleware'
+export const PRE_RENDER_MIDDLEWARE = new OpaqueToken(
+  '@ngrx/router Pre Render Middleware'
 );
 
-export const useRenderMiddleware = provideMiddlewareForToken(
-  RENDER_MIDDLEWARE
+export const POST_RENDER_MIDDLEWARE = new OpaqueToken(
+  '@ngrx/router Post Render Middleware'
+);
+
+export const usePreRenderMiddleware = provideMiddlewareForToken(
+  PRE_RENDER_MIDDLEWARE
+);
+
+export const usePostRenderMiddleware = provideMiddlewareForToken(
+  POST_RENDER_MIDDLEWARE
 );
 
 export interface RenderInstruction {
@@ -44,7 +52,10 @@ export interface ResolvedInstruction {
 
 @Injectable()
 export class ComponentRenderer {
-  constructor(@Inject(RENDER_MIDDLEWARE) private _middleware: Middleware[]) { }
+  constructor(
+    @Inject(PRE_RENDER_MIDDLEWARE) private _preMiddleware: Middleware[],
+    @Inject(POST_RENDER_MIDDLEWARE) private _postMiddleware: Middleware[]
+  ) { }
 
   render(
     route: Route,
@@ -57,14 +68,15 @@ export class ComponentRenderer {
       .map<RenderInstruction>(component => {
         return { component, injector, providers };
       })
-      .let<RenderInstruction>(compose(...this._middleware))
+      .let<RenderInstruction>(compose(...this._preMiddleware))
       .map<ResolvedInstruction>(instruction => {
         const providers = Injector.resolve(instruction.providers);
         const component = instruction.component;
 
         return { providers, component, ref, dcl }
       })
-      .mergeMap(instruction => this.renderComponent(instruction));
+      .mergeMap(instruction => this.renderComponent(instruction))
+      .let<ComponentRef>(compose(...this._postMiddleware));
   }
 
   renderComponent({ component, providers, ref, dcl }: ResolvedInstruction) {
@@ -85,6 +97,7 @@ export class ComponentRenderer {
 }
 
 export const COMPONENT_RENDERER_PROVIDERS = [
-  useRenderMiddleware(identity),
+  usePreRenderMiddleware(identity),
+  usePostRenderMiddleware(identity),
   new Provider(ComponentRenderer, { useClass: ComponentRenderer })
 ];
