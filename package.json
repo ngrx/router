@@ -44,5 +44,8 @@
     "presets": [
       "es2015"
     ]
+  },
+  "dependencies": {
+    "query-string": "^4.1.0"
   }
 }
