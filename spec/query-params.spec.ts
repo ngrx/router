@@ -73,14 +73,15 @@ describe('QueryParams Service', function() {
   });
 
   it('should replace the query string', function() {
-    params$.replace({ test: 123 });
+    const next = { test: 123 };
+    params$.replace(next);
 
-    expect(mockLocation.replaceState).toHaveBeenCalledWith('/test', 'test=123');
+    expect(mockLocation.replaceState).toHaveBeenCalledWith('/test', next);
   });
 
   it('should replace the query string with an empty value', function() {
     params$.replace();
 
-    expect(mockLocation.replaceState).toHaveBeenCalledWith('/test', '');
+    expect(mockLocation.replaceState).toHaveBeenCalledWith('/test', {});
   })
 });

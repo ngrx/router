@@ -9,11 +9,11 @@ import { LocationStrategy } from 'angular2/src/router/location/location_strategy
 import { UrlChangeEvent, PlatformLocation } from 'angular2/src/router/location/platform_location';
 import { BrowserPlatformLocation } from 'angular2/src/router/location/browser_platform_location';
 import { Injectable, Inject, Provider, provide } from 'angular2/core';
+import { stringify as stringifyQueryParams } from 'query-string';
 
 export interface LocationChange {
-  url: string;
-  pop: boolean;
-  type: string;
+  path: string;
+  type: 'push' | 'pop' | 'replace';
 }
 
 /**
@@ -63,15 +63,15 @@ export class Location extends ReplaySubject<LocationChange>{
   constructor(public platformStrategy: LocationStrategy) {
     super(1);
 
-    platformStrategy.onPopState(event => this._update(true, event.type));
+    platformStrategy.onPopState(event => this._update('pop'));
 
     var browserBaseHref = this.platformStrategy.getBaseHref();
     this._baseHref = stripTrailingSlash(stripIndexHtml(browserBaseHref));
-    this._update();
+    this._update('push');
   }
 
-  private _update(pop: boolean = false, type = 'push') {
-    this.next({ url: this.path(), pop, type });
+  private _update(type: 'push' | 'pop' | 'replace') {
+    this.next({ path: this.path(), type });
   }
 
   /**
@@ -106,18 +106,18 @@ export class Location extends ReplaySubject<LocationChange>{
    * Changes the browsers URL to the normalized version of the given URL, and pushes a
    * new item onto the platform's history.
    */
-  go(path: string, query: string = ''): void {
-    this.platformStrategy.pushState(null, '', path, query);
-    this._update();
+  go(path: string, query: any = ''): void {
+    this.platformStrategy.pushState(null, '', path, normalizeQuery(query));
+    this._update('push');
   }
 
   /**
    * Changes the browsers URL to the normalized version of the given URL, and replaces
    * the top item on the platform's history stack.
    */
-  replaceState(path: string, query: string = ''): void {
-    this.platformStrategy.replaceState(null, '', path, query);
-    this._update();
+  replaceState(path: string, query: any = ''): void {
+    this.platformStrategy.replaceState(null, '', path, normalizeQuery(query));
+    this._update('replace');
   }
 
   /**
@@ -157,6 +157,9 @@ function stripTrailingSlash(url: string): string {
   return url;
 }
 
+function normalizeQuery(query: any) {
+  return typeof query === 'string' ? query : stringifyQueryParams(query);
+}
 
 export const LOCATION_PROVIDERS = [
   provide(Location, { useClass: Location }),

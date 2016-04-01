@@ -90,7 +90,7 @@ describe('Location', () => {
   it('should update subject on location update', (done) => {
     location.go('/update/path');
     location.subscribe((ev) => {
-      expect(ev['url']).toEqual('/update/path');
+      expect(ev.path).toEqual('/update/path');
       done();
     });
   });
@@ -98,7 +98,7 @@ describe('Location', () => {
   it('should update subject on location replaceState', (done) => {
     location.replaceState('/replace/path');
     location.subscribe((ev) => {
-      expect(ev['url']).toEqual('/replace/path');
+      expect(ev.path).toEqual('/replace/path');
       done();
     });
   });
