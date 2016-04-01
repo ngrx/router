@@ -95,11 +95,11 @@ export class Location extends ReplaySubject<LocationChange>{
    * before normalizing. This method will also add a hash if `HashLocationStrategy` is
    * used, or the `APP_BASE_HREF` if the `PathLocationStrategy` is in use.
    */
-  prepareExternalUrl(url: string): string {
+  prepareExternalUrl(url: string, query: any = ''): string {
     if (url.length > 0 && !url.startsWith('/')) {
       url = '/' + url;
     }
-    return this.platformStrategy.prepareExternalUrl(url);
+    return this.platformStrategy.prepareExternalUrl(url + normalizeQueryParams(normalizeQuery(query)));
   }
 
   /**
@@ -159,6 +159,10 @@ function stripTrailingSlash(url: string): string {
 
 function normalizeQuery(query: any) {
   return typeof query === 'string' ? query : stringifyQueryParams(query);
+}
+
+function normalizeQueryParams(params: string): string {
+  return (params.length > 0 && params.substring(0, 1) != '?') ? ('?' + params) : params;
 }
 
 export const LOCATION_PROVIDERS = [

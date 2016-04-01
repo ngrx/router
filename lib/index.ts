@@ -12,6 +12,7 @@ import { GUARD_PROVIDERS } from './guard';
 import { MATCH_ROUTE_PROVIDERS } from './match-route';
 import { COMPONENT_RENDERER_PROVIDERS } from './component-renderer';
 import { QUERY_PARAMS_PROVIDERS } from './query-params';
+import { LINK_TO_PROVIDERS } from './link-to';
 
 export function provideRouter(routes: Routes) {
   return [
@@ -25,7 +26,8 @@ export function provideRouter(routes: Routes) {
     GUARD_PROVIDERS,
     MATCH_ROUTE_PROVIDERS,
     COMPONENT_RENDERER_PROVIDERS,
-    QUERY_PARAMS_PROVIDERS
+    QUERY_PARAMS_PROVIDERS,
+    LINK_TO_PROVIDERS
   ];
 }
 
@@ -39,3 +41,4 @@ export { usePreRenderMiddleware, usePostRenderMiddleware, RenderInstruction } fr
 export { Routes, Route, IndexRoute } from './route';
 export { useTraversalMiddleware } from './match-route';
 export { QueryParams } from './query-params';
+export { LinkTo } from './link-to';
