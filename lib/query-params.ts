@@ -20,7 +20,7 @@ export class QueryParams extends ReplaySubject<{ [param: string]: any }>{
   replace(params = {}) {
     const [ pathname ] = this._location.path().split('?');
 
-    this._location.replaceState(pathname, stringifyQueryParams(params));
+    this._location.replaceState(pathname, params);
   }
 }
 

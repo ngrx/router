@@ -44,10 +44,10 @@ function createRouteSet(
 ): RouteSet {
   return location$
     .observeOn(queue)
-    .distinctUntilChanged((prev, next) => prev.url === next.url)
+    .distinctUntilChanged((prev, next) => prev.path === next.path)
     .let<LocationChange>(compose(...locationMiddleware))
-    .switchMap(() => {
-      const [ pathname, queryString ] = location$.path().split('?');
+    .switchMap(change => {
+      const [ pathname, queryString ] = change.path.split('?');
 
       return traverser.find(pathname)
         .map<NextRoute>(set => {
