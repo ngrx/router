@@ -3,7 +3,7 @@
  * It exposes location updates as a BehaviorSubject, letting the router
  * observe location changes.
  */
-import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/subject/ReplaySubject';
 import { Subscriber } from 'rxjs/Subscriber';
 import { LocationStrategy } from 'angular2/src/router/location/location_strategy';
 import { UrlChangeEvent, PlatformLocation } from 'angular2/src/router/location/platform_location';
@@ -57,11 +57,11 @@ export interface LocationChange {
  * ```
  */
 @Injectable()
-export class Location extends BehaviorSubject<LocationChange>{
+export class Location extends ReplaySubject<LocationChange>{
   private _baseHref: string;
 
   constructor(public platformStrategy: LocationStrategy) {
-    super(undefined);
+    super(1);
 
     platformStrategy.onPopState(event => this._update(true, event.type));
 

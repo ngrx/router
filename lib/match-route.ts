@@ -16,7 +16,7 @@ import { OpaqueToken, Provider, Inject, Injectable } from 'angular2/core';
 
 import { fromCallback, compose } from './util';
 import { matchPattern } from './match-pattern';
-import { Route, IndexRoute, Routes } from './route';
+import { Route, IndexRoute, Routes, ROUTES } from './route';
 import { Middleware, provideMiddlewareForToken, identity } from './middleware';
 
 const TRAVERSAL_MIDDLEWARE = new OpaqueToken(
@@ -35,7 +35,14 @@ export interface Match {
 
 @Injectable()
 export class RouteTraverser {
-  constructor(@Inject(TRAVERSAL_MIDDLEWARE) private _middleware: Middleware[]){ }
+  constructor(
+    @Inject(TRAVERSAL_MIDDLEWARE) private _middleware: Middleware[],
+    @Inject(ROUTES) private _routes: Routes
+  ){ }
+
+  find(pathname: string) {
+    return this._matchRoutes(this._routes, pathname);
+  }
 
   /**
   * Asynchronously matches the given location to a set of routes and calls
@@ -45,7 +52,7 @@ export class RouteTraverser {
   * - routes       An array of routes that matched, in hierarchical order
   * - params       An object of URL parameters
   */
-  matchRoutes(
+  private _matchRoutes(
     routes: Routes,
     pathname: string,
     remainingPathname = pathname,
@@ -131,7 +138,7 @@ export class RouteTraverser {
 
     if( remainingPathname != null ) {
       return getChildRoutes(route)
-        .mergeMap(childRoutes => this.matchRoutes(
+        .mergeMap(childRoutes => this._matchRoutes(
           childRoutes,
           pathname,
           remainingPathname,
