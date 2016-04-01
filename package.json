@@ -1,14 +1,17 @@
 {
   "name": "@ngrx/router",
   "version": "0.0.1",
-  "description": "",
+  "description": "A reactive router for Angular 2",
   "main": "index.js",
   "scripts": {
     "build": "gulp build",
     "test": "karma start",
-    "postinstall": "typings install"
+    "installtypings": "typings install"
   },
-  "author": "",
+  "authors": [
+    "Mike Ryan",
+    "Brandon Roberts"
+  ],
   "license": "MIT",
   "peerDependencies": {
     "angular2": "^2.0.0-beta.9",
