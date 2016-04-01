@@ -21,6 +21,7 @@ export class PostPage {
 
 Because parameters are exposed as an observable, the router __does not re-render components when parameters change__. There is also no synchronous way to get the current route parameters. This is a big difference between the ngrx/router and other routers.
 
+###Usage
 To demonstrate how to work around this, lets take the above `PostPage` component and rewrite it to fetch the post from the server. If the post doesn't exist, we should redirect the user to the 404 page:
 
 ```ts
