@@ -42,7 +42,7 @@ gulp.task('build', ['babel'], function(){
       './release/cjs/**/*.js',
       './release/definitions/**/*.d.ts',
       './package.json',
-      './.npmrc'
+      './LICENSE'
     ])
     .pipe(gulp.dest('./release/npm'));
 });
