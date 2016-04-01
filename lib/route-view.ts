@@ -40,7 +40,8 @@ export class RouteView implements OnDestroy, OnInit{
       return {
         url: set.url,
         routes: [ ...set.routes ].slice(1),
-        params: set.params
+        params: set.params,
+        query: set.query
       }
     })
   });

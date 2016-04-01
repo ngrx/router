@@ -11,6 +11,7 @@ import 'rxjs/add/operator/observeOn';
 import { Observable } from 'rxjs/Observable';
 import { queue } from 'rxjs/scheduler/queue';
 import { provide, Provider, Injector, OpaqueToken } from 'angular2/core';
+import { parse as parseQueryString } from 'query-string';
 
 import { compose } from './util';
 import { Location, LocationChange } from './location';
@@ -27,6 +28,7 @@ export const useRouteSetMiddleware = provideMiddlewareForToken(ROUTE_SET_MIDDLEW
 export interface NextRoute {
   routes: Routes;
   params: any;
+  query: any;
   url: string;
 }
 
@@ -35,7 +37,6 @@ export class RouteSet extends Observable<NextRoute>{ }
 
 
 function createRouteSet(
-  routes: Routes,
   location$: Location,
   traverser: RouteTraverser,
   locationMiddleware: Middleware[],
@@ -45,12 +46,15 @@ function createRouteSet(
     .observeOn(queue)
     .distinctUntilChanged((prev, next) => prev.url === next.url)
     .let<LocationChange>(compose(...locationMiddleware))
-    .switchMap(change => {
-      return traverser.matchRoutes(routes, change.url)
+    .switchMap(() => {
+      const [ pathname, queryString ] = location$.path().split('?');
+
+      return traverser.find(pathname)
         .map<NextRoute>(set => {
           return {
-            url: change.url,
+            url: location$.path(),
             routes: set.routes,
+            query: parseQueryString(queryString),
             params: set.params
           };
         });
@@ -64,7 +68,7 @@ function createRouteSet(
 
 export const ROUTE_SET_PROVIDERS = [
   provide(RouteSet, {
-    deps: [ ROUTES, Location, RouteTraverser, LOCATION_MIDDLEWARE, ROUTE_SET_MIDDLEWARE ],
+    deps: [ Location, RouteTraverser, LOCATION_MIDDLEWARE, ROUTE_SET_MIDDLEWARE ],
     useFactory: createRouteSet
   }),
   useLocationMiddleware(identity),

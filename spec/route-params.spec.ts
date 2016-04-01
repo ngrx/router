@@ -31,7 +31,7 @@ describe('RouteParams Service', function() {
       done();
     });
 
-    routeSet$.next({ routes: [], params, url: '' });
+    routeSet$.next({ routes: [], params, url: '', query: {} });
   });
 
   it('should let you select a single param to observe', function(done) {
@@ -43,12 +43,12 @@ describe('RouteParams Service', function() {
       done();
     });
 
-    routeSet$.next({ params, routes: [], url: '' });
+    routeSet$.next({ params, routes: [], url: '', query: {} });
   });
 
   it('should replay the previous param value when you subscribe', function(done) {
     const params = { id: 456 };
-    routeSet$.next({ params, routes: [], url: '' });
+    routeSet$.next({ params, routes: [], url: '', query: {} });
 
     params$.subscribe(value => {
       expect(value).toBe(params);

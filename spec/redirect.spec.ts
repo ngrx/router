@@ -15,7 +15,8 @@ describe('Redirect Middleware', function() {
     routeSet$.next({
       routes: [ { redirectTo: to } ],
       params,
-      url: from
+      url: from,
+      query: {}
     });
   }
 
@@ -38,7 +39,8 @@ describe('Redirect Middleware', function() {
     const nextRoute: NextRoute = {
       routes: [ { path: '/first' } ],
       params: {},
-      url: '/first'
+      url: '/first',
+      query: {}
     };
 
     redirect(routeSet$).subscribe(value => {
@@ -55,7 +57,8 @@ describe('Redirect Middleware', function() {
     routeSet$.next({
       routes: [ { redirectTo: '/test' }],
       params: {},
-      url: '/go'
+      url: '/go',
+      query: {}
     });
 
     expect(observer.next).not.toHaveBeenCalled();
@@ -68,7 +71,8 @@ describe('Redirect Middleware', function() {
     routeSet$.next({
       routes: [ { redirectTo: '/posts/:id' } ],
       params: { id: '543' },
-      url: '/blog/543'
+      url: '/blog/543',
+      query: {}
     });
 
     expect(observer.next).not.toHaveBeenCalled();
@@ -81,7 +85,8 @@ describe('Redirect Middleware', function() {
     routeSet$.next({
       routes: [ { path: '/first' }, { path: 'second', redirectTo: '/home' } ],
       params: {},
-      url: '/first/second'
+      url: '/first/second',
+      query: {}
     });
 
     expect(observer.next).not.toHaveBeenCalled();
@@ -94,7 +99,8 @@ describe('Redirect Middleware', function() {
     routeSet$.next({
       routes: [ { path: '/blog' }, { path: ':id', redirectTo: '/posts/:id' } ],
       params: { id: '543' },
-      url: '/blog/543'
+      url: '/blog/543',
+      query: {}
     });
 
     expect(observer.next).not.toHaveBeenCalled();
