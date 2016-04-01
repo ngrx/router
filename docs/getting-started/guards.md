@@ -9,6 +9,7 @@ Guards are powerful hooks into the Router's route resolution process. When the l
 
 Guards are run before a route is selected to be evaluated. This gives you the opportunity let the router's traversal process know if a route should be considered a candidate or not for traversal.
 
+###Use Cases
 A great use case for guards is auth protecting routes. Guards are functions that return an Observable of true or false. If your guard's observable emits true, then traversal continues. If your guard emits false, traversal is canceled immediately and the router moves on to the next candidate route. To write an auth guard, we'll need to use the `createGuard` helper:
 
 ```ts
@@ -48,8 +49,10 @@ const routes: Routes = [
 ]
 ```
 
-What makes guards powerful is that they run before the component or children are loaded. This prevents the user from having to load unnecessary code, giving you a big win in performance.
+### What Makes Guards Powerful?
+Guards are run before the component or children are loaded. This prevents the user from having to load unnecessary code, giving you a big win in performance.
 
 While a guard must always return an observable, if a guard dispatches a route change (for instance redirecting to a `400 Not Authorized` route) the current traversal will be immediately canceled.
 
+### Limitations
 With great power comes major limitations that you need to be aware of. First, guards are run in the context of the root injector. This means that if guards require services like `Http`, they need to provided when you bootstrap your application. Second, because they are run before the router finishes resolving a new URL you do not have access to route params or query params yet.
