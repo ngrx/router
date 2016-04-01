@@ -3,7 +3,13 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { Injector, provide, DynamicComponentLoader, ElementRef } from 'angular2/core';
 import { Location } from '../lib/location';
-import { ComponentRenderer, RENDER_MIDDLEWARE, useRenderMiddleware } from '../lib/component-renderer';
+import {
+  ComponentRenderer,
+  PRE_RENDER_MIDDLEWARE,
+  POST_RENDER_MIDDLEWARE,
+  usePreRenderMiddleware,
+  usePostRenderMiddleware
+} from '../lib/component-renderer';
 import { Route } from '../lib/route';
 import { createMiddleware } from '../lib/middleware';
 
@@ -27,7 +33,8 @@ describe('Component Renderer', function() {
     beforeEach(() => {
       injector = Injector.resolveAndCreate([
         ComponentRenderer,
-        provide(RENDER_MIDDLEWARE, { useValue: [] }),
+        provide(PRE_RENDER_MIDDLEWARE, { useValue: [] }),
+        provide(POST_RENDER_MIDDLEWARE, { useValue: [] }),
         provide(DynamicComponentLoader, {useClass: MockDCL})
       ]);
 
@@ -60,7 +67,7 @@ describe('Component Renderer', function() {
     });
   });
 
-  describe('Middleware', () => {
+  describe('Pre Middleware', () => {
     let route: Route = { component: TestComponent };
     let providers = [];
     let elementRef = {};
@@ -86,7 +93,8 @@ describe('Component Renderer', function() {
 
       injector = Injector.resolveAndCreate([
         ComponentRenderer,
-        useRenderMiddleware(renderMiddleware),
+        usePreRenderMiddleware(renderMiddleware),
+        provide(POST_RENDER_MIDDLEWARE, {useValue: []}),
         provide(DynamicComponentLoader, {useClass: MockDCL})
       ]);
 
@@ -118,6 +126,55 @@ describe('Component Renderer', function() {
       render.subscribe(() => {
         expect(loader.loadNextToLocation).toHaveBeenCalled();
         expect(loader.loadNextToLocation.calls.mostRecent().args[0]).toEqual('newComponent');
+        done();
+      });
+    });
+  });
+
+  describe('Post Middleware', () => {
+    let route: Route = { component: TestComponent };
+    let providers = [];
+    let elementRef = {};
+    let middlewareSpy = jasmine.createSpy('middleware');
+    let renderMiddleware;
+    let render;
+
+    beforeEach(() => {
+      renderMiddleware = createMiddleware(function(instruction$) {
+        return (componentRef$) => componentRef$.map((componentRef) => {
+          middlewareSpy();
+
+          return false;
+        });
+      }, []);
+
+      injector = Injector.resolveAndCreate([
+        ComponentRenderer,
+        usePostRenderMiddleware(renderMiddleware),
+        provide(PRE_RENDER_MIDDLEWARE, {useValue: []}),
+        provide(DynamicComponentLoader, {useClass: MockDCL})
+      ]);
+
+      renderer = injector.get(ComponentRenderer);
+      loader = injector.get(DynamicComponentLoader);
+    });
+
+    beforeEach(() => {
+      render = renderer.render(route, injector, <ElementRef>elementRef, loader, providers);
+    });
+
+    it('should execute after rendering', (done) => {
+      render.subscribe(() => {
+        expect(loader.loadNextToLocation).toHaveBeenCalled();
+        expect(middlewareSpy).toHaveBeenCalled();
+        done();
+      });
+    });
+
+    it('can modify the component ref', (done) => {
+      render.subscribe((componentRef) => {
+        expect(loader.loadNextToLocation).toHaveBeenCalled();
+        expect(componentRef).toEqual(false);
         done();
       });
     });

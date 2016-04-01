@@ -32,6 +32,6 @@ export { LocationChange, Location } from './location';
 export { Middleware, createMiddleware } from './middleware';
 export { RouteParams } from './route-params';
 export { useLocationMiddleware, useRouteSetMiddleware, RouteSet, NextRoute } from './route-set';
-export { useRenderMiddleware, RenderInstruction } from './component-renderer';
+export { usePreRenderMiddleware, usePostRenderMiddleware, RenderInstruction } from './component-renderer';
 export { Routes, Route, IndexRoute } from './route';
 export { useTraversalMiddleware } from './match-route';
