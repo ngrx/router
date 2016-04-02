@@ -8,12 +8,12 @@ import {
   injectAsync,
   expect
 } from 'angular2/testing';
-import {
-  Component
-} from 'angular2/core';
+import { Component, provide } from 'angular2/core';
 import { LinkTo } from '../lib/link-to';
 import { LOCATION_PROVIDERS, Location } from '../lib/location';
 import { Observable } from 'rxjs/Observable';
+import { LocationStrategy } from 'angular2/src/router/location/location_strategy';
+import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
 
 @Component({
   selector: 'link-test',
@@ -30,7 +30,8 @@ const compile = (tcb: TestComponentBuilder, template: string = '') => {
 
 describe('Link To', () => {
   beforeEachProviders(() => [
-    LOCATION_PROVIDERS
+    LOCATION_PROVIDERS,
+    provide(LocationStrategy, { useClass: MockLocationStrategy })
   ]);
 
   it('should be defined', () => {
