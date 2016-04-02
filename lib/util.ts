@@ -1,3 +1,4 @@
+import 'rxjs/add/observable/bindCallback';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { provide, Provider, OpaqueToken } from 'angular2/core';
@@ -5,12 +6,7 @@ import { provide, Provider, OpaqueToken } from 'angular2/core';
 export type Callback<T> = (callback: (value: T) => void ) => void;
 
 export function fromCallback<T>(fn: Callback<T>) {
-  return new Observable<T>((sub: Subscriber<T>) => {
-    fn((value) => {
-      sub.next(value);
-      sub.complete();
-    });
-  });
+  return Observable.bindCallback(fn)()
 }
 
 export function createFactoryProvider<T>(
