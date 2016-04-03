@@ -73,7 +73,7 @@ export class RouteTraverser {
         paramValues
       )
       .catch(error => {
-        console.error('Error During Traversa', error);
+        console.error('Error During Traversal', error);
         return Observable.of(null);
       });
     });
