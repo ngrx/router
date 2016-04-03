@@ -39,6 +39,6 @@ export { RouteParams } from './route-params';
 export { useLocationMiddleware, useRouteSetMiddleware, RouteSet, NextRoute } from './route-set';
 export { usePreRenderMiddleware, usePostRenderMiddleware, RenderInstruction } from './component-renderer';
 export { Routes, Route, IndexRoute } from './route';
-export { useTraversalMiddleware } from './match-route';
+export { useTraversalMiddleware, TraversalCandidate } from './match-route';
 export { QueryParams } from './query-params';
 export { LinkTo } from './link-to';

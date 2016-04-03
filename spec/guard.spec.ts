@@ -4,6 +4,7 @@ import { Injector } from 'angular2/core';
 
 import { Route } from '../lib/route';
 import { Middleware } from '../lib/middleware';
+import { TraversalCandidate } from '../lib/match-route';
 import { Guard, createGuard, guardMiddleware } from '../lib/guard';
 
 
@@ -11,8 +12,8 @@ describe('Guard Middleware', function() {
   let guardRunner: Middleware;
   let injector: Injector;
 
-  function route(route: Route) {
-    return Observable.of(route);
+  function route(route: Route, params = {}, isTerminal = false) {
+    return Observable.of({ route, params, isTerminal });
   }
 
   beforeEach(function() {
@@ -22,9 +23,9 @@ describe('Guard Middleware', function() {
 
   it('should always return true for routes with no gaurds', function(done) {
     route({ })
-      .let(guardRunner)
-      .subscribe(value => {
-        expect(value).toBe(true);
+      .let<TraversalCandidate>(guardRunner)
+      .subscribe(({ route }) => {
+        expect(route).toBeTruthy();
 
         done();
       });
@@ -32,9 +33,9 @@ describe('Guard Middleware', function() {
 
   it('should return true for routes with an empty guard array', function(done) {
     route({ guards: [] })
-      .let(guardRunner)
-      .subscribe(value => {
-        expect(value).toBe(true);
+      .let<TraversalCandidate>(guardRunner)
+      .subscribe(({ route }) => {
+        expect(route).toBeTruthy();
 
         done();
       });
@@ -54,19 +55,21 @@ describe('Guard Middleware', function() {
     spyOn(testGuard, 'run').and.callThrough();
     const guard = createGuard(() => testGuard.run);
     const nextRoute = { guards: [ guard ] };
+    const params = { abc: 123 };
+    const isTerminal = true;
 
-    route(nextRoute).let(guardRunner).subscribe();
+    route(nextRoute, params, isTerminal).let(guardRunner).subscribe();
 
-    expect(testGuard.run).toHaveBeenCalledWith(nextRoute);
+    expect(testGuard.run).toHaveBeenCalledWith(nextRoute, params, isTerminal);
   });
 
   it('should return true if all of the guards return true', function(done) {
     const pass = createGuard(() => () => Observable.of(true));
 
     route({ guards: [ pass ] })
-      .let(guardRunner)
-      .subscribe(value => {
-        expect(value).toBe(true);
+      .let<TraversalCandidate>(guardRunner)
+      .subscribe(({ route }) => {
+        expect(route).toBeTruthy();
 
         done();
       });
@@ -78,8 +81,8 @@ describe('Guard Middleware', function() {
 
     route({ guards: [ pass, fail ] })
       .let(guardRunner)
-      .subscribe(value => {
-        expect(value).toBe(false);
+      .subscribe(({ route }) => {
+        expect(route).toBeFalsy();
 
         done();
       });

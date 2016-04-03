@@ -10,7 +10,6 @@ import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/every';
 import { Observable } from 'rxjs/Observable';
 import { OpaqueToken, Provider, Inject, Injectable } from 'angular2/core';
 
@@ -31,6 +30,12 @@ export interface Match {
   routes: Routes;
   params: any;
 };
+
+export interface TraversalCandidate {
+  route: Route,
+  params: any;
+  isTerminal: boolean;
+}
 
 
 @Injectable()
@@ -59,33 +64,27 @@ export class RouteTraverser {
     paramNames = [],
     paramValues = []
   ): Observable<Match> {
-    const seekers = routes.map<Observable<Match>>(route => Observable.of(route)
-      .let(route$ => {
-        const resolved = this._middleware.map(m => m(route$));
-
-        return Observable
-          .merge(...resolved)
-          .every(signal => !!signal);
-      })
-      .mergeMap(canTraverse => {
-        if( canTraverse ) {
-          return this._matchRouteDeep(
-            route,
-            pathname,
-            remainingPathname,
-            paramNames,
-            paramValues
-          );
-        }
-
-        return Observable.of(null);
-      })
+    const seekers = routes.map<Observable<Match>>(route => {
+      return this._matchRouteDeep(
+        route,
+        pathname,
+        remainingPathname,
+        paramNames,
+        paramValues
+      )
       .catch(error => {
-        console.error(error);
+        console.error('Error During Traversal', error);
         return Observable.of(null);
-      })
-    );
-
+      });
+    });
+    /**
+     * A note about this code: it should use Observable.concat
+     * to merge the seekers into an in-order sequence. However,
+     * unubscribing from sequences that way seems to throw a ton
+     * of empty errors. Merging and sorting works correctly, but it
+     * is very aggressive and probably not as performant as concat
+     * would have been.
+     */
     return Observable
       .merge(...seekers)
       .toArray()
@@ -113,51 +112,59 @@ export class RouteTraverser {
       paramValues = [];
     }
 
-    if( remainingPathname !== null ) {
-      const matched = matchPattern(pattern, remainingPathname);
-      remainingPathname = matched.remainingPathname;
-      paramNames = [ ...paramNames, ...matched.paramNames ];
-      paramValues = [ ...paramValues, ...matched.paramValues ];
+    return Observable.of(route)
+      .filter(() => remainingPathname !== null)
+      .do(() => {
+        const matched = matchPattern(pattern, remainingPathname);
+        remainingPathname = matched.remainingPathname;
+        paramNames = [ ...paramNames, ...matched.paramNames ];
+        paramValues = [ ...paramValues, ...matched.paramValues ];
+      })
+      .filter(() => remainingPathname !== null)
+      .map<TraversalCandidate>(() => {
+        return {
+          route,
+          params: assignParams(paramNames, paramValues),
+          isTerminal: remainingPathname === '' && !!route.path
+        }
+      })
+      .let<TraversalCandidate>(compose(...this._middleware))
+      .filter(({ route }) => !!route)
+      .mergeMap(({ route, params, isTerminal }) => {
+        if( isTerminal ) {
+          const match: Match = {
+            routes: [ route ],
+            params
+          };
 
-      if( remainingPathname === '' && route.path ) {
-        const match: Match = {
-          routes: [ route ],
-          params: assignParams(paramNames, paramValues)
-        };
+          return getIndexRoute(route)
+            .map(indexRoute => {
+              if( !!indexRoute ) {
+                match.routes.push(indexRoute);
+              }
 
-        return getIndexRoute(route)
-          .map(indexRoute => {
-            if( !!indexRoute ) {
-              match.routes.push(indexRoute);
+              return match;
+            });
+        }
+
+        return getChildRoutes(route)
+          .mergeMap(childRoutes => this._matchRoutes(
+            childRoutes,
+            pathname,
+            remainingPathname,
+            paramNames,
+            paramValues
+          ))
+          .map(match => {
+            if( !!match ) {
+              match.routes.unshift(route);
+
+              return match;
             }
 
-            return match;
+            return null;
           });
-      }
-    }
-
-    if( remainingPathname != null ) {
-      return getChildRoutes(route)
-        .mergeMap(childRoutes => this._matchRoutes(
-          childRoutes,
-          pathname,
-          remainingPathname,
-          paramNames,
-          paramValues
-        ))
-        .map(match => {
-          if( !!match ) {
-            match.routes.unshift(route);
-
-            return match;
-          }
-
-          return null;
-        });
-    }
-    else {
-      return Observable.of(null);
-    }
+      });
   }
 }
 
