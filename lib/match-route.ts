@@ -4,7 +4,7 @@
 * to run route guards as part of the traversal process
 */
 import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/merge';
+import 'rxjs/add/observable/concat';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/toArray';
@@ -86,12 +86,10 @@ export class RouteTraverser {
      * would have been.
      */
     return Observable
-      .merge<Match>(...seekers)
+      .concat<Match>(...seekers)
       .toArray()
       .map(matches => {
-        const valid = matches
-          .filter(match => !!match)
-          .sort((first, second) => second.routes.length - first.routes.length);
+        const valid = matches.filter(match => !!match);
 
         return valid[0];
       });
