@@ -44,7 +44,7 @@ export const guardMiddleware = createMiddleware(function(injector: Injector) {
           .every(value => !!value)
           .map(passed => {
             if ( passed ) {
-              return { route, params };
+              return { route, params, isTerminal };
             }
 
             return { route: null, params, isTerminal };
