@@ -73,7 +73,7 @@ export class ComponentRenderer {
         const providers = Injector.resolve(instruction.providers);
         const component = instruction.component;
 
-        return { providers, component, ref, dcl }
+        return { providers, component, ref, dcl };
       })
       .mergeMap(instruction => this.renderComponent(instruction))
       .let<ComponentRef>(compose(...this._postMiddleware));
@@ -86,11 +86,11 @@ export class ComponentRenderer {
   }
 
   loadComponentForRoute(route: Route) {
-    if( !!route.component ) {
+    if ( !!route.component ) {
       return Observable.of(route.component);
     }
 
-    else if( !!route.loadComponent ) {
+    else if ( !!route.loadComponent ) {
       return fromCallback(route.loadComponent);
     }
   }

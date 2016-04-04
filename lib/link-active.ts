@@ -35,7 +35,7 @@ export interface ActiveOptions {
    private _sub: any;
 
    constructor(
-     @Query(LinkTo) public links:QueryList<LinkTo>,
+     @Query(LinkTo) public links: QueryList<LinkTo>,
      public element: ElementRef,
      public location$: Location,
      public renderer: Renderer

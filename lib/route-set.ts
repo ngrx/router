@@ -33,7 +33,7 @@ export interface NextRoute {
 }
 
 
-export class RouteSet extends Observable<NextRoute>{ }
+export class RouteSet extends Observable<NextRoute> { }
 
 
 function createRouteSet(

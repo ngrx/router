@@ -32,7 +32,7 @@ export interface Match {
 };
 
 export interface TraversalCandidate {
-  route: Route,
+  route: Route;
   params: any;
   isTerminal: boolean;
 }
@@ -43,7 +43,7 @@ export class RouteTraverser {
   constructor(
     @Inject(TRAVERSAL_MIDDLEWARE) private _middleware: Middleware[],
     @Inject(ROUTES) private _routes: Routes
-  ){ }
+  ) { }
 
   find(pathname: string) {
     return this._matchRoutes(this._routes, pathname);
@@ -86,7 +86,7 @@ export class RouteTraverser {
      * would have been.
      */
     return Observable
-      .merge(...seekers)
+      .merge<Match>(...seekers)
       .toArray()
       .map(matches => {
         const valid = matches
@@ -106,7 +106,7 @@ export class RouteTraverser {
   ): Observable<Match> {
     const pattern = route.path || '';
 
-    if( pattern.charAt(0) === '/' ) {
+    if ( pattern.charAt(0) === '/' ) {
       remainingPathname = pathname;
       paramNames = [];
       paramValues = [];
@@ -126,12 +126,12 @@ export class RouteTraverser {
           route,
           params: assignParams(paramNames, paramValues),
           isTerminal: remainingPathname === '' && !!route.path
-        }
+        };
       })
       .let<TraversalCandidate>(compose(...this._middleware))
       .filter(({ route }) => !!route)
       .mergeMap(({ route, params, isTerminal }) => {
-        if( isTerminal ) {
+        if ( isTerminal ) {
           const match: Match = {
             routes: [ route ],
             params
@@ -139,7 +139,7 @@ export class RouteTraverser {
 
           return getIndexRoute(route)
             .map(indexRoute => {
-              if( !!indexRoute ) {
+              if ( !!indexRoute ) {
                 match.routes.push(indexRoute);
               }
 
@@ -148,7 +148,7 @@ export class RouteTraverser {
         }
 
         return getChildRoutes(route)
-          .mergeMap(childRoutes => this._matchRoutes(
+          .mergeMap<Match>(childRoutes => this._matchRoutes(
             childRoutes,
             pathname,
             remainingPathname,
@@ -156,7 +156,7 @@ export class RouteTraverser {
             paramValues
           ))
           .map(match => {
-            if( !!match ) {
+            if ( !!match ) {
               match.routes.unshift(route);
 
               return match;
@@ -178,7 +178,7 @@ export function assignParams(paramNames: string[], paramValues: string[]) {
   return paramNames.reduce(function (params, paramName, index) {
     const paramValue = paramValues && paramValues[index];
 
-    if( Array.isArray(params[paramName]) ){
+    if ( Array.isArray(params[paramName]) ) {
       params[paramName].push(paramValue);
     }
     else if (paramName in params) {

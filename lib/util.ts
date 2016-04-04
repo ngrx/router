@@ -6,7 +6,7 @@ import { provide, Provider, OpaqueToken } from 'angular2/core';
 export type Callback<T> = (callback: (value: T) => void ) => void;
 
 export function fromCallback<T>(fn: Callback<T>) {
-  return Observable.bindCallback(fn)()
+  return Observable.bindCallback(fn)();
 }
 
 export function createFactoryProvider<T>(
@@ -20,7 +20,7 @@ export function createFactoryProvider<T>(
       multi,
       useFactory: factory
     });
-  }
+  };
 }
 
 

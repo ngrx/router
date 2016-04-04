@@ -32,7 +32,7 @@ import { ComponentRenderer } from './component-renderer';
   providers: [ ComponentRenderer ],
   template: ``
 })
-export class RouteView implements OnDestroy, OnInit{
+export class RouteView implements OnDestroy, OnInit {
   private _prev: ComponentRef;
   private _sub: any;
   private _routeSetProvider = provide(RouteSet, {
@@ -42,7 +42,7 @@ export class RouteView implements OnDestroy, OnInit{
         routes: [ ...set.routes ].slice(1),
         params: set.params,
         query: set.query
-      }
+      };
     })
   });
 
@@ -52,9 +52,9 @@ export class RouteView implements OnDestroy, OnInit{
     protected _renderer: ComponentRenderer,
     protected _dcl: DynamicComponentLoader,
     protected _ref: ElementRef
-  ){ }
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this._sub = this._routeSet$
       .map(set => set.routes[0])
       .distinctUntilChanged()
@@ -66,13 +66,13 @@ export class RouteView implements OnDestroy, OnInit{
       .subscribe((ref: ComponentRef) => this._prev = ref);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this._cleanPreviousRef();
     this._sub.unsubscribe();
   }
 
-  protected _cleanPreviousRef(){
-    if(this._prev){
+  protected _cleanPreviousRef() {
+    if (this._prev) {
       this._prev.dispose();
       this._prev = null;
     }

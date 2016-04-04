@@ -8,12 +8,12 @@ export interface Params {
   [param: string]: string | string[];
 }
 
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+function escapeRegExp(input: string) {
+  return input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function escapeSource(string) {
-  return escapeRegExp(string).replace(/\/+/g, '/+')
+function escapeSource(input: string) {
+  return escapeRegExp(input).replace(/\/+/g, '/+');
 }
 
 export interface CompiledPattern {
@@ -38,22 +38,22 @@ function _compilePattern(pattern: string): CompiledPattern {
       regexpSource += escapeSource(pattern.slice(lastIndex, match.index));
     }
 
-    if( match[1] ) {
+    if ( match[1] ) {
       regexpSource += '([^/]+)';
       paramNames.push(match[1]);
     }
-    else if( match[0] === '**' ) {
+    else if ( match[0] === '**' ) {
       regexpSource += '(.*)';
       paramNames.push('splat');
     }
-    else if( match[0] === '*' ) {
+    else if ( match[0] === '*' ) {
       regexpSource += '(.*?)';
       paramNames.push('splat');
     }
-    else if( match[0] === '(' ) {
+    else if ( match[0] === '(' ) {
       regexpSource += '(?:';
     }
-    else if( match[0] === ')' ) {
+    else if ( match[0] === ')' ) {
       regexpSource += ')?';
     }
 
@@ -61,9 +61,9 @@ function _compilePattern(pattern: string): CompiledPattern {
     lastIndex = matcher.lastIndex;
   }
 
-  if( lastIndex !== pattern.length ) {
-    tokens.push(pattern.slice(lastIndex, pattern.length))
-    regexpSource += escapeSource(pattern.slice(lastIndex, pattern.length))
+  if ( lastIndex !== pattern.length ) {
+    tokens.push(pattern.slice(lastIndex, pattern.length));
+    regexpSource += escapeSource(pattern.slice(lastIndex, pattern.length));
   }
 
   return {
@@ -74,10 +74,10 @@ function _compilePattern(pattern: string): CompiledPattern {
   };
 }
 
-const CompiledPatternsCache: { [pattern: string]: CompiledPattern } = {}
+const CompiledPatternsCache: { [pattern: string]: CompiledPattern } = {};
 
 export function compilePattern(pattern) {
-  if( !(pattern in CompiledPatternsCache) ) {
+  if ( !(pattern in CompiledPatternsCache) ) {
     CompiledPatternsCache[pattern] = _compilePattern(pattern);
   }
 
@@ -106,10 +106,10 @@ export function compilePattern(pattern) {
 */
 export function matchPattern(pattern: string, pathname: string) {
   // Make leading slashes consistent between pattern and pathname.
-  if( pattern.charAt(0) !== '/' ) {
+  if ( pattern.charAt(0) !== '/' ) {
     pattern = `/${pattern}`;
   }
-  if( pathname.charAt(0) !== '/' ) {
+  if ( pathname.charAt(0) !== '/' ) {
     pathname = `/${pathname}`;
   }
 
@@ -127,14 +127,14 @@ export function matchPattern(pattern: string, pathname: string) {
   let remainingPathname: string;
   let paramValues: string[];
 
-  if( match != null ) {
-    const matchedPath = match[0]
-    remainingPathname = pathname.substr(matchedPath.length)
+  if ( match != null ) {
+    const matchedPath = match[0];
+    remainingPathname = pathname.substr(matchedPath.length);
 
     // If we didn't match the entire pathname, then make sure that the match we
     // did get ends at a path separator (potentially the one we added above at
     // the beginning of the path, if the actual match was empty).
-    if(
+    if (
       remainingPathname &&
       matchedPath.charAt(matchedPath.length - 1) !== '/'
     ) {
@@ -189,38 +189,38 @@ export function formatPattern(pattern: string, params: Params = {}) {
   let paramName: string;
   let paramValue;
 
-  for(let i = 0, len = tokens.length; i < len; ++i) {
-    token = tokens[i]
+  for (let i = 0, len = tokens.length; i < len; ++i) {
+    token = tokens[i];
 
     if (token === '*' || token === '**') {
       paramValue = Array.isArray(params['splat']) ?
         params['splat'][splatIndex++] :
         params['splat'];
 
-      if( paramValue != null || parenCount > 0 ) {
+      if ( paramValue != null || parenCount > 0 ) {
         console.error('Missing splat #%s for path "%s"',   splatIndex, pattern);
       }
 
-      if( paramValue != null ) {
+      if ( paramValue != null ) {
         pathname += encodeURI(paramValue);
       }
     }
-    else if( token === '(' ) {
-      parenCount += 1
+    else if ( token === '(' ) {
+      parenCount += 1;
     }
-    else if( token === ')' ) {
-      parenCount -= 1
+    else if ( token === ')' ) {
+      parenCount -= 1;
     }
-    else if( token.charAt(0) === ':' ) {
+    else if ( token.charAt(0) === ':' ) {
       paramName = token.substring(1);
       paramValue = params[paramName];
 
-      if( !(paramValue != null || parenCount > 0) ) {
+      if ( !(paramValue != null || parenCount > 0) ) {
         console.error('Missing "%s" parameter for path "%s"',
         paramName, pattern);
       }
 
-      if( paramValue != null ) {
+      if ( paramValue != null ) {
         pathname += encodeURIComponent(paramValue);
       }
     }

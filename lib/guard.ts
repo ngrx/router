@@ -33,7 +33,7 @@ export const createGuard = createFactoryProvider<Guard>('@ngrx/router Guard');
 export const guardMiddleware = createMiddleware(function(injector: Injector) {
   return (route$: Observable<TraversalCandidate>) => route$
     .mergeMap<TraversalCandidate>(({ route, params, isTerminal }) => {
-      if( !!route.guards && Array.isArray(route.guards) && route.guards.length > 0 ) {
+      if ( !!route.guards && Array.isArray(route.guards) && route.guards.length > 0 ) {
         const guards: Guard[] = route.guards
           .map(provider => injector.resolveAndInstantiate(provider));
 
@@ -43,12 +43,12 @@ export const guardMiddleware = createMiddleware(function(injector: Injector) {
           .observeOn(asap)
           .every(value => !!value)
           .map(passed => {
-            if( passed ) {
+            if ( passed ) {
               return { route, params };
             }
 
             return { route: null, params, isTerminal };
-          })
+          });
       }
 
       return Observable.of({ route, params, isTerminal });
