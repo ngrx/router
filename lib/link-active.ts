@@ -1,4 +1,16 @@
-import {Directive, Input, Query, QueryList, Renderer, ElementRef, AfterViewInit, OnDestroy} from 'angular2/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  Input,
+  OnDestroy,
+  Query,
+  QueryList,
+  PLATFORM_DIRECTIVES,
+  provide,
+  Provider,
+  Renderer
+} from 'angular2/core';
 import { LinkTo } from './link-to';
 import { Location } from './location';
 
@@ -60,3 +72,10 @@ export interface ActiveOptions {
      }
    }
  }
+
+ export const LINK_ACTIVE_PROVIDERS = [
+   provide(PLATFORM_DIRECTIVES, {
+     multi: true,
+     useValue: [ LinkActive ]
+   })
+ ];
