@@ -5,6 +5,7 @@
 */
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/catch';
@@ -14,7 +15,7 @@ import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
 import { OpaqueToken, Provider, Inject, Injectable } from 'angular2/core';
 
-import { fromCallback, compose } from './util';
+import { Callback, compose } from './util';
 import { matchPattern } from './match-pattern';
 import { Route, IndexRoute, Routes, ROUTES } from './route';
 import { Middleware, provideMiddlewareForToken, identity } from './middleware';
@@ -120,7 +121,7 @@ export class RouteTraverser {
             params
           };
 
-          return getIndexRoute(route)
+          return this._loadIndexRoute(route)
             .map(indexRoute => {
               if ( !!indexRoute ) {
                 match.routes.push(indexRoute);
@@ -130,7 +131,7 @@ export class RouteTraverser {
             });
         }
 
-        return getChildRoutes(route)
+        return this._loadChildRoutes(route)
           .mergeMap<Match>(childRoutes => this._matchRoutes(
             childRoutes,
             pathname,
@@ -148,6 +149,35 @@ export class RouteTraverser {
             return null;
           });
       });
+  }
+
+  private _loadChildRoutes(route: Route): Observable<Routes> {
+    return this._loadResource(route.children, route.loadChildren, []);
+  }
+
+  private _loadIndexRoute(route: Route): Observable<Route> {
+    return this._loadResource(route.indexRoute, route.loadIndexRoute, null);
+  }
+
+  /**
+   * :-(
+   *
+   * We tried to use Observable.of and Observable.bindCallback, but zones...
+   */
+  private _loadResource<T>(sync: T, async: Callback<T>, defaultValue: any): Observable<T> {
+    let promise: Promise<T>;
+
+    if (!!sync) {
+      promise = Promise.resolve(sync);
+    }
+    else if (!!async) {
+      promise = new Promise<T>(resolve => async(resolve));
+    }
+    else {
+      promise = Promise.resolve(defaultValue);
+    }
+
+    return Observable.fromPromise(promise);
   }
 }
 
@@ -173,28 +203,4 @@ export function assignParams(paramNames: string[], paramValues: string[]) {
 
     return params;
   }, {});
-}
-
-function getChildRoutes(route: Route): Observable<Routes> {
-  if ( !!route.children ) {
-    return Observable.of(route.children);
-  }
-
-  else if ( !route.loadChildren ) {
-    return Observable.of([]);
-  }
-
-  return fromCallback<Routes>(route.loadChildren);
-}
-
-function getIndexRoute(route: Route): Observable<IndexRoute> {
-  if ( !!route.indexRoute ) {
-    return Observable.of(route.indexRoute);
-  }
-
-  else if ( !route.loadIndexRoute ) {
-    return Observable.of(null);
-  }
-
-  return fromCallback<IndexRoute>(route.loadIndexRoute);
 }
