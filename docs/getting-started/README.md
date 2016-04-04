@@ -1,7 +1,7 @@
 # @ngrx/router
 Angular 2 Reactive Routing.
 
-@ngrx/router exposes an API with multiple middleware entry points, easy to load, asynchronous route configuration, and powerful route resolution hooks. A fresh, Rx-based alternative for your [Angular 2](https://angular.io/) routing needs. 
+@ngrx/router exposes an API with multiple middleware entry points, easy to load, asynchronous route configuration, and powerful route resolution hooks. A fresh, Rx-based alternative for your [Angular 2](https://angular.io/) routing needs.
 
 
 ### Installation
@@ -17,7 +17,7 @@ npm install @ngrx/router --save
 
   ```ts
   import { Routes } from '@ngrx/router';
-  
+
   const routes: Routes = [
     {
       path: '/',
@@ -39,7 +39,7 @@ npm install @ngrx/router --save
 
   ```ts
   import { Component } from 'angular2/core';
-  
+
   @Component({
     selector: 'app',
     template: `
@@ -48,12 +48,12 @@ npm install @ngrx/router --save
         <a linkTo="/">Home</a>
         <a linkTo="/blog">Blog</a>
       </nav>
-  
+
       <route-view></route-view>
     `
   })
   class App { }
-  
+
   @Component({
     selector: 'home-page',
     template: `
@@ -61,7 +61,7 @@ npm install @ngrx/router --save
     `
   })
   class HomePage { }
-  
+
   @Component({
     selector: 'blog-page',
     template: `
@@ -69,12 +69,12 @@ npm install @ngrx/router --save
       <nav>
         <a *ngFor="var post of posts" [linkTo]="'/blog/' + post.id">{{ post.title }}</a>
       </nav>
-  
+
       <route-view></route-view>
     `
   })
   class BlogPage { }
-  
+
   @Component({
     selector: 'post-page',
     template: `
@@ -87,7 +87,7 @@ npm install @ngrx/router --save
 
   ```ts
   import { provideRouter } from '@ngrx/router';
-  
+
   bootstrap(App, [
     provideRouter(routes)
   ]);
@@ -98,6 +98,7 @@ That's it! You are ready to begin taking advantage of reactive routing!
 ### Documentation
 
 * [Route Configuration](route.md)
+* [Route Links](links.md)
 * [Index Routes](index-route.md)
 * [Redirects](redirect.md)
 * [Code Splitting](code-splitting.md)
