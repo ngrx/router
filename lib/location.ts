@@ -57,7 +57,7 @@ export interface LocationChange {
  * ```
  */
 @Injectable()
-export class Location extends ReplaySubject<LocationChange>{
+export class Location extends ReplaySubject<LocationChange> {
   private _baseHref: string;
 
   constructor(public platformStrategy: LocationStrategy) {
@@ -65,7 +65,7 @@ export class Location extends ReplaySubject<LocationChange>{
 
     platformStrategy.onPopState(event => this._update('pop'));
 
-    var browserBaseHref = this.platformStrategy.getBaseHref();
+    const browserBaseHref = this.platformStrategy.getBaseHref();
     this._baseHref = stripTrailingSlash(stripIndexHtml(browserBaseHref));
     this._update('push');
   }
@@ -162,7 +162,7 @@ function normalizeQuery(query: any) {
 }
 
 function normalizeQueryParams(params: string): string {
-  return (params.length > 0 && params.substring(0, 1) != '?') ? ('?' + params) : params;
+  return (params.length > 0 && params.substring(0, 1) !== '?') ? ('?' + params) : params;
 }
 
 export const LOCATION_PROVIDERS = [

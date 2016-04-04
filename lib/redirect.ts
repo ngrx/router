@@ -16,7 +16,7 @@ export const redirectMiddleware = createMiddleware(function(location: Location) 
     .filter(next => {
       const last = next.routes[next.routes.length - 1];
 
-      if( !!last.redirectTo ) {
+      if ( !!last.redirectTo ) {
         handleRedirect(location, last, next);
         return false;
       }
@@ -30,7 +30,7 @@ function handleRedirect(location: Location, route: Route, next: NextRoute) {
 
   let pathname;
 
-  if( route.redirectTo.charAt(0) === '/' ) {
+  if ( route.redirectTo.charAt(0) === '/' ) {
     pathname = formatPattern(route.redirectTo, params);
   }
   else {
@@ -46,13 +46,13 @@ function handleRedirect(location: Location, route: Route, next: NextRoute) {
 function getRoutePattern(routes: Routes, routeIndex: number) {
   let parentPattern = '';
 
-  for( let i = routeIndex; i >= 0; i-- ) {
+  for ( let i = routeIndex; i >= 0; i-- ) {
     const route = routes[i];
     const pattern = route.path || '';
 
     parentPattern = pattern.replace(/\/*$/, '/') + parentPattern;
 
-    if( pattern.indexOf('/') === 0 )
+    if ( pattern.indexOf('/') === 0 )
       break;
   }
 

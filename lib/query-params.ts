@@ -8,8 +8,8 @@ import { stringify as stringifyQueryParams } from 'query-string';
 import { Location} from './location';
 import { RouteSet } from './route-set';
 
-export class QueryParams extends ReplaySubject<{ [param: string]: any }>{
-  constructor(private _location: Location){
+export class QueryParams extends ReplaySubject<{ [param: string]: any }> {
+  constructor(private _location: Location) {
     super(1);
   }
 

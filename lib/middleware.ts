@@ -8,10 +8,10 @@ import { OpaqueToken, Provider, provide, Injector } from 'angular2/core';
 import { compose, createFactoryProvider } from './util';
 
 export interface Middleware {
-  (input$: Observable<any>): Observable<any>
+  (input$: Observable<any>): Observable<any>;
 }
 
-export const identity: Middleware = t => t
+export const identity: Middleware = t => t;
 
 export function createMiddleware(
   useFactory: (...deps: any[]) => Middleware, deps?: any[]
@@ -23,7 +23,7 @@ export function createMiddleware(
 }
 
 export function provideMiddlewareForToken(token) {
-  function isProvider(t: any): t is Provider{
+  function isProvider(t: any): t is Provider {
     return t instanceof Provider;
   }
 
@@ -31,9 +31,9 @@ export function provideMiddlewareForToken(token) {
     const provider = provide(token, {
       multi: true,
       deps: [ Injector ],
-      useFactory(injector: Injector){
+      useFactory(injector: Injector) {
         const middleware = _middleware.map(m => {
-          if(isProvider(m)){
+          if (isProvider(m)) {
             return injector.get(m.token);
           }
 
@@ -47,5 +47,5 @@ export function provideMiddlewareForToken(token) {
     const providers = _middleware.filter(isProvider) as Provider[];
 
     return [ ...providers, provider ];
-  }
+  };
 }

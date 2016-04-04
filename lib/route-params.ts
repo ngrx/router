@@ -11,8 +11,8 @@ import { provide, Provider } from 'angular2/core';
 
 import { RouteSet } from './route-set';
 
-export class RouteParams extends ReplaySubject<{ [param: string]: any }>{
-  constructor(){
+export class RouteParams extends ReplaySubject<{ [param: string]: any }> {
+  constructor() {
     super(1);
   }
 
