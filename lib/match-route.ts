@@ -4,12 +4,13 @@
 * to run route guards as part of the traversal process
 */
 import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/concat';
+import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/let';
-import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
 import { OpaqueToken, Provider, Inject, Injectable } from 'angular2/core';
 
@@ -45,18 +46,17 @@ export class RouteTraverser {
     @Inject(ROUTES) private _routes: Routes
   ) { }
 
-  find(pathname: string) {
-    return this._matchRoutes(this._routes, pathname);
-  }
-
   /**
-  * Asynchronously matches the given location to a set of routes and calls
-  * callback(error, state) when finished. The state object will have the
-  * following properties:
+  * Asynchronously matches the given location to a set of routes. The state
+  * object will have the following properties:
   *
   * - routes       An array of routes that matched, in hierarchical order
   * - params       An object of URL parameters
   */
+  find(pathname: string) {
+    return this._matchRoutes(this._routes, pathname);
+  }
+
   private _matchRoutes(
     routes: Routes,
     pathname: string,
@@ -64,35 +64,20 @@ export class RouteTraverser {
     paramNames = [],
     paramValues = []
   ): Observable<Match> {
-    const seekers = routes.map<Observable<Match>>(route => {
-      return this._matchRouteDeep(
+    return Observable.from(routes)
+      .concatMap(route => this._matchRouteDeep(
         route,
         pathname,
         remainingPathname,
         paramNames,
         paramValues
-      )
+      ))
       .catch(error => {
         console.error('Error During Traversal', error);
         return Observable.of(null);
-      });
-    });
-    /**
-     * A note about this code: it should use Observable.concat
-     * to merge the seekers into an in-order sequence. However,
-     * unubscribing from sequences that way seems to throw a ton
-     * of empty errors. Merging and sorting works correctly, but it
-     * is very aggressive and probably not as performant as concat
-     * would have been.
-     */
-    return Observable
-      .concat<Match>(...seekers)
-      .toArray()
-      .map(matches => {
-        const valid = matches.filter(match => !!match);
-
-        return valid[0];
-      });
+      })
+      .filter(match => !!match)
+      .take(1);
   }
 
   private _matchRouteDeep(
