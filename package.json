@@ -22,7 +22,7 @@
     "build:docs": "esdoc -c esdoc.json",
     "prepare": "npm-run-all prepare:*",
     "prepare:es6": "cp -R ./release/es6 ./release/npm",
-    "prepare:package": "cp ./{package.json,README.md,LICENSE} ./release/npm",
+    "prepare:package": "cp ./{package.json,README.md,LICENSE,.npmrc} ./release/npm",
     "test": "npm-run-all clean typings karma",
     "karma": "karma start --single-run",
     "karma:watch": "karma start",
