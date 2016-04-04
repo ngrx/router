@@ -64,7 +64,7 @@ export class ComponentRenderer {
     dcl: DynamicComponentLoader,
     providers: Provider[]
   ) {
-    return this.loadComponentForRoute(route)
+    return this._loadComponent(route)
       .map<RenderInstruction>(component => {
         return { component, injector, providers };
       })
@@ -85,14 +85,23 @@ export class ComponentRenderer {
     ));
   }
 
-  loadComponentForRoute(route: Route) {
+  /**
+   * :-(
+   *
+   * We tried to use Observable.of and Observable.bindCallback, but zones...
+   */
+  private _loadComponent(route: Route): Observable<Type> {
+    let promise: Promise<Type>;
+
     if ( !!route.component ) {
-      return Observable.of(route.component);
+      promise = Promise.resolve(route.component);
     }
 
     else if ( !!route.loadComponent ) {
-      return fromCallback(route.loadComponent);
+      promise = new Promise(resolve => route.loadComponent(resolve));
     }
+
+    return Observable.fromPromise(promise);
   }
 }
 
