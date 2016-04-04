@@ -84,7 +84,7 @@ describe('RouteTraverser', function() {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ RootRoute, UsersRoute, UsersIndexRoute ]);
 
-            done()
+            done();
           });
       });
     });
@@ -98,7 +98,7 @@ describe('RouteTraverser', function() {
             expect(match.routes).toEqual([ RootRoute, UsersRoute, UserRoute ]);
             expect(match.params).toEqual({ userID: '5' });
 
-            done()
+            done();
           });
       });
     });
@@ -112,7 +112,7 @@ describe('RouteTraverser', function() {
             expect(match.routes).toEqual([ RootRoute, UsersRoute, UserRoute, PostRoute ]);
             expect(match.params).toEqual({ userID: '5', postID: 'abc' });
 
-            done()
+            done();
           });
       });
     });
@@ -126,7 +126,7 @@ describe('RouteTraverser', function() {
             expect(match.routes).toEqual([ FilesRoute ]);
             expect(match.params).toEqual({ splat: [ 'a', 'b/c' ] });
 
-            done()
+            done();
           });
       });
     });
@@ -140,7 +140,7 @@ describe('RouteTraverser', function() {
             expect(match.routes).toEqual([ GreedyRoute ]);
             expect(match.params).toEqual({ splat: 'foo/bar' });
 
-            done()
+            done();
           });
       });
     });
@@ -153,7 +153,7 @@ describe('RouteTraverser', function() {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ AboutRoute ]);
 
-            done()
+            done();
           });
       });
     });
@@ -166,7 +166,7 @@ describe('RouteTraverser', function() {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ OptionalRoute ]);
 
-            done()
+            done();
           });
       });
 
@@ -177,7 +177,7 @@ describe('RouteTraverser', function() {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ OptionalRoute ]);
 
-            done()
+            done();
           });
       });
     });
@@ -190,7 +190,7 @@ describe('RouteTraverser', function() {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ OptionalRoute, OptionalRouteChild ]);
 
-            done()
+            done();
           });
       });
 
@@ -201,7 +201,7 @@ describe('RouteTraverser', function() {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ OptionalRoute, OptionalRouteChild ]);
 
-            done()
+            done();
           });
       });
     });
@@ -214,7 +214,7 @@ describe('RouteTraverser', function() {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ CatchAllRoute ]);
 
-            done()
+            done();
           });
       });
 
@@ -225,7 +225,7 @@ describe('RouteTraverser', function() {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ CatchAllRoute ]);
 
-            done()
+            done();
           });
       });
 
@@ -236,7 +236,7 @@ describe('RouteTraverser', function() {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ CatchAllRoute ]);
 
-            done()
+            done();
           });
       });
     });
@@ -264,7 +264,7 @@ describe('RouteTraverser', function() {
       routes.forEach(route => {
         const { children, indexRoute } = route;
 
-        if( children ) {
+        if ( children ) {
           delete route.children;
 
           route.loadChildren = function(done) {
@@ -274,7 +274,7 @@ describe('RouteTraverser', function() {
           makeAsyncRouteConfig(children);
         }
 
-        if( indexRoute ) {
+        if ( indexRoute ) {
           delete route.indexRoute;
 
           route.loadIndexRoute = function(done) {
