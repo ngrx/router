@@ -8,7 +8,7 @@ import {
   injectAsync,
   expect
 } from 'angular2/testing';
-import { Component, provide } from 'angular2/core';
+import { Component, provide, ViewChild } from 'angular2/core';
 import { LinkTo } from '../lib/link-to';
 import { LOCATION_PROVIDERS, Location } from '../lib/location';
 import { Observable } from 'rxjs/Observable';
@@ -20,7 +20,9 @@ import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
   template: '',
   directives: [LinkTo]
 })
-class TestComponent{}
+class TestComponent{
+  @ViewChild(LinkTo) link: LinkTo;
+}
 
 const compile = (tcb: TestComponentBuilder, template: string = '') => {
   return tcb
@@ -102,7 +104,9 @@ describe('Link To', () => {
 
           spyOn(location, 'go');
 
-          link.click();
+          let instance = fixture.componentInstance.link;
+          let event = { button: 1 };
+          instance.onClick(event);
 
           expect(location.go).not.toHaveBeenCalled();
         });
@@ -117,14 +121,28 @@ describe('Link To', () => {
           fixture.detectChanges();
           let compiled = fixture.debugElement.nativeElement;
           let link: Element = compiled.querySelector('a');
+          fixture.detectChanges();
+
+          let instance = fixture.componentInstance.link;
 
           spyOn(location, 'go');
 
-          let event = new MouseEvent('click', { metaKey: true });
+          let events = [
+            { which: 1, ctrlKey: true },
+            { which: 1, metaKey: true },
+            { which: 1, shiftKey: true },
+            { which: 2 },
+            { button: 2 },
+            { ctrlKey: true },
+            { metaKey: true },
+            { shiftKey: true }
+          ];
 
-          compiled.dispatchEvent(event, link);
+          events.forEach((event) => {
+            instance.onClick(event);
+          });
 
-          expect(location.go).not.toHaveBeenCalled();
+          expect(location.go.calls.count()).toEqual(0);
         });
     }));
   });
