@@ -121,6 +121,16 @@ export class Location extends ReplaySubject<LocationChange> {
   }
 
   /**
+   * Changes the browsers query parameters. Replaces teh top item on the platform's
+   * history stack
+   */
+   search(query: any = ''): void {
+     const [ pathname ] = this.path().split('?');
+
+     this.replaceState(pathname, query);
+   }
+
+  /**
    * Navigates forward in the platform's history.
    */
   forward(): void {
