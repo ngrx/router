@@ -1,22 +1,8 @@
 import { Injector, Provider, OpaqueToken } from 'angular2/core';
-import { Callback, fromCallback, createFactoryProvider, compose } from '../lib/util';
+import { createFactoryProvider, compose } from '../lib/util';
 
 
 describe('Router Utilities', function() {
-  describe('fromCallback Helper', function() {
-    it('should wrap a callback function in an observable', function(done) {
-      const callback: Callback<number> = function(done) {
-        done(123);
-      };
-
-      fromCallback(callback).subscribe(value => {
-        expect(value).toBe(123);
-
-        done();
-      });
-    });
-  });
-
   describe('createFactoryProvider Helper', function() {
     it('should create a factory function for anonymous providers', function() {
       const factory = createFactoryProvider('test');

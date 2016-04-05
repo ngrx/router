@@ -1,4 +1,6 @@
 import { Injector, provide } from 'angular2/core';
+
+import { RESOURCE_LOADER_PROVIDERS } from '../lib/resource-loader';
 import { Routes, Route, ROUTES } from '../lib/route';
 import { RouteTraverser, MATCH_ROUTE_PROVIDERS } from '../lib/match-route';
 
@@ -70,6 +72,7 @@ describe('RouteTraverser', function() {
   beforeEach(function() {
     const injector = Injector.resolveAndCreate([
       MATCH_ROUTE_PROVIDERS,
+      RESOURCE_LOADER_PROVIDERS,
       provide(ROUTES, { useValue: routes })
     ]);
     traverser = injector.get(RouteTraverser);
@@ -267,9 +270,7 @@ describe('RouteTraverser', function() {
         if ( children ) {
           delete route.children;
 
-          route.loadChildren = function(done) {
-            setTimeout(() => done(children));
-          };
+          route.loadChildren = () => Promise.resolve(children);
 
           makeAsyncRouteConfig(children);
         }
@@ -277,9 +278,7 @@ describe('RouteTraverser', function() {
         if ( indexRoute ) {
           delete route.indexRoute;
 
-          route.loadIndexRoute = function(done) {
-            setTimeout(() => done(indexRoute));
-          };
+          route.loadIndexRoute = () => Promise.resolve(indexRoute);
         }
       });
     }

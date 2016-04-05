@@ -2,6 +2,8 @@ import 'rxjs/add/operator/toPromise';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { Injector, provide, DynamicComponentLoader, ElementRef } from 'angular2/core';
+
+import { RESOURCE_LOADER_PROVIDERS } from '../lib/resource-loader';
 import { Location } from '../lib/location';
 import {
   ComponentRenderer,
@@ -35,7 +37,8 @@ describe('Component Renderer', function() {
         ComponentRenderer,
         provide(PRE_RENDER_MIDDLEWARE, { useValue: [] }),
         provide(POST_RENDER_MIDDLEWARE, { useValue: [] }),
-        provide(DynamicComponentLoader, {useClass: MockDCL})
+        provide(DynamicComponentLoader, {useClass: MockDCL}),
+        RESOURCE_LOADER_PROVIDERS
       ]);
 
       renderer = injector.get(ComponentRenderer);
@@ -54,10 +57,9 @@ describe('Component Renderer', function() {
 
     it('should render a loaded component', (done) => {
       route = {
-        loadComponent(cb) {
-          cb(TestComponent);
-        }
+        loadComponent: () => Promise.resolve(TestComponent)
       };
+
       let render = renderer.render(route, injector, <ElementRef>elementRef, loader, providers);
 
       render.subscribe(() => {
@@ -95,7 +97,8 @@ describe('Component Renderer', function() {
         ComponentRenderer,
         usePreRenderMiddleware(renderMiddleware),
         provide(POST_RENDER_MIDDLEWARE, {useValue: []}),
-        provide(DynamicComponentLoader, {useClass: MockDCL})
+        provide(DynamicComponentLoader, {useClass: MockDCL}),
+        RESOURCE_LOADER_PROVIDERS
       ]);
 
       renderer = injector.get(ComponentRenderer);
@@ -152,7 +155,8 @@ describe('Component Renderer', function() {
         ComponentRenderer,
         usePostRenderMiddleware(renderMiddleware),
         provide(PRE_RENDER_MIDDLEWARE, {useValue: []}),
-        provide(DynamicComponentLoader, {useClass: MockDCL})
+        provide(DynamicComponentLoader, {useClass: MockDCL}),
+        RESOURCE_LOADER_PROVIDERS
       ]);
 
       renderer = injector.get(ComponentRenderer);

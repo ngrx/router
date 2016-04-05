@@ -1,4 +1,3 @@
-import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/map';
@@ -17,7 +16,8 @@ import {
 } from 'angular2/core';
 import { Observable } from 'rxjs/Observable';
 
-import { fromCallback, compose } from './util';
+import { Async, ResourceLoader } from './resource-loader';
+import { compose } from './util';
 import { Route } from './route';
 import { Middleware, identity, provideMiddlewareForToken } from './middleware';
 
@@ -53,6 +53,7 @@ export interface ResolvedInstruction {
 @Injectable()
 export class ComponentRenderer {
   constructor(
+    private _loader: ResourceLoader,
     @Inject(PRE_RENDER_MIDDLEWARE) private _preMiddleware: Middleware[],
     @Inject(POST_RENDER_MIDDLEWARE) private _postMiddleware: Middleware[]
   ) { }
@@ -64,7 +65,8 @@ export class ComponentRenderer {
     dcl: DynamicComponentLoader,
     providers: Provider[]
   ) {
-    return this._loadComponent(route)
+    return Observable.of(route)
+      .mergeMap(route => this._loadComponent(route))
       .map<RenderInstruction>(component => {
         return { component, injector, providers };
       })
@@ -80,28 +82,11 @@ export class ComponentRenderer {
   }
 
   renderComponent({ component, providers, ref, dcl }: ResolvedInstruction) {
-    return Observable.fromPromise(dcl.loadNextToLocation(
-      component, ref, providers
-    ));
+    return dcl.loadNextToLocation(component, ref, providers);
   }
 
-  /**
-   * :-(
-   *
-   * We tried to use Observable.of and Observable.bindCallback, but zones...
-   */
-  private _loadComponent(route: Route): Observable<Type> {
-    let promise: Promise<Type>;
-
-    if ( !!route.component ) {
-      promise = Promise.resolve(route.component);
-    }
-
-    else if ( !!route.loadComponent ) {
-      promise = new Promise(resolve => route.loadComponent(resolve));
-    }
-
-    return Observable.fromPromise(promise);
+  private _loadComponent(route: Route): Promise<Type> {
+    return this._loader.load(route.component, route.loadComponent);
   }
 }
 

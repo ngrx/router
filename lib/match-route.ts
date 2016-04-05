@@ -5,7 +5,6 @@
 */
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/catch';
@@ -15,7 +14,8 @@ import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
 import { OpaqueToken, Provider, Inject, Injectable } from 'angular2/core';
 
-import { Callback, compose } from './util';
+import { ResourceLoader, Async } from './resource-loader';
+import { compose } from './util';
 import { matchPattern } from './match-pattern';
 import { Route, IndexRoute, Routes, ROUTES } from './route';
 import { Middleware, provideMiddlewareForToken, identity } from './middleware';
@@ -43,6 +43,7 @@ export interface TraversalCandidate {
 @Injectable()
 export class RouteTraverser {
   constructor(
+    private _loader: ResourceLoader,
     @Inject(TRAVERSAL_MIDDLEWARE) private _middleware: Middleware[],
     @Inject(ROUTES) private _routes: Routes
   ) { }
@@ -121,7 +122,8 @@ export class RouteTraverser {
             params
           };
 
-          return this._loadIndexRoute(route)
+          return Observable.of(route)
+            .mergeMap(route => this._loadIndexRoute(route))
             .map(indexRoute => {
               if ( !!indexRoute ) {
                 match.routes.push(indexRoute);
@@ -131,7 +133,8 @@ export class RouteTraverser {
             });
         }
 
-        return this._loadChildRoutes(route)
+        return Observable.of(route)
+          .mergeMap(route => this._loadChildRoutes(route))
           .mergeMap<Match>(childRoutes => this._matchRoutes(
             childRoutes,
             pathname,
@@ -151,33 +154,12 @@ export class RouteTraverser {
       });
   }
 
-  private _loadChildRoutes(route: Route): Observable<Routes> {
-    return this._loadResource(route.children, route.loadChildren, []);
+  private _loadChildRoutes(route: Route): Promise<Routes> {
+    return this._loader.load(route.children, route.loadChildren, []);
   }
 
-  private _loadIndexRoute(route: Route): Observable<Route> {
-    return this._loadResource(route.indexRoute, route.loadIndexRoute, null);
-  }
-
-  /**
-   * :-(
-   *
-   * We tried to use Observable.of and Observable.bindCallback, but zones...
-   */
-  private _loadResource<T>(sync: T, async: Callback<T>, defaultValue: any): Observable<T> {
-    let promise: Promise<T>;
-
-    if (!!sync) {
-      promise = Promise.resolve(sync);
-    }
-    else if (!!async) {
-      promise = new Promise<T>(resolve => async(resolve));
-    }
-    else {
-      promise = Promise.resolve(defaultValue);
-    }
-
-    return Observable.fromPromise(promise);
+  private _loadIndexRoute(route: Route): Promise<Route> {
+    return this._loader.load(route.indexRoute, route.loadIndexRoute, null);
   }
 }
 
