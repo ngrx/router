@@ -39,14 +39,10 @@ const routes: Routes = [
   {
     path: '/account',
     guards: [ authGuard ],
-    loadComponent(done) {
-      System.load('/pages/account')
-        .then(module => done(module.AccountPage));
-    },
-    loadChildren(done) {
-      System.load('/routes/account')
-        .then(module => done(module.accountRoutes));
-    }
+    loadComponent: () => System.import('/pages/account', __moduleName)
+      .then(module => module.AccountPage),
+    loadChildren: () => System.import('/routes/account', __moduleName))
+      .then(module => module.accountRoutes),
   }
 ]
 ```

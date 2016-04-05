@@ -4,13 +4,13 @@
 import { Observable } from 'rxjs/Observable';
 import { Provider, Type, OpaqueToken } from 'angular2/core';
 
-import { Callback } from './util';
+import { Async } from './resource-loader';
 
 export type Routes = Array<Route>;
 
 export interface IndexRoute {
   component?: Type;
-  loadComponent?: Callback<Type>;
+  loadComponent?: Async<Type>;
   redirectTo?: string;
 }
 
@@ -18,9 +18,9 @@ export interface Route extends IndexRoute {
   path?: string;
   guards?: Provider[];
   indexRoute?: IndexRoute;
-  loadIndexRoute?: Callback<IndexRoute>;
+  loadIndexRoute?: Async<IndexRoute>;
   children?: Routes;
-  loadChildren?: Callback<Routes>;
+  loadChildren?: Async<Routes>;
 }
 
 export const ROUTES = new OpaqueToken('@ngrx/router Init Routes');
