@@ -5,6 +5,8 @@ import typescript from 'typescript';
 import sourcemaps from 'gulp-sourcemaps';
 import babel from 'gulp-babel';
 import del from 'del';
+import changelog from 'conventional-changelog';
+import fs from 'fs';
 
 const tsProject = ts.createProject('tsconfig.json', { typescript });
 
@@ -37,12 +39,21 @@ gulp.task('babel', ['ts'], function(){
     .pipe(gulp.dest('./release/cjs'));
 });
 
+gulp.task('changelog', function () {
+	return changelog({
+		preset: 'angular',
+		releaseCount: 0
+	})
+	.pipe(fs.createWriteStream('CHANGELOG.md'));
+});
+
 gulp.task('build', ['babel'], function(){
   return gulp.src([
       './release/cjs/**/*.js',
       './release/definitions/**/*.d.ts',
       './package.json',
-      './LICENSE'
+      './LICENSE',
+      './CHANGELOG.md'
     ])
     .pipe(gulp.dest('./release/npm'));
 });

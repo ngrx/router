@@ -8,7 +8,8 @@
     "installtypings": "typings install",
     "prebuild": "npm run installtypings && npm run lint",
     "build": "gulp build",
-    "test": "karma start"
+    "test": "karma start",
+    "changelog": "gulp changelog"
   },
   "authors": [
     "Mike Ryan",
@@ -24,6 +25,7 @@
     "babel": "^6.3.26",
     "babel-core": "^6.4.5",
     "babel-preset-es2015": "^6.3.13",
+    "conventional-changelog": "^1.1.0",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
