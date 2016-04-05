@@ -11,24 +11,24 @@ import { Routes } from 'ngrx/router';
 export const routes: Routes = [
   {
     path: '/',
-    loadComponent(done) {
+    loadComponent: () => new Promise(resolve => {
       require.ensure([], require => {
-        done(require('./pages/home').HomePage);
+        resolve(require('./pages/home').HomePage);
       })
-    }
+    })
   },
   {
     path: '/blog',
-    loadComponent(done) {
+    loadComponent: () => new Promise(resolve => {
       require.ensure([], require => {
-        done(require('./pages/blog').BlogPage);
+        resolve(require('./pages/blog').BlogPage);
       })
-    },
-    loadChildren(done) {
+    }),
+    loadChildren: () => new Promise(resolve => {
       require.ensure([], require => {
-        done(require('./blog-routes').blogRoutes);
+        resolve(require('./blog-routes').blogRoutes);
       })
-    }
+    })
   }
 ]
 ```
@@ -40,11 +40,11 @@ import { Routes } from 'ngrx/router';
 export const blogRoutes: Routes = [
   {
     path: ':id',
-    loadComponent(done) {
+    loadComponent: () => new Promise(resolve => {
       require.ensure([], require => {
-        done(require('./pages/post').PostPage);
+        resolve(require('./pages/post').PostPage);
       });
-    }
+    })
   }
 ]
 ```
