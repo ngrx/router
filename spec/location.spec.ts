@@ -22,7 +22,7 @@ import {MockLocationStrategy} from 'angular2/src/mock/mock_location_strategy';
 
 describe('Location', () => {
 
-  var locationStrategy, location;
+  let locationStrategy, location;
 
   function makeLocation(baseHref: string = '/my/app', provider: any = CONST_EXPR([])): Location {
     locationStrategy = new MockLocationStrategy();
@@ -58,8 +58,8 @@ describe('Location', () => {
    });
 
   it('should revert to the previous path when a back() operation is executed', () => {
-    var locationStrategy = new MockLocationStrategy();
-    var location = new Location(locationStrategy);
+    let locationStrategy = new MockLocationStrategy();
+    let location = new Location(locationStrategy);
 
     function assertUrl(path) { expect(location.path()).toEqual(path); }
 
@@ -80,11 +80,40 @@ describe('Location', () => {
   });
 
   it('should incorporate the provided query values into the location change', () => {
-    var locationStrategy = new MockLocationStrategy();
-    var location = new Location(locationStrategy);
+    let locationStrategy = new MockLocationStrategy();
+    let location = new Location(locationStrategy);
 
-    location.go('/home', "key=value");
-    expect(location.path()).toEqual("/home?key=value");
+    location.go('/home', 'key=value');
+    expect(location.path()).toEqual('/home?key=value');
+
+    location.go('/home', { foo: 'bar' });
+    expect(location.path()).toEqual('/home?foo=bar');
+  });
+
+  it('should allow you to replace query params', () => {
+    let locationStrategy = new MockLocationStrategy();
+    let location = new Location(locationStrategy);
+
+    location.go('/home');
+    location.search('key=value');
+    expect(location.path()).toEqual('/home?key=value');
+
+    location.search({ foo: 'bar' });
+    expect(location.path()).toEqual('/home?foo=bar');
+  });
+
+  it('should replace the state when using search to update query params', () => {
+    let locationStrategy = new MockLocationStrategy();
+    let location = new Location(locationStrategy);
+
+    location.go('/home');
+
+    spyOn(location, 'replaceState');
+    spyOn(location, 'go');
+
+    location.search('key=value');
+    expect(location.go).not.toHaveBeenCalled();
+    expect(location.replaceState).toHaveBeenCalledWith('/home', 'key=value');
   });
 
   it('should update subject on location update', (done) => {
