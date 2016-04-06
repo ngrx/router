@@ -13,21 +13,23 @@ import { COMPONENT_RENDERER_PROVIDERS } from './component-renderer';
 import { LINK_TO_PROVIDERS } from './link-to';
 import { LINK_ACTIVE_PROVIDERS } from './link-active';
 import { PARAMS_PROVIDERS } from './params';
+import { RESOURCE_LOADER_PROVIDERS } from './resource-loader';
 
 export function provideRouter(routes: Routes) {
   return [
     provide(LocationStrategy, { useClass: PathLocationStrategy }),
     provide(ROUTES, { useValue: routes }),
-    LOCATION_PROVIDERS,
-    ROUTE_SET_PROVIDERS,
-    ROUTE_VIEW_PROVIDERS,
-    REDIRECT_PROVIDERS,
-    GUARD_PROVIDERS,
-    MATCH_ROUTE_PROVIDERS,
     COMPONENT_RENDERER_PROVIDERS,
-    LINK_TO_PROVIDERS,
+    GUARD_PROVIDERS,
     LINK_ACTIVE_PROVIDERS,
-    PARAMS_PROVIDERS
+    LINK_TO_PROVIDERS,
+    LOCATION_PROVIDERS,
+    MATCH_ROUTE_PROVIDERS,
+    PARAMS_PROVIDERS,
+    REDIRECT_PROVIDERS,
+    RESOURCE_LOADER_PROVIDERS,
+    ROUTE_SET_PROVIDERS,
+    ROUTE_VIEW_PROVIDERS
   ];
 }
 
