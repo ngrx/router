@@ -1,6 +1,10 @@
-<a name="0.1.0"></a>
-# [0.1.0](https://github.com/ngrx/router/compare/v0.0.7...v0.1.0) (2016-04-06)
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/ngrx/router/compare/v0.0.7...v0.1.1) (2016-04-06)
 
+
+### Bug Fixes
+
+* **Providers:** Include ResourceLoader providers ([a12fa6b](https://github.com/ngrx/router/commit/a12fa6b))
 
 ### Features
 
