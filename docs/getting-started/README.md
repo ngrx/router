@@ -102,5 +102,5 @@ That's it! You are ready to begin taking advantage of reactive routing!
 * [Index Routes](index-route.md)
 * [Redirects](redirect.md)
 * [Code Splitting](code-splitting.md)
-* [Route Parameters](route-params.md)
+* [Route and Query Parameters](params.md)
 * [Guarding Routes](guards.md)

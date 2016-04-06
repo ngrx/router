@@ -1,8 +1,9 @@
-# Route Params
-The Router exposes route parameters using an observable service. With it you can subscribe to route parameter changes or use the `select` method to listen to a particular parameter:
+# Route and Query Params
+The Router exposes route and query parameters using observable services.
 
+Using `RouteParams`:
 ```ts
-import { RouteParams } from '@ngrx/router';
+import { QueryParams } from '@ngrx/router';
 
 @Component({
   selector: 'post-page',
@@ -13,15 +14,34 @@ import { RouteParams } from '@ngrx/router';
 export class PostPage {
   id$: Observable<string>;
 
-  constructor(params$: RouteParams) {
-    this.id$ = params$.select('id');
+  constructor(routeParams$: RouteParams) {
+    this.id$ = routeParams$.pluck('id');
   }
 }
 ```
 
-Because parameters are exposed as an observable, the router __does not re-render components when parameters change__. There is also no synchronous way to get the current route parameters. This is a big difference between the ngrx/router and other routers.
+Using `QueryParams`:
+```
+import { QueryParams } from '@ngrx/router';
 
-###Usage
+@Component({
+  selector: 'search-posts-page',
+  template: `
+    Current search: {{ search$ | async }}
+  `
+})
+export class SearchPostsPage {
+  search$: Observable<string>;
+
+  constructor(queryParams$: QueryParams) {
+    this.search$ = queryParams$.pluck('search');
+  }
+}
+```
+
+Because parameters are exposed as an observable, the router __does not re-render components when parameters change__. There is also no synchronous way to get the current route or query parameters. This is a big difference between ngrx/router and other routers.
+
+### Usage
 To demonstrate how to work around this, lets take the above `PostPage` component and rewrite it to fetch the post from the server. If the post doesn't exist, we should redirect the user to the 404 page:
 
 ```ts
@@ -42,7 +62,9 @@ export class PostPage {
 
   constructor(params$: RouteParams, http: Http) {
     // Listen for the ID to change
-    this.post$ = params$.select('id')
+    this.post$ = params$.pluck('id')
+      // only update if `id` changes
+      .distinctUntilChanged()
       // Request the post from the server when the ID updates
       .mergeMap(id => {
         // Mark that we are loading a new post:
