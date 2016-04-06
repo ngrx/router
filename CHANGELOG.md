@@ -1,3 +1,106 @@
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/ngrx/router/compare/v0.0.7...v0.1.0) (2016-04-06)
+
+
+### Features
+
+* **AsyncConfig:** Refactor route config to use promises instead of callbacks ([f057d55](https://github.com/ngrx/router/commit/f057d55))
+* **Params:** Simplify params services by removing select method ([af160d7](https://github.com/ngrx/router/commit/af160d7))
+
+
+### BREAKING CHANGES
+
+* AsyncConfig: Before loadComponent, loadChildren, and loadIndexRoute used a callback to handle async loading
+
+  of code. These must be replaced with promise-returning functions.
+
+
+
+  Before:
+
+
+
+  ```ts
+
+  {
+
+    loadIndex(done) {
+
+      System.import('./my-index-route', __moduleName)
+
+        .then(module => done(module.indexRoute));
+
+    },
+
+    loadComponent(done) {
+
+      System.import('./my-component', __moduleName)
+
+        .then(module => done(module.MyComponent));
+
+    },
+
+    loadChildren(done) {
+
+      System.import('./child-routes', __moduleName)
+
+        .then(module => done(module.routes));
+
+    }
+
+  }
+
+  ```
+
+
+
+  After:
+
+
+
+  ```
+
+  {
+
+    loadIndex: () => System.import('./my-index-route', __moduleName)
+
+      .then(module => module.indexRoute),
+
+
+
+    loadComponent: () => System.import('./my-component', __moduleName)
+
+      .then(module => module.MyComponent),
+
+
+
+    loadChildren: () => System.import('./child-routes', __moduleName)
+
+      .then(module => module.routes)
+
+  }
+
+  ```
+* Params: select method removed from QueryParams and RouteParams. Use pluck instead:
+
+  BEFORE:
+
+  ```ts
+
+  routeParams.select('id').subscribe(id => {});
+
+  ```
+
+  AFTER:
+
+  ```ts
+
+  routeParams.pluck('id').subscribe(id => {});
+
+  ```
+
+
+
 <a name="0.0.7"></a>
 ## [0.0.7](https://github.com/ngrx/router/compare/v0.0.6...v0.0.7) (2016-04-04)
 
@@ -98,6 +201,3 @@
 * **RouteView:** Added unit tests for route view ([09700ee](https://github.com/ngrx/router/commit/09700ee))
 * **test:** Added initial setup for testing ([aba3689](https://github.com/ngrx/router/commit/aba3689)), closes [#2](https://github.com/ngrx/router/issues/2)
 * **Util:** Added unit tests for utilities ([58b627c](https://github.com/ngrx/router/commit/58b627c))
-
-
-
