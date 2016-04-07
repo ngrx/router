@@ -20,10 +20,11 @@ import {
   Provider,
   PLATFORM_DIRECTIVES,
   ElementRef,
-  DynamicComponentLoader
+  DynamicComponentLoader,
+  Attribute
 } from 'angular2/core';
 
-import { Route } from './route';
+import { Route, getNamedComponents } from './route';
 import { RouteSet, NextRoute } from './route-set';
 import { ComponentRenderer } from './component-renderer';
 
@@ -47,6 +48,7 @@ export class RouteView implements OnDestroy, OnInit {
   });
 
   constructor(
+    @Attribute('name') private _name: string,
     protected _routeSet$: RouteSet,
     protected _injector: Injector,
     protected _renderer: ComponentRenderer,
@@ -56,12 +58,20 @@ export class RouteView implements OnDestroy, OnInit {
 
   ngOnInit() {
     this._sub = this._routeSet$
-      .map(set => set.routes[0])
-      .distinctUntilChanged()
+      .map(set => {
+        const route = set.routes[0];
+        const components = getNamedComponents(route, this._name);
+
+        return { route, components };
+      })
+      .distinctUntilChanged((prev, next) => {
+        return prev.components.component === next.components.component
+            && prev.components.loadComponent === next.components.loadComponent;
+      })
       .do(ins => this._cleanPreviousRef())
-      .filter(route => !!route && ( !!route.component || !!route.loadComponent ))
-      .switchMap(route => this._renderer.render(
-        route, this._injector, this._ref, this._dcl, [ this._routeSetProvider ]
+      .filter(({ components }) => !!components.component || !!components.loadComponent)
+      .switchMap(({ route, components }) => this._renderer.render(
+        route, components, this._injector, this._ref, this._dcl, [ this._routeSetProvider ]
       ))
       .subscribe((ref: ComponentRef) => this._prev = ref);
   }

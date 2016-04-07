@@ -88,3 +88,36 @@ bootstrap(App, [
   provideRouter(routes)
 ]);
 ```
+
+## Named Components
+For composing more complex views, the `<route-view>` component can be instructed to use named components. In our route config, instead of supplying `component` we can supply `components`:
+
+```ts
+const routes: Routes = [
+  {
+    path: '/blog',
+    components: {
+      main: Blog,
+      sideMenu: RecentPosts
+    }
+  }
+]
+```
+
+Then in our `App` template we give each `<route-view />` a name:
+
+```ts
+@Component({
+  selector: 'app',
+  template: `
+    <section>
+      <route-view name="main"></route-view>
+    </section>
+
+    <aside>
+      <route-view name="sideMenu"></route-view>
+    </aside>
+  `
+})
+export class App { }
+```

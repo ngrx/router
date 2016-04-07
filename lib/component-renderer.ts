@@ -18,7 +18,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Async, ResourceLoader } from './resource-loader';
 import { compose } from './util';
-import { Route } from './route';
+import { Route, SimpleRoute } from './route';
 import { Middleware, identity, provideMiddlewareForToken } from './middleware';
 
 export const PRE_RENDER_MIDDLEWARE = new OpaqueToken(
@@ -60,13 +60,14 @@ export class ComponentRenderer {
 
   render(
     route: Route,
+    components: SimpleRoute,
     injector: Injector,
     ref: ElementRef,
     dcl: DynamicComponentLoader,
     providers: Provider[]
   ) {
     return Observable.of(route)
-      .mergeMap(route => this._loadComponent(route))
+      .mergeMap(route => this._loadComponent(components))
       .map<RenderInstruction>(component => {
         return { component, injector, providers };
       })
@@ -85,7 +86,7 @@ export class ComponentRenderer {
     return dcl.loadNextToLocation(component, ref, providers);
   }
 
-  private _loadComponent(route: Route): Promise<Type> {
+  private _loadComponent(route: SimpleRoute): Promise<Type> {
     return this._loader.load(route.component, route.loadComponent);
   }
 }

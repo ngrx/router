@@ -12,22 +12,24 @@ import {
   usePreRenderMiddleware,
   usePostRenderMiddleware
 } from '../lib/component-renderer';
-import { Route } from '../lib/route';
+import { Route, SimpleRoute } from '../lib/route';
 import { createMiddleware } from '../lib/middleware';
 
 class MockDCL {
-  loadNextToLocation: Function = jasmine.createSpy('loadNextToLocation').and.returnValue(Observable.of(true).toPromise())
+  loadNextToLocation: Function = jasmine.createSpy('loadNextToLocation').and
+    .returnValue(Observable.of(true).toPromise());
 }
 
-class TestComponent{}
+class TestComponent {}
 
 describe('Component Renderer', function() {
   let route: Route,
+      components: SimpleRoute,
       renderer: ComponentRenderer,
       injector: Injector,
       loader: any;
 
-  describe('Rendering', () => {
+  describe('when rendering', () => {
     let route;
     let elementRef = {};
     let providers = [];
@@ -46,21 +48,24 @@ describe('Component Renderer', function() {
     });
 
     it('should render a component', (done) => {
-      route = { component: TestComponent };
-      let render = renderer.render(route, injector, <ElementRef>elementRef, loader, providers);
+      route = {};
+      components = { component: TestComponent };
+
+      let render = renderer.render(route, components, injector, <ElementRef>elementRef, loader, providers);
 
       render.subscribe(() => {
-        expect(loader.loadNextToLocation).toHaveBeenCalledWith(route.component, elementRef, providers);
+        expect(loader.loadNextToLocation).toHaveBeenCalledWith(TestComponent, elementRef, providers);
         done();
       });
     });
 
     it('should render a loaded component', (done) => {
-      route = {
+      route = { };
+      components = {
         loadComponent: () => Promise.resolve(TestComponent)
       };
 
-      let render = renderer.render(route, injector, <ElementRef>elementRef, loader, providers);
+      let render = renderer.render(route, components, injector, <ElementRef>elementRef, loader, providers);
 
       render.subscribe(() => {
         expect(loader.loadNextToLocation).toHaveBeenCalledWith(TestComponent, elementRef, providers);
@@ -106,7 +111,7 @@ describe('Component Renderer', function() {
     });
 
     beforeEach(() => {
-      render = renderer.render(route, injector, <ElementRef>elementRef, loader, providers);
+      render = renderer.render(route, route, injector, <ElementRef>elementRef, loader, providers);
     });
 
     it('should execute before rendering', (done) => {
@@ -164,7 +169,7 @@ describe('Component Renderer', function() {
     });
 
     beforeEach(() => {
-      render = renderer.render(route, injector, <ElementRef>elementRef, loader, providers);
+      render = renderer.render(route, route, injector, <ElementRef>elementRef, loader, providers);
     });
 
     it('should execute after rendering', (done) => {

@@ -30,7 +30,7 @@ export const routes: Routes = [
       })
     })
   }
-]
+];
 ```
 
 In `blog-routes.ts`:
@@ -46,7 +46,24 @@ export const blogRoutes: Routes = [
       });
     })
   }
-]
+];
 ```
 
 Now our router will load route configuration and components as needed. This can have a dramatic impact on the amount of code your users will need to download up front in order to run your application.
+
+## Named Routes
+Just like you can use `components` instead of `component` to specify a map of named components, you can do the same with `loadComponents`:
+
+```ts
+export const routes: Routes = [
+  {
+    path: '/blog',
+    loadComponents: {
+      main: () => System.import('/app/blog.ts')
+        .then(module => module.BlogPage),
+      sideMenu: () => System.import('/app/recent-posts.ts')
+        .then(module => module.RecentPosts)
+    }
+  }
+];
+```
