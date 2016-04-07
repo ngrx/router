@@ -16,12 +16,14 @@ import { Observable } from 'rxjs/Observable';
 import { RouteSet, NextRoute } from '../lib/route-set';
 import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
 
-class TestRoute{}
+class TestRoute {}
 
-class TestRoute2{}
+class TestRoute2 {}
 
-class MockRenderer{
-  render: Function = jasmine.createSpy('_render').and.returnValue(Observable.of(jasmine.createSpyObj('ComponentRef', ['dispose'])));
+class MockRenderer {
+  render: Function = jasmine.createSpy('_render').and.returnValue(
+    Observable.of(jasmine.createSpyObj('ComponentRef', ['dispose']))
+  );
 }
 
 class MockRouteSet extends BehaviorSubject<NextRoute> {}
@@ -31,7 +33,7 @@ const compile = (tcb: TestComponentBuilder) => {
     .overrideProviders(RouteView, [
       provide(ComponentRenderer, {useClass: MockRenderer})
     ])
-    .createAsync(RouteView)
+    .createAsync(RouteView);
 };
 
 describe('Route View', () => {
@@ -89,10 +91,31 @@ describe('Route View', () => {
       });
   }));
 
+  it('should render with a named component', injectAsync([TestComponentBuilder, RouteSet], (tcb, rs) => {
+    rs.next({
+      url: '/url',
+      routes: [{
+        components: {
+          main: TestRoute
+        }
+      }],
+      params: {}
+    });
+
+    return compile(tcb)
+      .then((fixture) => {
+        let instance = fixture.componentInstance;
+        instance._name = 'main';
+        instance.ngOnInit();
+
+        expect(instance._renderer.render).toHaveBeenCalled();
+      });
+  }));
+
   it('should render with a component loader', injectAsync([TestComponentBuilder, RouteSet], (tcb, rs) => {
     rs.next({
       routes: [{
-        loadComponent: () => TestRoute
+        loadComponent: () => Promise.resolve(TestRoute)
       }]
     });
 
@@ -147,7 +170,87 @@ describe('Route View', () => {
           }]
         });
 
-        expect(instance._prev.dispose.calls.count()).toEqual(1);
+
+        expect(instance._prev.dispose).not.toHaveBeenCalled();
+      });
+  }));
+
+  it('should not dispose if the component doesn\'t change when the route set changes with named routes', injectAsync([TestComponentBuilder, RouteSet], (tcb, rs) => {
+    rs.next({
+      routes: [{
+        components: {
+          test: TestRoute
+        }
+      }]
+    });
+
+    return compile(tcb)
+      .then((fixture) => {
+        let instance = fixture.componentInstance;
+        instance._name = 'test';
+        instance.ngOnInit();
+
+        rs.next({
+          routes: [{
+            components: {
+              test: TestRoute
+            }
+          }]
+        });
+
+
+        expect(instance._prev.dispose).not.toHaveBeenCalled();
+      });
+  }));
+
+  it('should dispose if the component does change when the route set changes', injectAsync([TestComponentBuilder, RouteSet], (tcb, rs) => {
+    rs.next({
+      routes: [{
+        component: TestRoute
+      }]
+    });
+
+    return compile(tcb)
+      .then((fixture) => {
+        let instance = fixture.componentInstance;
+        instance.ngOnInit();
+
+        rs.next({
+          routes: [{
+            component: TestRoute2
+          }]
+        });
+
+
+        expect(instance._prev.dispose).toHaveBeenCalledTimes(1);
+      });
+  }));
+
+  it('should dispose if the component does change when the route set changes with named routes', injectAsync([TestComponentBuilder, RouteSet], (tcb, rs) => {
+    rs.next({
+      routes: [{
+        components: {
+          main: TestRoute
+        }
+      }]
+    });
+
+    return compile(tcb)
+      .then((fixture) => {
+        let instance = fixture.componentInstance;
+        instance._name = 'main';
+        instance.ngOnInit();
+
+        rs.next({
+          routes: [{
+            components: {
+              main: TestRoute2
+            }
+          }]
+        });
+
+
+        expect(instance._prev.dispose).toHaveBeenCalledTimes(1);
       });
   }));
 
