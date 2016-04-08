@@ -10,7 +10,7 @@
     "build": "gulp build",
     "pretest": "npm run install:typings",
     "test": "npm run lint && karma start --single-run",
-    "test:watch" : "karma start",
+    "test:watch": "karma start",
     "changelog": "gulp changelog"
   },
   "authors": [
@@ -33,10 +33,13 @@
     "gulp-babel": "^6.1.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-typescript": "^2.12.1",
+    "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
+    "karma-coverage": "^0.5.5",
     "karma-jasmine": "^0.3.8",
+    "karma-mocha-reporter": "^2.0.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-typescript-preprocessor": "0.0.21",
     "karma-webpack": "^1.7.0",

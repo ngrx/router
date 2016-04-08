@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function(karma) {
   'use strict';
 
@@ -7,19 +9,25 @@ module.exports = function(karma) {
     frameworks: ['jasmine'],
 
     files: [
-      {pattern: 'node_modules/zone.js/dist/zone.js', watched: false},
-      {pattern: 'node_modules/zone.js/dist/long-stack-trace-zone.js', watched: false},
-      {pattern: 'node_modules/zone.js/dist/jasmine-patch.js', watched: false},
-      'tests.js'
+      { pattern: 'tests.js', watched: false }
     ],
 
     exclude: [],
 
     preprocessors: {
-      'tests.js': ['webpack', 'sourcemap']
+      'tests.js': ['coverage', 'webpack', 'sourcemap']
     },
 
-    reporters: ['progress'],
+    reporters: ['mocha', 'coverage'],
+
+    coverageReporter: {
+      dir: 'coverage/',
+      reporters: [
+        { type: 'text-summary' },
+        { type: 'json' },
+        { type: 'html' }
+      ]
+    },
 
     browsers: ['Chrome'],
 
@@ -31,7 +39,7 @@ module.exports = function(karma) {
     singleRun: false,
 
     webpack: {
-      devtool: 'source-map',
+      devtool: 'inline-source-map',
       resolve: {
         root: __dirname,
         extensions: ['', '.ts', '.js']
@@ -43,8 +51,22 @@ module.exports = function(karma) {
             exclude: /(node_modules)/,
             loader: 'ts-loader'
           }
+        ],
+        postLoaders: [
+          {
+            test: /\.(js|ts)$/, loader: 'istanbul-instrumenter-loader',
+            include: path.resolve(__dirname, 'lib'),
+            exclude: [
+              /\.(e2e|spec)\.ts$/,
+              /node_modules/
+            ]
+          }
         ]
-      }
+      },
+    },
+
+    webpackServer: {
+      noInfo: true
     }
   });
 };
