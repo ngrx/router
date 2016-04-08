@@ -1,0 +1,37 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "declaration": false
+  },
+  "filesGlob": [
+    "./**/*.ts",
+    "../typings/main.d.ts"
+  ],
+  "files": [
+    "./component-renderer.spec.ts",
+    "./guard.spec.ts",
+    "./index.spec.ts",
+    "./link-active.spec.ts",
+    "./link-to.spec.ts",
+    "./location.spec.ts",
+    "./match-pattern.spec.ts",
+    "./match-route.spec.ts",
+    "./middleware.spec.ts",
+    "./params.spec.ts",
+    "./redirect.spec.ts",
+    "./route-set.spec.ts",
+    "./route-view.spec.ts",
+    "./route.spec.ts",
+    "./util.spec.ts",
+    "../typings/main.d.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  }
+}
