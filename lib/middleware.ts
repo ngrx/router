@@ -5,7 +5,7 @@
 import { Observable } from 'rxjs/Observable';
 import { OpaqueToken, Provider, provide, Injector } from 'angular2/core';
 
-import { compose, createFactoryProvider } from './util';
+import { compose, createProviderFactory } from './util';
 
 export interface Middleware {
   (input$: Observable<any>): Observable<any>;

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { provide, Provider, OpaqueToken } from 'angular2/core';
 
-export function createFactoryProvider<T>(
+export function createProviderFactory<T>(
   name: string,
   token = new OpaqueToken(name),
   multi = false

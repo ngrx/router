@@ -16,32 +16,42 @@ import { parse as parseQueryString } from 'query-string';
 import { compose } from './util';
 import { Location, LocationChange } from './location';
 import { Routes, Route, ROUTES } from './route';
-import { RouteTraverser, Match } from './match-route';
+import { RouteTraverser, Match } from './route-traverser';
 import { Middleware, provideMiddlewareForToken, identity } from './middleware';
 
-const LOCATION_MIDDLEWARE = new OpaqueToken('@ngrx/router Location Middleware');
-const ROUTE_SET_MIDDLEWARE = new OpaqueToken('@ngrx/router Route Set Middleware');
+const LOCATION_MIDDLEWARE = new OpaqueToken(
+  '@ngrx/router Location Middleware'
+);
 
-export const useLocationMiddleware = provideMiddlewareForToken(LOCATION_MIDDLEWARE);
-export const useRouteSetMiddleware = provideMiddlewareForToken(ROUTE_SET_MIDDLEWARE);
+const ROUTER_INSTRUCTION_MIDDLEWARE = new OpaqueToken(
+  '@ngrx/router Router Instruction Middleware'
+);
 
-export interface NextRoute {
-  routes: Routes;
-  params: any;
-  query: any;
-  url: string;
+export const useLocationMiddleware = provideMiddlewareForToken(
+  LOCATION_MIDDLEWARE
+);
+
+export const useRouterInstructionMiddleware = provideMiddlewareForToken(
+  ROUTER_INSTRUCTION_MIDDLEWARE
+);
+
+export interface NextInstruction {
+  routeConfigs: Routes;
+  routeParams: any;
+  queryParams: any;
+  locationChange: LocationChange;
 }
 
 
-export class RouteSet extends Observable<NextRoute> { }
+export class RouterInstruction extends Observable<NextInstruction> { }
 
 
-function createRouteSet(
+function createRouterInstruction(
   location$: Location,
   traverser: RouteTraverser,
   locationMiddleware: Middleware[],
-  routeSetMiddleware: Middleware[]
-): RouteSet {
+  routerInstructionMiddleware: Middleware[]
+): RouterInstruction {
   return location$
     .observeOn(queue)
     .distinctUntilChanged((prev, next) => prev.path === next.path)
@@ -50,27 +60,27 @@ function createRouteSet(
       const [ pathname, queryString ] = change.path.split('?');
 
       return traverser.find(pathname)
-        .map<NextRoute>(set => {
+        .map<NextInstruction>(set => {
           return {
-            url: location$.path(),
-            routes: set.routes,
-            query: parseQueryString(queryString),
-            params: set.params
+            locationChange: change,
+            routeConfigs: set.routes,
+            queryParams: parseQueryString(queryString),
+            routeParams: set.params
           };
         });
     })
     .filter(match => !!match)
-    .let<NextRoute>(compose(...routeSetMiddleware))
+    .let<NextInstruction>(compose(...routerInstructionMiddleware))
     .publishReplay(1)
     .refCount();
 }
 
 
 export const ROUTE_SET_PROVIDERS = [
-  provide(RouteSet, {
-    deps: [ Location, RouteTraverser, LOCATION_MIDDLEWARE, ROUTE_SET_MIDDLEWARE ],
-    useFactory: createRouteSet
+  provide(RouterInstruction, {
+    deps: [ Location, RouteTraverser, LOCATION_MIDDLEWARE, ROUTER_INSTRUCTION_MIDDLEWARE ],
+    useFactory: createRouterInstruction
   }),
   useLocationMiddleware(identity),
-  useRouteSetMiddleware(identity)
+  useRouterInstructionMiddleware(identity)
 ];

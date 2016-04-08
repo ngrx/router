@@ -8,12 +8,12 @@ import { Async } from './resource-loader';
 
 export type Routes = Array<Route>;
 
-export interface SimpleRoute {
+export interface BaseRoute {
   component?: Type;
   loadComponent?: Async<Type>;
 }
 
-export interface IndexRoute extends SimpleRoute {
+export interface IndexRoute extends BaseRoute {
   components?: { [name: string]: Type };
   loadComponents?: { [name: string]: Async<Type> };
   redirectTo?: string;
@@ -30,7 +30,7 @@ export interface Route extends IndexRoute {
 
 export const ROUTES = new OpaqueToken('@ngrx/router Init Routes');
 
-export function getNamedComponents(route: IndexRoute, name?: string): SimpleRoute {
+export function getNamedComponents(route: IndexRoute, name?: string): BaseRoute {
   if (!name) {
     return { component: route.component, loadComponent: route.loadComponent };
   }

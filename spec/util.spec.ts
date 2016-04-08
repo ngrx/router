@@ -1,11 +1,11 @@
 import { Injector, Provider, OpaqueToken } from 'angular2/core';
-import { createFactoryProvider, compose } from '../lib/util';
+import { createProviderFactory, compose } from '../lib/util';
 
 
 describe('Router Utilities', function() {
-  describe('createFactoryProvider Helper', function() {
+  describe('createProviderFactory Helper', function() {
     it('should create a factory function for anonymous providers', function() {
-      const factory = createFactoryProvider('test');
+      const factory = createProviderFactory('test');
       const provider = factory(() => ({}));
 
       expect(typeof factory).toBe('function');
@@ -15,7 +15,7 @@ describe('Router Utilities', function() {
 
     it('should use an existing token if provided', function() {
       const token = new OpaqueToken('existing');
-      const factory = createFactoryProvider('Test', token);
+      const factory = createProviderFactory('Test', token);
       const provider = factory(() => ({}));
 
       expect(provider.token).toBe(token);
@@ -23,14 +23,14 @@ describe('Router Utilities', function() {
 
     it('should create multi-providers if specified', function() {
       const token = new OpaqueToken('existing');
-      const factory = createFactoryProvider('Test', token, true);
+      const factory = createProviderFactory('Test', token, true);
       const provider = factory(() => ({}));
 
       expect(provider.multi).toBe(true);
     });
 
     it('should create the provider as a factory', function() {
-      const providerFactory = createFactoryProvider('Test');
+      const providerFactory = createProviderFactory('Test');
       const factory = () => ({});
       const provider = providerFactory(factory);
 
@@ -38,7 +38,7 @@ describe('Router Utilities', function() {
     });
 
     it('should pass dependencies to the provider', function() {
-      const providerFactory = createFactoryProvider('Test');
+      const providerFactory = createProviderFactory('Test');
       const deps = [1, 2, 3];
       const provider = providerFactory(() => ({}), deps);
 

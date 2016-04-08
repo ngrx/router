@@ -14,7 +14,7 @@ import {
 import { LinkTo } from './link-to';
 import { Location } from './location';
 
-export interface ActiveOptions {
+export interface LinkActiveOptions {
   exact: boolean;
 }
 
@@ -31,7 +31,7 @@ export interface ActiveOptions {
  @Directive({ selector: '[linkActive]' })
  export class LinkActive implements AfterViewInit, OnDestroy {
    @Input('linkActive') activeClass: string;
-   @Input() activeOptions: ActiveOptions = { exact: true };
+   @Input() activeOptions: LinkActiveOptions = { exact: true };
    private _sub: any;
 
    constructor(

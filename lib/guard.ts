@@ -19,16 +19,16 @@ import { asap } from 'rxjs/scheduler/asap';
 import { Observable } from 'rxjs/Observable';
 import { provide, Provider, OpaqueToken, Injector } from 'angular2/core';
 
-import { createFactoryProvider } from './util';
+import { createProviderFactory } from './util';
 import { Route } from './route';
-import { useTraversalMiddleware, TraversalCandidate } from './match-route';
+import { useTraversalMiddleware, TraversalCandidate } from './route-traverser';
 import { createMiddleware } from './middleware';
 
 export interface Guard {
   (route: Route, params: any, isTerminal: boolean): Observable<boolean>;
 }
 
-export const createGuard = createFactoryProvider<Guard>('@ngrx/router Guard');
+export const createGuard = createProviderFactory<Guard>('@ngrx/router Guard');
 
 export const guardMiddleware = createMiddleware(function(injector: Injector) {
   return (route$: Observable<TraversalCandidate>) => route$

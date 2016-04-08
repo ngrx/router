@@ -25,31 +25,31 @@ import {
 } from 'angular2/core';
 
 import { Route, getNamedComponents } from './route';
-import { RouteSet, NextRoute } from './route-set';
+import { RouterInstruction, NextInstruction } from './router-instruction';
 import { ComponentRenderer } from './component-renderer';
 
 @Component({
   selector: 'route-view',
-  providers: [ ComponentRenderer ],
+  providers: [],
   template: ``
 })
 export class RouteView implements OnDestroy, OnInit {
   private _prev: ComponentRef;
   private _sub: any;
-  private _routeSetProvider = provide(RouteSet, {
-    useValue: this._routeSet$.map<NextRoute>(set => {
+  private _routeSetProvider = provide(RouterInstruction, {
+    useValue: this._routeSet$.map<NextInstruction>(set => {
       return {
-        url: set.url,
-        routes: [ ...set.routes ].slice(1),
-        params: set.params,
-        query: set.query
+        locationChange: set.locationChange,
+        routeConfigs: [ ...set.routeConfigs ].slice(1),
+        routeParams: set.routeParams,
+        queryParams: set.queryParams
       };
     })
   });
 
   constructor(
     @Attribute('name') private _name: string,
-    protected _routeSet$: RouteSet,
+    protected _routeSet$: RouterInstruction,
     protected _injector: Injector,
     protected _renderer: ComponentRenderer,
     protected _dcl: DynamicComponentLoader,
@@ -59,7 +59,7 @@ export class RouteView implements OnDestroy, OnInit {
   ngOnInit() {
     this._sub = this._routeSet$
       .map(set => {
-        const route = set.routes[0];
+        const route = set.routeConfigs[0];
         const components = getNamedComponents(route, this._name);
 
         return { route, components };

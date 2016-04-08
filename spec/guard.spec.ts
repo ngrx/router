@@ -4,7 +4,7 @@ import { Injector } from 'angular2/core';
 
 import { Route } from '../lib/route';
 import { Middleware } from '../lib/middleware';
-import { TraversalCandidate } from '../lib/match-route';
+import { TraversalCandidate } from '../lib/route-traverser';
 import { Guard, createGuard, guardMiddleware } from '../lib/guard';
 
 
