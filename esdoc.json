@@ -1,0 +1,24 @@
+{
+  "source": "./release/es6",
+  "destination": "./release/docs",
+  "title": "@ngrx/router",
+  "index": "./docs/index.md",
+  "autoPrivate": true,
+  "includeSource": false,
+  "undocumentIdentifier": false,
+  "manual": {
+    "overview": [
+      "./docs/overview/README.md",
+      "./docs/overview/route.md",
+      "./docs/overview/links.md",
+      "./docs/overview/params.md",
+      "./docs/overview/redirect.md",
+      "./docs/overview/guards.md",
+      "./docs/overview/index-route.md",
+      "./docs/overview/code-splitting.md"
+    ],
+    "changelog": [
+      "./CHANGELOG.md"
+    ]
+  }
+}

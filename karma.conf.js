@@ -22,6 +22,7 @@ module.exports = function(karma) {
 
     coverageReporter: {
       dir: 'coverage/',
+      subdir: '.',
       reporters: [
         { type: 'text-summary' },
         { type: 'json' },
@@ -49,7 +50,7 @@ module.exports = function(karma) {
           {
             test: /\.ts?$/,
             exclude: /(node_modules)/,
-            loader: 'ts-loader'
+            loader: 'ts-loader?target=es5&module=commonjs'
           }
         ],
         postLoaders: [
@@ -63,6 +64,9 @@ module.exports = function(karma) {
           }
         ]
       },
+      ts: {
+        configFileName: './spec/tsconfig.json'
+      }
     },
 
     webpackServer: {

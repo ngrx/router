@@ -3,15 +3,33 @@
   "version": "0.1.1",
   "description": "A reactive router for Angular 2",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngrx/router.git"
+  },
   "scripts": {
-    "lint": "tslint lib/**.ts",
-    "install:typings": "typings install",
-    "prebuild": "npm run test",
-    "build": "gulp build",
-    "pretest": "npm run install:typings",
-    "test": "npm run lint && karma start --single-run",
-    "test:watch": "karma start",
-    "changelog": "gulp changelog"
+    "lint": "npm-run-all lint:*",
+    "lint:lib": "tslint lib/**.ts",
+    "lint:spec": "tslint spec/**.ts",
+    "typings": "typings install",
+    "clean": "npm-run-all clean:*",
+    "clean:release": "rm -rf ./release",
+    "clean:typings": "rm -rf ./typings",
+    "prebuild": "npm-run-all clean typings karma",
+    "build": "npm-run-all build:cjs build:es6 build:docs",
+    "build:cjs": "tsc -m commonjs --outDir ./release/npm -d --diagnostics --pretty",
+    "build:es6": "tsc -m es2015   --outDir ./release/es6 -d --diagnostics --pretty",
+    "build:docs": "esdoc -c esdoc.json",
+    "prepare": "npm-run-all prepare:*",
+    "prepare:es6": "cp -R ./release/es6 ./release/npm",
+    "prepare:package": "cp ./{package.json,README.md,LICENSE} ./release/npm",
+    "test": "npm-run-all clean typings karma",
+    "karma": "karma start --single-run",
+    "karma:watch": "karma start",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "postbuild": "npm run prepare",
+    "preversion": "run run test",
+    "version": "npm run changelog && git add CHANGELOG.md"
   },
   "authors": [
     "Mike Ryan",
@@ -24,15 +42,9 @@
   },
   "devDependencies": {
     "angular2": "^2.0.0-beta.12",
-    "babel": "^6.3.26",
-    "babel-core": "^6.4.5",
-    "babel-preset-es2015": "^6.3.13",
-    "conventional-changelog": "^1.1.0",
-    "del": "^2.2.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-typescript": "^2.12.1",
+    "conventional-changelog-cli": "^1.1.1",
+    "core-js": "^2.2.2",
+    "esdoc": "^0.4.6",
     "istanbul-instrumenter-loader": "^0.2.0",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
@@ -43,20 +55,16 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-typescript-preprocessor": "0.0.21",
     "karma-webpack": "^1.7.0",
-    "merge2": "^1.0.0",
+    "npm-run-all": "^1.7.0",
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.0-beta.4",
+    "source-map-loader": "^0.1.5",
     "ts-loader": "^0.8.1",
     "tslint": "^3.6.0",
     "typescript": "^1.8.9",
-    "typings": "^0.7.9",
+    "typings": "^0.7.12",
     "webpack": "^1.12.14",
     "zone.js": "^0.6.8"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
   },
   "dependencies": {
     "query-string": "^4.1.0"

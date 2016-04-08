@@ -2,20 +2,17 @@
   "version": "1.8.0",
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./release",
-    "target": "es5",
-    "sourceMap": false,
+    "outDir": "./release/es6",
+    "target": "es6",
+    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": false,
     "moduleResolution": "node",
-    "inlineSourceMap": false,
     "declaration": true
   },
-  "exclude": [
-    "node_modules",
-    "typings/browser.d.ts",
-    "typings/browser"
+  "files": [
+    "typings/main/ambient/query-string/index.d.ts",
+    "lib/index.ts"
   ]
 }
