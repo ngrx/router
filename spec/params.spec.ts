@@ -1,19 +1,31 @@
 import { Subject } from 'rxjs/Subject';
 import { Injector, provide } from 'angular2/core';
-import { NextRoute, RouteSet } from '../lib/route-set';
+import { NextInstruction, RouterInstruction } from '../lib/router-instruction';
 import { RouteParams, QueryParams, PARAMS_PROVIDERS } from '../lib/params';
 
 
 describe('Params Services', function() {
-  let routeSet$: Subject<NextRoute>;
+  let routerInstruction$: Subject<NextInstruction>;
   let routeParams$: RouteParams;
   let queryParams$: QueryParams;
 
+  function nextInstruction(routeParams, queryParams) {
+    routerInstruction$.next({
+      routeConfigs: [],
+      routeParams,
+      queryParams,
+      locationChange: {
+        type: 'push',
+        path: ''
+      }
+    });
+  }
+
   beforeEach(function() {
-    routeSet$ = new Subject<NextRoute>();
+    routerInstruction$ = new Subject<NextInstruction>();
     const injector = Injector.resolveAndCreate([
       PARAMS_PROVIDERS,
-      provide(RouteSet, { useValue: routeSet$ })
+      provide(RouterInstruction, { useValue: routerInstruction$ })
     ]);
 
     routeParams$ = injector.get(RouteParams);
@@ -21,7 +33,7 @@ describe('Params Services', function() {
   });
 
   afterEach(function() {
-    routeSet$.complete();
+    routerInstruction$.complete();
   });
 
   describe('RouteParams', function() {
@@ -34,7 +46,7 @@ describe('Params Services', function() {
         done();
       });
 
-      routeSet$.next({ routes: [], params, url: '', query: {} });
+      nextInstruction(params, {});
     });
   });
 
@@ -48,7 +60,7 @@ describe('Params Services', function() {
         done();
       });
 
-      routeSet$.next({ routes: [], params: {}, url: '', query });
+      nextInstruction({}, query);
     });
   });
 });

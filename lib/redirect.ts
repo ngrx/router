@@ -7,14 +7,14 @@ import { Provider } from 'angular2/core';
 
 import { Location } from './location';
 import { Routes, Route } from './route';
-import { useRouteSetMiddleware, NextRoute } from './route-set';
+import { useRouterInstructionMiddleware, RouterInstruction, NextInstruction } from './router-instruction';
 import { createMiddleware } from './middleware';
 import { formatPattern } from './match-pattern';
 
 export const redirectMiddleware = createMiddleware(function(location: Location) {
-  return (next$: Observable<NextRoute>) => next$
+  return (next$: RouterInstruction): RouterInstruction => next$
     .filter(next => {
-      const last = next.routes[next.routes.length - 1];
+      const last = next.routeConfigs[next.routeConfigs.length - 1];
 
       if ( !!last.redirectTo ) {
         handleRedirect(location, last, next);
@@ -25,22 +25,22 @@ export const redirectMiddleware = createMiddleware(function(location: Location) 
     });
 }, [ Location ]);
 
-function handleRedirect(location: Location, route: Route, next: NextRoute) {
-  const { url, params } = next;
+function handleRedirect(location: Location, route: Route, next: NextInstruction) {
+  const { routeParams, queryParams } = next;
 
   let pathname;
 
   if ( route.redirectTo.charAt(0) === '/' ) {
-    pathname = formatPattern(route.redirectTo, params);
+    pathname = formatPattern(route.redirectTo, routeParams);
   }
   else {
-    const routeIndex = next.routes.indexOf(route);
-    const parentPattern = getRoutePattern(next.routes, routeIndex - 1);
+    const routeIndex = next.routeConfigs.indexOf(route);
+    const parentPattern = getRoutePattern(next.routeConfigs, routeIndex - 1);
     const pattern = parentPattern.replace(/\/*$/, '/') + route.redirectTo;
-    pathname = formatPattern(pattern, params);
+    pathname = formatPattern(pattern, routeParams);
   }
 
-  location.replaceState(pathname);
+  location.replaceState(pathname, queryParams);
 }
 
 function getRoutePattern(routes: Routes, routeIndex: number) {
@@ -60,5 +60,5 @@ function getRoutePattern(routes: Routes, routeIndex: number) {
 }
 
 export const REDIRECT_PROVIDERS = [
-  useRouteSetMiddleware(redirectMiddleware)
+  useRouterInstructionMiddleware(redirectMiddleware)
 ];

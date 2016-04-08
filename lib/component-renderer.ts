@@ -18,14 +18,14 @@ import { Observable } from 'rxjs/Observable';
 
 import { Async, ResourceLoader } from './resource-loader';
 import { compose } from './util';
-import { Route, SimpleRoute } from './route';
+import { Route, BaseRoute } from './route';
 import { Middleware, identity, provideMiddlewareForToken } from './middleware';
 
-export const PRE_RENDER_MIDDLEWARE = new OpaqueToken(
+const PRE_RENDER_MIDDLEWARE = new OpaqueToken(
   '@ngrx/router Pre Render Middleware'
 );
 
-export const POST_RENDER_MIDDLEWARE = new OpaqueToken(
+const POST_RENDER_MIDDLEWARE = new OpaqueToken(
   '@ngrx/router Post Render Middleware'
 );
 
@@ -43,13 +43,6 @@ export interface RenderInstruction {
   providers: Provider[];
 }
 
-export interface ResolvedInstruction {
-  component: Type;
-  providers: ResolvedProvider[];
-  ref: ElementRef;
-  dcl: DynamicComponentLoader;
-}
-
 @Injectable()
 export class ComponentRenderer {
   constructor(
@@ -60,7 +53,7 @@ export class ComponentRenderer {
 
   render(
     route: Route,
-    components: SimpleRoute,
+    components: BaseRoute,
     injector: Injector,
     ref: ElementRef,
     dcl: DynamicComponentLoader,
@@ -72,21 +65,16 @@ export class ComponentRenderer {
         return { component, injector, providers };
       })
       .let<RenderInstruction>(compose(...this._preMiddleware))
-      .map<ResolvedInstruction>(instruction => {
+      .mergeMap(instruction => {
         const providers = Injector.resolve(instruction.providers);
         const component = instruction.component;
 
-        return { providers, component, ref, dcl };
+        return dcl.loadNextToLocation(component, ref, providers);
       })
-      .mergeMap(instruction => this.renderComponent(instruction))
       .let<ComponentRef>(compose(...this._postMiddleware));
   }
 
-  renderComponent({ component, providers, ref, dcl }: ResolvedInstruction) {
-    return dcl.loadNextToLocation(component, ref, providers);
-  }
-
-  private _loadComponent(route: SimpleRoute): Promise<Type> {
+  private _loadComponent(route: BaseRoute): Promise<Type> {
     return this._loader.load(route.component, route.loadComponent);
   }
 }

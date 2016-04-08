@@ -7,13 +7,11 @@ import { RESOURCE_LOADER_PROVIDERS } from '../lib/resource-loader';
 import { Location } from '../lib/location';
 import {
   ComponentRenderer,
-  PRE_RENDER_MIDDLEWARE,
-  POST_RENDER_MIDDLEWARE,
   usePreRenderMiddleware,
   usePostRenderMiddleware
 } from '../lib/component-renderer';
-import { Route, SimpleRoute } from '../lib/route';
-import { createMiddleware } from '../lib/middleware';
+import { Route, BaseRoute } from '../lib/route';
+import { createMiddleware, identity } from '../lib/middleware';
 
 class MockDCL {
   loadNextToLocation: Function = jasmine.createSpy('loadNextToLocation').and
@@ -24,7 +22,7 @@ class TestComponent {}
 
 describe('Component Renderer', function() {
   let route: Route,
-      components: SimpleRoute,
+      components: BaseRoute,
       renderer: ComponentRenderer,
       injector: Injector,
       loader: any;
@@ -37,8 +35,8 @@ describe('Component Renderer', function() {
     beforeEach(() => {
       injector = Injector.resolveAndCreate([
         ComponentRenderer,
-        provide(PRE_RENDER_MIDDLEWARE, { useValue: [] }),
-        provide(POST_RENDER_MIDDLEWARE, { useValue: [] }),
+        usePreRenderMiddleware(identity),
+        usePostRenderMiddleware(identity),
         provide(DynamicComponentLoader, {useClass: MockDCL}),
         RESOURCE_LOADER_PROVIDERS
       ]);
@@ -101,7 +99,7 @@ describe('Component Renderer', function() {
       injector = Injector.resolveAndCreate([
         ComponentRenderer,
         usePreRenderMiddleware(renderMiddleware),
-        provide(POST_RENDER_MIDDLEWARE, {useValue: []}),
+        usePostRenderMiddleware(identity),
         provide(DynamicComponentLoader, {useClass: MockDCL}),
         RESOURCE_LOADER_PROVIDERS
       ]);
@@ -158,8 +156,8 @@ describe('Component Renderer', function() {
 
       injector = Injector.resolveAndCreate([
         ComponentRenderer,
+        usePreRenderMiddleware(identity),
         usePostRenderMiddleware(renderMiddleware),
-        provide(PRE_RENDER_MIDDLEWARE, {useValue: []}),
         provide(DynamicComponentLoader, {useClass: MockDCL}),
         RESOURCE_LOADER_PROVIDERS
       ]);
