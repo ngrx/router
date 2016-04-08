@@ -9,4 +9,4 @@ This is a reactive router for Angular 2. It started as a fork of [react-router](
 Please note that we are currently pre-v1.0. While we believe the core of the router is solid, you can expect a few breaking changes as we work towards a beta release. These early releases are meant to gather feedback from the community and to help with the direction of the router.
 
 ### Getting Started
-Read the [Getting Started](docs/getting-started/README.md) guide
+Read the [Getting Started](docs/overview/README.md) guide
