@@ -26,7 +26,7 @@ import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
   template: '',
   directives: [LinkTo, LinkActive]
 })
-class TestComponent{}
+class TestComponent {}
 
 const compile = (tcb: TestComponentBuilder, template: string = '') => {
   return tcb

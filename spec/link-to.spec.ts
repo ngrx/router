@@ -20,7 +20,7 @@ import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
   template: '',
   directives: [LinkTo]
 })
-class TestComponent{
+class TestComponent {
   @ViewChild(LinkTo) link: LinkTo;
 }
 
@@ -75,8 +75,8 @@ describe('Link To', () => {
 
   describe('When Clicked', () => {
     it('should go to the provided URL', injectAsync([TestComponentBuilder, Location], (tcb, location) => {
-      let linkHref = "/page";
-      let queryParams = "{id: 1}";
+      let linkHref = '/page';
+      let queryParams = '{id: 1}';
 
       return compile(tcb, '<a linkTo="' + linkHref + '" queryParams="' + queryParams + '">Page</a>')
         .then((fixture) => {
@@ -93,8 +93,8 @@ describe('Link To', () => {
     }));
 
     it('should not prevent default behavior with a provided target', injectAsync([TestComponentBuilder, Location], (tcb, location) => {
-      let linkHref = "/page";
-      let queryParams = "id=1";
+      let linkHref = '/page';
+      let queryParams = 'id=1';
 
       return compile(tcb, '<a linkTo="' + linkHref + '" queryParams="' + queryParams + '" target="_blank">Page</a>')
         .then((fixture) => {
@@ -113,8 +113,8 @@ describe('Link To', () => {
     }));
 
     it('should not prevent default behavior with a combo click', injectAsync([TestComponentBuilder, Location], (tcb, location) => {
-      let linkHref = "/page";
-      let queryParams = "id=1";
+      let linkHref = '/page';
+      let queryParams = 'id=1';
 
       return compile(tcb, '<a linkTo="' + linkHref + '" queryParams="' + queryParams + '">Page</a>')
         .then((fixture) => {

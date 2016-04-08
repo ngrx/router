@@ -1,5 +1,5 @@
 import 'rxjs/add/observable/of';
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs/Observable';
 import { Injector } from 'angular2/core';
 
 import { Route } from '../lib/route';

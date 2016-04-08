@@ -9,7 +9,7 @@ describe('Redirect Middleware', function() {
   let redirect: Middleware;
   let routeSet$: Subject<NextRoute>;
   let location = { replaceState(next: string) { } };
-  let observer = { next(){ } };
+  let observer = { next() { } };
 
   function nextInstruction(from: string, to: string, params: any) {
     routeSet$.next({

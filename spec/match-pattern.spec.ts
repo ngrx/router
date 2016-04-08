@@ -1,4 +1,4 @@
-import { matchPattern } from '../lib/match-pattern'
+import { matchPattern } from '../lib/match-pattern';
 
 describe('matchPattern', function() {
   function assertMatch(pattern, pathname, remainingPathname, paramNames, paramValues) {
