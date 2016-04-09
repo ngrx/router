@@ -12,7 +12,8 @@ import {
   Provider,
   ResolvedProvider,
   OpaqueToken,
-  ComponentRef
+  ComponentRef,
+  Optional
 } from 'angular2/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -45,11 +46,16 @@ export interface RenderInstruction {
 
 @Injectable()
 export class ComponentRenderer {
+  private _preMiddleware: Middleware<RenderInstruction>;
+  private _postMiddleware: Middleware<ComponentRef>;
   constructor(
     private _loader: ResourceLoader,
-    @Inject(PRE_RENDER_MIDDLEWARE) private _preMiddleware: Middleware[],
-    @Inject(POST_RENDER_MIDDLEWARE) private _postMiddleware: Middleware[]
-  ) { }
+    @Inject(PRE_RENDER_MIDDLEWARE) allPreMiddleware: Middleware<RenderInstruction>[],
+    @Inject(POST_RENDER_MIDDLEWARE) allPostMiddleware: Middleware<ComponentRef>[]
+  ) {
+    this._preMiddleware = compose(...allPreMiddleware);
+    this._postMiddleware = compose(...allPostMiddleware);
+  }
 
   render(
     route: Route,
@@ -64,14 +70,14 @@ export class ComponentRenderer {
       .map<RenderInstruction>(component => {
         return { component, injector, providers };
       })
-      .let<RenderInstruction>(compose(...this._preMiddleware))
+      .let(this._preMiddleware)
       .mergeMap(instruction => {
         const providers = Injector.resolve(instruction.providers);
         const component = instruction.component;
 
         return dcl.loadNextToLocation(component, ref, providers);
       })
-      .let<ComponentRef>(compose(...this._postMiddleware));
+      .let(this._postMiddleware);
   }
 
   private _loadComponent(route: BaseRoute): Promise<Type> {
@@ -80,7 +86,7 @@ export class ComponentRenderer {
 }
 
 export const COMPONENT_RENDERER_PROVIDERS = [
+  new Provider(ComponentRenderer, { useClass: ComponentRenderer }),
   usePreRenderMiddleware(identity),
-  usePostRenderMiddleware(identity),
-  new Provider(ComponentRenderer, { useClass: ComponentRenderer })
+  usePostRenderMiddleware(identity)
 ];

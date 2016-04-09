@@ -6,7 +6,7 @@ import { redirectMiddleware } from '../lib/redirect';
 import { Location } from '../lib/location';
 
 describe('Redirect Middleware', function() {
-  let redirect: Middleware;
+  let redirect: Middleware<NextInstruction>;
   let routeSet$: Subject<NextInstruction>;
   let location = { replaceState(next: string) { } };
   let observer = { next() { } };

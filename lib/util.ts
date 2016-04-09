@@ -17,15 +17,11 @@ export function createProviderFactory<T>(
 }
 
 
-export function compose(...funcs) {
-  return function(...args) {
-    if (funcs.length === 0) {
-      return args[0];
-    }
-
+export function compose<T>(...funcs: Array<(input: T) => T>) {
+  return function(input: T) {
     const last = funcs[funcs.length - 1];
     const rest = funcs.slice(0, -1);
 
-    return rest.reduceRight((composed, f) => f(composed), last(...args));
+    return rest.reduceRight((composed, f) => f(composed), last(input));
   };
 };

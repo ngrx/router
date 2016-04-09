@@ -9,7 +9,7 @@ import { Guard, createGuard, guardMiddleware } from '../lib/guard';
 
 
 describe('Guard Middleware', function() {
-  let guardRunner: Middleware;
+  let guardRunner: Middleware<TraversalCandidate>;
   let injector: Injector;
 
   function route(route: Route, params = {}, isTerminal = false) {

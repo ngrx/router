@@ -8,6 +8,7 @@ import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/observeOn';
+import 'rxjs/add/operator/last';
 import { Observable } from 'rxjs/Observable';
 import { queue } from 'rxjs/scheduler/queue';
 import { provide, Provider, Injector, OpaqueToken } from 'angular2/core';
@@ -49,13 +50,13 @@ export class RouterInstruction extends Observable<NextInstruction> { }
 function createRouterInstruction(
   location$: Location,
   traverser: RouteTraverser,
-  locationMiddleware: Middleware[],
-  routerInstructionMiddleware: Middleware[]
+  locationMiddleware: Middleware<LocationChange>[],
+  routerInstructionMiddleware: Middleware<NextInstruction>[]
 ): RouterInstruction {
   return location$
     .observeOn(queue)
     .distinctUntilChanged((prev, next) => prev.path === next.path)
-    .let<LocationChange>(compose(...locationMiddleware))
+    .let(compose(...locationMiddleware))
     .switchMap(change => {
       const [ pathname, queryString ] = change.path.split('?');
 
@@ -70,7 +71,7 @@ function createRouterInstruction(
         });
     })
     .filter(match => !!match)
-    .let<NextInstruction>(compose(...routerInstructionMiddleware))
+    .let(compose(...routerInstructionMiddleware))
     .publishReplay(1)
     .refCount();
 }
