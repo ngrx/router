@@ -5,27 +5,27 @@
 import { Observable } from 'rxjs/Observable';
 import { Provider } from 'angular2/core';
 
-import { Location } from './location';
+import { Router } from './router';
 import { Routes, Route } from './route';
 import { useRouterInstructionMiddleware, RouterInstruction, NextInstruction } from './router-instruction';
 import { createMiddleware } from './middleware';
 import { formatPattern } from './match-pattern';
 
-export const redirectMiddleware = createMiddleware(function(location: Location) {
+export const redirectMiddleware = createMiddleware(function(router: Router) {
   return (next$: RouterInstruction): RouterInstruction => next$
     .filter(next => {
       const last = next.routeConfigs[next.routeConfigs.length - 1];
 
       if ( !!last.redirectTo ) {
-        handleRedirect(location, last, next);
+        handleRedirect(router, last, next);
         return false;
       }
 
       return true;
     });
-}, [ Location ]);
+}, [ Router ]);
 
-function handleRedirect(location: Location, route: Route, next: NextInstruction) {
+function handleRedirect(router: Router, route: Route, next: NextInstruction) {
   const { routeParams, queryParams } = next;
 
   let pathname;
@@ -40,7 +40,7 @@ function handleRedirect(location: Location, route: Route, next: NextInstruction)
     pathname = formatPattern(pattern, routeParams);
   }
 
-  location.replaceState(pathname, queryParams);
+  router.replace(pathname, queryParams);
 }
 
 function getRoutePattern(routes: Routes, routeIndex: number) {

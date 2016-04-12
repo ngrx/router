@@ -2,7 +2,7 @@ import { Provider, provide } from 'angular2/core';
 import { LocationStrategy } from 'angular2/src/router/location/location_strategy';
 import { PathLocationStrategy } from 'angular2/src/router/location/path_location_strategy';
 
-import { LOCATION_PROVIDERS } from './location';
+import { ROUTER_PROVIDERS } from './router';
 import { ROUTE_SET_PROVIDERS } from './router-instruction';
 import { ROUTE_VIEW_PROVIDERS } from './route-view';
 import { REDIRECT_PROVIDERS } from './redirect';
@@ -23,22 +23,22 @@ export function provideRouter(routes: Routes) {
     GUARD_PROVIDERS,
     LINK_ACTIVE_PROVIDERS,
     LINK_TO_PROVIDERS,
-    LOCATION_PROVIDERS,
     MATCH_ROUTE_PROVIDERS,
     PARAMS_PROVIDERS,
     REDIRECT_PROVIDERS,
     RESOURCE_LOADER_PROVIDERS,
     ROUTE_SET_PROVIDERS,
-    ROUTE_VIEW_PROVIDERS
+    ROUTE_VIEW_PROVIDERS,
+    ROUTER_PROVIDERS
   ];
 }
 
 
 export { Guard, createGuard } from './guard';
-export { LocationChange, Location } from './location';
+export { LocationChange, Router } from './router';
 export { Middleware, createMiddleware } from './middleware';
 export { RouteParams, QueryParams } from './params';
-export { useLocationMiddleware, useRouterInstructionMiddleware, RouterInstruction, NextInstruction } from './router-instruction';
+export { useRouterMiddleware, useRouterInstructionMiddleware, RouterInstruction, NextInstruction } from './router-instruction';
 export { usePreRenderMiddleware, usePostRenderMiddleware, RenderInstruction } from './component-renderer';
 export { Routes, Route, IndexRoute } from './route';
 export { useTraversalMiddleware, TraversalCandidate } from './route-traverser';

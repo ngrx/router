@@ -10,7 +10,7 @@ import {
 } from 'angular2/testing';
 import { Component, provide, ViewChild } from 'angular2/core';
 import { LinkTo } from '../lib/link-to';
-import { LOCATION_PROVIDERS, Location } from '../lib/location';
+import { ROUTER_PROVIDERS, Router } from '../lib/router';
 import { Observable } from 'rxjs/Observable';
 import { LocationStrategy } from 'angular2/src/router/location/location_strategy';
 import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
@@ -32,7 +32,7 @@ const compile = (tcb: TestComponentBuilder, template: string = '') => {
 
 describe('Link To', () => {
   beforeEachProviders(() => [
-    LOCATION_PROVIDERS,
+    ROUTER_PROVIDERS,
     provide(LocationStrategy, { useClass: MockLocationStrategy })
   ]);
 
@@ -74,7 +74,7 @@ describe('Link To', () => {
   }));
 
   describe('When Clicked', () => {
-    it('should go to the provided URL', injectAsync([TestComponentBuilder, Location], (tcb, location) => {
+    it('should go to the provided URL', injectAsync([TestComponentBuilder, Router], (tcb, router) => {
       let linkHref = '/page';
       let queryParams = '{id: 1}';
 
@@ -84,15 +84,15 @@ describe('Link To', () => {
           let compiled = fixture.debugElement.nativeElement;
           let link = compiled.querySelector('a');
 
-          spyOn(location, 'go');
+          spyOn(router, 'go');
 
           link.click();
 
-          expect(location.go).toHaveBeenCalledWith(linkHref, queryParams);
+          expect(router.go).toHaveBeenCalledWith(linkHref, queryParams);
         });
     }));
 
-    it('should not prevent default behavior with a provided target', injectAsync([TestComponentBuilder, Location], (tcb, location) => {
+    it('should not prevent default behavior with a provided target', injectAsync([TestComponentBuilder, Router], (tcb, router) => {
       let linkHref = '/page';
       let queryParams = 'id=1';
 
@@ -102,17 +102,17 @@ describe('Link To', () => {
           let compiled = fixture.debugElement.nativeElement;
           let link = compiled.querySelector('a');
 
-          spyOn(location, 'go');
+          spyOn(router, 'go');
 
           let instance = fixture.componentInstance.link;
           let event = { button: 1 };
           instance.onClick(event);
 
-          expect(location.go).not.toHaveBeenCalled();
+          expect(router.go).not.toHaveBeenCalled();
         });
     }));
 
-    it('should not prevent default behavior with a combo click', injectAsync([TestComponentBuilder, Location], (tcb, location) => {
+    it('should not prevent default behavior with a combo click', injectAsync([TestComponentBuilder, Router], (tcb, router) => {
       let linkHref = '/page';
       let queryParams = 'id=1';
 
@@ -125,7 +125,7 @@ describe('Link To', () => {
 
           let instance = fixture.componentInstance.link;
 
-          spyOn(location, 'go');
+          spyOn(router, 'go');
 
           let events = [
             { which: 1, ctrlKey: true },
@@ -142,7 +142,7 @@ describe('Link To', () => {
             instance.onClick(event);
           });
 
-          expect(location.go.calls.count()).toEqual(0);
+          expect(router.go.calls.count()).toEqual(0);
         });
     }));
   });

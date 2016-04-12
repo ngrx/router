@@ -47,7 +47,7 @@ To demonstrate how to work around this, lets take the above `PostPage` component
 ```ts
 import { Observable } from 'rxjs/Observable';
 import { Http } from 'angular2/http';
-import { RouteParams, Location } from '@ngrx/router';
+import { RouteParams, Router } from '@ngrx/router';
 
 @Component({
   selector: 'post-page',
@@ -60,7 +60,7 @@ export class PostPage {
   post$: Observable<Post>;
   loading: boolean;
 
-  constructor(params$: RouteParams, http: Http) {
+  constructor(params$: RouteParams, http: Http, router: Router) {
     // Listen for the ID to change
     this.post$ = params$.pluck('id')
       // only update if `id` changes
@@ -79,7 +79,7 @@ export class PostPage {
           })
           // If the request fails, go to the 404 route
           .catch(err => {
-            location.replaceState('/404');
+            router.replace('/404');
             return Observable.of(false);
           })
       });

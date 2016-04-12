@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Injector, provide, DynamicComponentLoader, ElementRef } from 'angular2/core';
 
 import { RESOURCE_LOADER_PROVIDERS } from '../lib/resource-loader';
-import { Location } from '../lib/location';
+
 import {
   ComponentRenderer,
   usePreRenderMiddleware,

@@ -7,12 +7,12 @@ import {
   provide,
   Provider
 } from  'angular2/core';
-import { Location } from './location';
+import { Router } from './router';
 
 /**
  * The LinkTo directive links to routes in your app
  *
- * Links are pushed to the `Location` service to trigger a route change.
+ * Links are pushed to the `Router` service to trigger a route change.
  * Query params can be represented as an object or a string of names/values
  *
  * <a linkTo="/home/page" [queryParams]="{ id: 123 }">Home Page</a>
@@ -36,7 +36,7 @@ export class LinkTo {
   private _href: string;
   private _query: string | Object;
 
-  constructor(private _location: Location) {}
+  constructor(private _router: Router) {}
 
   /**
    * Handles click events on the associated link
@@ -45,14 +45,14 @@ export class LinkTo {
   @HostListener('click', ['$event'])
   onClick(event) {
     if (!this._comboClick(event) && !this.target) {
-      this._location.go(this._href, this._query);
+      this._router.go(this._href, this._query);
 
       event.preventDefault();
     }
   }
 
   private _updateHref() {
-    this.linkHref = this._location.prepareExternalUrl(this._href, this._query);
+    this.linkHref = this._router.prepareExternalUrl(this._href, this._query);
   }
 
   /**

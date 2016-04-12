@@ -53,7 +53,7 @@ Guards are run before the component or children are loaded. This prevents the us
 While a guard must always return an observable, if a guard dispatches a route change (for instance redirecting to a `400 Not Authorized` route) the current traversal will be immediately canceled:
 
 ```ts
-const authGuard = createGuard(function(http: Http, location: Location) {
+const authGuard = createGuard(function(http: Http, router: Router) {
   // Guards are provided with the route that is being evaluated:
   return function(route: Route) {
     return http.get('/auth/check')
@@ -61,7 +61,7 @@ const authGuard = createGuard(function(http: Http, location: Location) {
       .map(() => true)
       // If request fails, redirect to "not authorized" route
       .catch(() => {
-        location.replaceState('/not-authorized');
+        router.replace('/not-authorized');
         return Observable.of(false);
       });
   }
