@@ -6,7 +6,7 @@ import { LocationStrategy } from 'angular2/src/router/location/location_strategy
 import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
 
 import { RouteTraverser } from '../lib/route-traverser';
-import { Location, LOCATION_PROVIDERS } from '../lib/location';
+import { Router, ROUTER_PROVIDERS } from '../lib/router';
 import { NextInstruction, RouterInstruction, ROUTE_SET_PROVIDERS } from '../lib/router-instruction';
 
 
@@ -16,7 +16,7 @@ describe('Route Set', function() {
 
   let mockTraverser: any;
   let routerInstruction: RouterInstruction;
-  let location: Location;
+  let router: Router;
 
   beforeEach(function() {
     mockTraverser = {
@@ -28,21 +28,21 @@ describe('Route Set', function() {
     spyOn(mockTraverser, 'find').and.callThrough();
 
     const injector = Injector.resolveAndCreate([
-      LOCATION_PROVIDERS,
+      ROUTER_PROVIDERS,
       ROUTE_SET_PROVIDERS,
       provide(RouteTraverser, { useValue: mockTraverser }),
       provide(LocationStrategy, { useClass: MockLocationStrategy })
     ]);
 
     routerInstruction = injector.get(RouterInstruction);
-    location = injector.get(Location);
+    router = injector.get(Router);
   });
 
   it('should parse a simple location change into a new route set', function(done) {
-    location.go('/test');
+    router.go('/test');
 
     routerInstruction
-      .withLatestFrom(location)
+      .withLatestFrom(router)
       .subscribe(([set, change]) => {
         expect(set.routeConfigs).toBe(routes);
         expect(set.routeParams).toBe(params);
@@ -55,7 +55,7 @@ describe('Route Set', function() {
   });
 
   it('should parse a location change with query params', function(done) {
-    location.go('/test?a=2');
+    router.go('/test?a=2');
 
     routerInstruction.subscribe(set => {
       expect(set.queryParams.a).toBeDefined();
@@ -66,7 +66,7 @@ describe('Route Set', function() {
   });
 
   it('should share a subscription amonst all subscribers', function() {
-    location.go('/');
+    router.go('/');
 
     routerInstruction.subscribe();
     routerInstruction.subscribe();

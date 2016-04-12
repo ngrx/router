@@ -3,12 +3,12 @@ import { Injector, provide } from 'angular2/core';
 import { NextInstruction } from '../lib/router-instruction';
 import { Middleware } from '../lib/middleware';
 import { redirectMiddleware } from '../lib/redirect';
-import { Location } from '../lib/location';
+import { Router } from '../lib/router';
 
 describe('Redirect Middleware', function() {
   let redirect: Middleware;
   let routeSet$: Subject<NextInstruction>;
-  let location = { replaceState(next: string) { } };
+  let router = { replace(next: string) { } };
   let observer = { next() { } };
 
   function nextInstruction(to: string, routeParams: any = {}, queryParams: any = {}) {
@@ -25,10 +25,10 @@ describe('Redirect Middleware', function() {
 
   beforeEach(function() {
     routeSet$ = new Subject<NextInstruction>();
-    spyOn(location, 'replaceState');
+    spyOn(router, 'replace');
     spyOn(observer, 'next');
     const injector = Injector.resolveAndCreate([
-      provide(Location, { useValue: location })
+      provide(Router, { useValue: router })
     ]);
 
     redirect = injector.resolveAndInstantiate(redirectMiddleware);
@@ -63,7 +63,7 @@ describe('Redirect Middleware', function() {
     nextInstruction('/test');
 
     expect(observer.next).not.toHaveBeenCalled();
-    expect(location.replaceState).toHaveBeenCalledWith('/test', {});
+    expect(router.replace).toHaveBeenCalledWith('/test', {});
   });
 
   it('should correctly redirect paths with params', function() {
@@ -72,7 +72,7 @@ describe('Redirect Middleware', function() {
     nextInstruction('/posts/:id', { id: '543' });
 
     expect(observer.next).not.toHaveBeenCalled();
-    expect(location.replaceState).toHaveBeenCalledWith('/posts/543', {});
+    expect(router.replace).toHaveBeenCalledWith('/posts/543', {});
   });
 
   it('should redirect relative paths', function() {
@@ -89,7 +89,7 @@ describe('Redirect Middleware', function() {
     });
 
     expect(observer.next).not.toHaveBeenCalled();
-    expect(location.replaceState).toHaveBeenCalledWith('/home', {});
+    expect(router.replace).toHaveBeenCalledWith('/home', {});
   });
 
   it('should redirect relative paths with params', function() {
@@ -106,6 +106,6 @@ describe('Redirect Middleware', function() {
     });
 
     expect(observer.next).not.toHaveBeenCalled();
-    expect(location.replaceState).toHaveBeenCalledWith('/posts/543', {});
+    expect(router.replace).toHaveBeenCalledWith('/posts/543', {});
   });
 });

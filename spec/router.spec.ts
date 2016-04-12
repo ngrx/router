@@ -16,42 +16,42 @@ import {
 import {Injector, provide} from 'angular2/core';
 import {CONST_EXPR} from 'angular2/src/facade/lang';
 
-import {Location} from '../lib/location';
+import {Router} from '../lib/router';
 import {LocationStrategy, APP_BASE_HREF} from 'angular2/src/router/location/location_strategy';
 import {MockLocationStrategy} from 'angular2/src/mock/mock_location_strategy';
 
-describe('Location', () => {
+describe('Router', () => {
 
-  let locationStrategy, location;
+  let locationStrategy, router: Router;
 
-  function makeLocation(baseHref: string = '/my/app', provider: any = CONST_EXPR([])): Location {
+  function makeRouter(baseHref: string = '/my/app', provider: any = CONST_EXPR([])): Router {
     locationStrategy = new MockLocationStrategy();
     locationStrategy.internalBaseHref = baseHref;
     let injector = Injector.resolveAndCreate(
-        [Location, provide(LocationStrategy, {useValue: locationStrategy}), provider]);
-    return location = injector.get(Location);
+        [Router, provide(LocationStrategy, {useValue: locationStrategy}), provider]);
+    return router = injector.get(Router);
   }
 
   beforeEach(() => {
-    makeLocation();
+    makeRouter();
   });
 
   it('should not prepend urls with starting slash when an empty URL is provided',
-     () => { expect(location.prepareExternalUrl('')).toEqual(locationStrategy.getBaseHref()); });
+     () => { expect(router.prepareExternalUrl('')).toEqual(locationStrategy.getBaseHref()); });
 
   it('should not prepend path with an extra slash when a baseHref has a trailing slash', () => {
-    let location = makeLocation('/my/slashed/app/');
-    expect(location.prepareExternalUrl('/page')).toEqual('/my/slashed/app/page');
+    let router = makeRouter('/my/slashed/app/');
+    expect(router.prepareExternalUrl('/page')).toEqual('/my/slashed/app/page');
   });
 
   it('should not append urls with leading slash on navigate', () => {
-    location.go('/my/app/user/btford');
+    router.go('/my/app/user/btford');
     expect(locationStrategy.path()).toEqual('/my/app/user/btford');
   });
 
   xit('should normalize urls on popstate', (done) => {
      locationStrategy.simulatePopState('/my/app/user/btford');
-     location.subscribe((ev) => {
+     router.subscribe((ev) => {
        expect(ev['url']).toEqual('/user/btford');
        done();
      });
@@ -59,74 +59,74 @@ describe('Location', () => {
 
   it('should revert to the previous path when a back() operation is executed', () => {
     let locationStrategy = new MockLocationStrategy();
-    let location = new Location(locationStrategy);
+    let router = new Router(locationStrategy);
 
-    function assertUrl(path) { expect(location.path()).toEqual(path); }
+    function assertUrl(path) { expect(router.path()).toEqual(path); }
 
-    location.go('/ready');
+    router.go('/ready');
     assertUrl('/ready');
 
-    location.go('/ready/set');
+    router.go('/ready/set');
     assertUrl('/ready/set');
 
-    location.go('/ready/set/go');
+    router.go('/ready/set/go');
     assertUrl('/ready/set/go');
 
-    location.back();
+    router.back();
     assertUrl('/ready/set');
 
-    location.back();
+    router.back();
     assertUrl('/ready');
   });
 
   it('should incorporate the provided query values into the location change', () => {
     let locationStrategy = new MockLocationStrategy();
-    let location = new Location(locationStrategy);
+    let router = new Router(locationStrategy);
 
-    location.go('/home', 'key=value');
-    expect(location.path()).toEqual('/home?key=value');
+    router.go('/home', 'key=value');
+    expect(router.path()).toEqual('/home?key=value');
 
-    location.go('/home', { foo: 'bar' });
-    expect(location.path()).toEqual('/home?foo=bar');
+    router.go('/home', { foo: 'bar' });
+    expect(router.path()).toEqual('/home?foo=bar');
   });
 
   it('should allow you to replace query params', () => {
     let locationStrategy = new MockLocationStrategy();
-    let location = new Location(locationStrategy);
+    let router = new Router(locationStrategy);
 
-    location.go('/home');
-    location.search('key=value');
-    expect(location.path()).toEqual('/home?key=value');
+    router.go('/home');
+    router.search('key=value');
+    expect(router.path()).toEqual('/home?key=value');
 
-    location.search({ foo: 'bar' });
-    expect(location.path()).toEqual('/home?foo=bar');
+    router.search({ foo: 'bar' });
+    expect(router.path()).toEqual('/home?foo=bar');
   });
 
   it('should replace the state when using search to update query params', () => {
     let locationStrategy = new MockLocationStrategy();
-    let location = new Location(locationStrategy);
+    let router = new Router(locationStrategy);
 
-    location.go('/home');
+    router.go('/home');
 
-    spyOn(location, 'replaceState');
-    spyOn(location, 'go');
+    spyOn(router, 'replace');
+    spyOn(router, 'go');
 
-    location.search('key=value');
-    expect(location.go).not.toHaveBeenCalled();
-    expect(location.replaceState).toHaveBeenCalledWith('/home', 'key=value');
+    router.search('key=value');
+    expect(router.go).not.toHaveBeenCalled();
+    expect(router.replace).toHaveBeenCalledWith('/home', 'key=value');
   });
 
   it('should update subject on location update', (done) => {
-    location.go('/update/path');
-    location.subscribe((ev) => {
+    router.go('/update/path');
+    router.subscribe((ev) => {
       expect(ev.path).toEqual('/update/path');
       done();
     });
   });
 
-  it('should update subject on location replaceState', (done) => {
-    location.replaceState('/replace/path');
-    location.subscribe((ev) => {
+  it('should update subject on location replace', (done) => {
+    router.replace('/replace/path');
+    router.subscribe((ev) => {
       expect(ev.path).toEqual('/replace/path');
       done();
     });

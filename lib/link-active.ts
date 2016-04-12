@@ -12,7 +12,7 @@ import {
   Renderer
 } from 'angular2/core';
 import { LinkTo } from './link-to';
-import { Location } from './location';
+import { Router } from './router';
 
 export interface LinkActiveOptions {
   exact: boolean;
@@ -37,13 +37,13 @@ export interface LinkActiveOptions {
    constructor(
      @Query(LinkTo) public links: QueryList<LinkTo>,
      public element: ElementRef,
-     public location$: Location,
+     public router$: Router,
      public renderer: Renderer
    ) {}
 
    ngAfterViewInit() {
-     this._sub = this.location$
-     .map(({path}) => this.location$.prepareExternalUrl(path))
+     this._sub = this.router$
+     .map(({path}) => this.router$.prepareExternalUrl(path))
      .subscribe(path => {
        this.checkActive(path);
      });

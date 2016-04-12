@@ -19,7 +19,6 @@
     "./index.spec.ts",
     "./link-active.spec.ts",
     "./link-to.spec.ts",
-    "./location.spec.ts",
     "./match-pattern.spec.ts",
     "./middleware.spec.ts",
     "./params.spec.ts",
@@ -28,6 +27,7 @@
     "./route-traverser.spec.ts",
     "./route-view.spec.ts",
     "./route.spec.ts",
+    "./router.spec.ts",
     "./util.spec.ts",
     "../typings/main.d.ts"
   ],

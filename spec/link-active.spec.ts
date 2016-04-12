@@ -14,7 +14,7 @@ import {
 } from 'angular2/core';
 import { LinkTo } from '../lib/link-to';
 import { LinkActive } from '../lib/link-active';
-import { LOCATION_PROVIDERS, Location } from '../lib/location';
+import { ROUTER_PROVIDERS, Router } from '../lib/router';
 import { SpyLocation } from 'angular2/router/testing';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
@@ -36,7 +36,7 @@ const compile = (tcb: TestComponentBuilder, template: string = '') => {
 
 describe('Link Active', () => {
   beforeEachProviders(() => [
-    LOCATION_PROVIDERS,
+    ROUTER_PROVIDERS,
     provide(LocationStrategy, { useClass: MockLocationStrategy })
   ]);
 
@@ -44,8 +44,8 @@ describe('Link Active', () => {
     expect(LinkActive).toBeDefined();
   });
 
-  it('should add the provided class to the active element', injectAsync([TestComponentBuilder, Location], (tcb, location$) => {
-    location$.next({
+  it('should add the provided class to the active element', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+    router$.next({
       path: '/page'
     });
 
@@ -59,8 +59,8 @@ describe('Link Active', () => {
       });
   }));
 
-  it('should support multiple classes on the active element', injectAsync([TestComponentBuilder, Location], (tcb, location$) => {
-    location$.next({
+  it('should support multiple classes on the active element', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+    router$.next({
       path: '/page'
     });
 
@@ -74,8 +74,8 @@ describe('Link Active', () => {
       });
   }));
 
-  it('should add the provided class to a child element', injectAsync([TestComponentBuilder, Location], (tcb, location$) => {
-    location$.next({
+  it('should add the provided class to a child element', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+    router$.next({
       path: '/page'
     });
 
@@ -93,8 +93,8 @@ describe('Link Active', () => {
       });
   }));
 
-  it('should add the provided class to a parent element with one active child element', injectAsync([TestComponentBuilder, Location], (tcb, location$) => {
-    location$.next({
+  it('should add the provided class to a parent element with one active child element', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+    router$.next({
       path: '/page2'
     });
 
@@ -114,8 +114,8 @@ describe('Link Active', () => {
       });
   }));
 
-  it('should match parent/child elements when using non-exact match', injectAsync([TestComponentBuilder, Location], (tcb, location$) => {
-    location$.next({
+  it('should match parent/child elements when using non-exact match', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+    router$.next({
       path: '/pages/page2'
     });
 
@@ -134,7 +134,7 @@ describe('Link Active', () => {
       });
   }));
 
-  it('should only check path for active link', injectAsync([TestComponentBuilder, Location], (tcb, location$) => {
+  it('should only check path for active link', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
     return compile(tcb, `
           <a linkActive="active" linkTo="/pages/page2" [queryParams]="{ search: 'criteria' }">Page 2</a><br>
       `)
@@ -143,7 +143,7 @@ describe('Link Active', () => {
         let compiled = fixture.debugElement.nativeElement;
         let link: Element = compiled.querySelector('a');
 
-        location$.next({
+        router$.next({
           path: '/pages/page2'
         });
 

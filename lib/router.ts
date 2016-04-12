@@ -16,48 +16,8 @@ export interface LocationChange {
   type: 'push' | 'pop' | 'replace';
 }
 
-/**
- * `Location` is a service that applications can use to interact with a browser's URL.
- * Depending on which {@link LocationStrategy} is used, `Location` will either persist
- * to the URL's path or the URL's hash segment.
- *
- * Note: it's better to use {@link Router#navigate} service to trigger route changes. Use
- * `Location` only if you need to interact with or create normalized URLs outside of
- * routing.
- *
- * `Location` is responsible for normalizing the URL against the application's base href.
- * A normalized URL is absolute from the URL host, includes the application's base href, and has no
- * trailing slash:
- * - `/my/app/user/123` is normalized
- * - `my/app/user/123` **is not** normalized
- * - `/my/app/user/123/` **is not** normalized
- *
- * ### Example
- *
- * ```
- * import {Component} from 'angular2/core';
- * import {
- *   ROUTER_DIRECTIVES,
- *   ROUTER_PROVIDERS,
- *   RouteConfig,
- *   Location
- * } from 'angular2/router';
- *
- * @Component({directives: [ROUTER_DIRECTIVES]})
- * @RouteConfig([
- *  {...},
- * ])
- * class AppCmp {
- *   constructor(location: Location) {
- *     location.go('/foo');
- *   }
- * }
- *
- * bootstrap(AppCmp, [ROUTER_PROVIDERS]);
- * ```
- */
 @Injectable()
-export class Location extends ReplaySubject<LocationChange> {
+export class Router extends ReplaySubject<LocationChange> {
   private _baseHref: string;
 
   constructor(public platformStrategy: LocationStrategy) {
@@ -115,19 +75,19 @@ export class Location extends ReplaySubject<LocationChange> {
    * Changes the browsers URL to the normalized version of the given URL, and replaces
    * the top item on the platform's history stack.
    */
-  replaceState(path: string, query: any = ''): void {
+  replace(path: string, query: any = ''): void {
     this.platformStrategy.replaceState(null, '', path, normalizeQuery(query));
     this._update('replace');
   }
 
   /**
-   * Changes the browsers query parameters. Replaces teh top item on the platform's
+   * Changes the browsers query parameters. Replaces the top item on the platform's
    * history stack
    */
    search(query: any = ''): void {
      const [ pathname ] = this.path().split('?');
 
-     this.replaceState(pathname, query);
+     this.replace(pathname, query);
    }
 
   /**
@@ -175,7 +135,7 @@ function normalizeQueryParams(params: string): string {
   return (params.length > 0 && params.substring(0, 1) !== '?') ? ('?' + params) : params;
 }
 
-export const LOCATION_PROVIDERS = [
-  provide(Location, { useClass: Location }),
+export const ROUTER_PROVIDERS = [
+  provide(Router, { useClass: Router }),
   provide(PlatformLocation, { useClass: BrowserPlatformLocation })
 ];

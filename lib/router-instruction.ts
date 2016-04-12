@@ -14,21 +14,21 @@ import { provide, Provider, Injector, OpaqueToken } from 'angular2/core';
 import { parse as parseQueryString } from 'query-string';
 
 import { compose } from './util';
-import { Location, LocationChange } from './location';
+import { Router, LocationChange } from './router';
 import { Routes, Route, ROUTES } from './route';
 import { RouteTraverser, Match } from './route-traverser';
 import { Middleware, provideMiddlewareForToken, identity } from './middleware';
 
-const LOCATION_MIDDLEWARE = new OpaqueToken(
-  '@ngrx/router Location Middleware'
+const ROUTER_MIDDLEWARE = new OpaqueToken(
+  '@ngrx/router Router Middleware'
 );
 
 const ROUTER_INSTRUCTION_MIDDLEWARE = new OpaqueToken(
   '@ngrx/router Router Instruction Middleware'
 );
 
-export const useLocationMiddleware = provideMiddlewareForToken(
-  LOCATION_MIDDLEWARE
+export const useRouterMiddleware = provideMiddlewareForToken(
+  ROUTER_MIDDLEWARE
 );
 
 export const useRouterInstructionMiddleware = provideMiddlewareForToken(
@@ -47,12 +47,12 @@ export class RouterInstruction extends Observable<NextInstruction> { }
 
 
 function createRouterInstruction(
-  location$: Location,
+  router$: Router,
   traverser: RouteTraverser,
   locationMiddleware: Middleware[],
   routerInstructionMiddleware: Middleware[]
 ): RouterInstruction {
-  return location$
+  return router$
     .observeOn(queue)
     .distinctUntilChanged((prev, next) => prev.path === next.path)
     .let<LocationChange>(compose(...locationMiddleware))
@@ -78,9 +78,9 @@ function createRouterInstruction(
 
 export const ROUTE_SET_PROVIDERS = [
   provide(RouterInstruction, {
-    deps: [ Location, RouteTraverser, LOCATION_MIDDLEWARE, ROUTER_INSTRUCTION_MIDDLEWARE ],
+    deps: [ Router, RouteTraverser, ROUTER_MIDDLEWARE, ROUTER_INSTRUCTION_MIDDLEWARE ],
     useFactory: createRouterInstruction
   }),
-  useLocationMiddleware(identity),
+  useRouterMiddleware(identity),
   useRouterInstructionMiddleware(identity)
 ];
