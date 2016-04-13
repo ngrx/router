@@ -99,7 +99,6 @@ That's it! You are ready to begin taking advantage of reactive routing!
 
 * [Route Configuration](route.md)
 * [Route Links](links.md)
-* [Index Routes](index-route.md)
 * [Redirects](redirect.md)
 * [Code Splitting](code-splitting.md)
 * [Route and Query Parameters](params.md)

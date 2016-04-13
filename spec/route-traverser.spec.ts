@@ -21,6 +21,11 @@ describe('RouteTraverser', function() {
   let OptionalRoute: Route;
   let OptionalRouteChild: Route;
   let CatchAllRoute: Route;
+  let RegexRoute: Route;
+  let UnnamedParamsRoute: Route;
+  let UnnamedParamsRouteChild: Route;
+  let PathlessRoute: Route;
+  let PathlessChildRoute: Route;
 
   let routes: Routes = [
     RootRoute = {
@@ -54,13 +59,31 @@ describe('RouteTraverser', function() {
       path: '/about'
     },
     GreedyRoute = {
-      path: '/**/f'
+      path: '/*/f'
     },
     OptionalRoute = {
-      path: '/(optional)',
+      path: '/(optional)?',
       children: [
         OptionalRouteChild = {
           path: 'child'
+        }
+      ]
+    },
+    RegexRoute = {
+      path: '/int/:int(\\d+)'
+    },
+    UnnamedParamsRoute = {
+      path: '/unnamed-params/(foo)',
+      children: [
+        UnnamedParamsRouteChild = {
+          path: '(bar)'
+        }
+      ]
+    },
+    PathlessRoute = {
+      children: [
+        PathlessChildRoute = {
+          path: 'pathless-child'
         }
       ]
     },
@@ -127,7 +150,7 @@ describe('RouteTraverser', function() {
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ FilesRoute ]);
-            expect(match.params).toEqual({ splat: [ 'a', 'b/c' ] });
+            expect(match.params).toEqual({ 0: 'a/b', 1: 'c' });
 
             done();
           });
@@ -141,7 +164,7 @@ describe('RouteTraverser', function() {
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ GreedyRoute ]);
-            expect(match.params).toEqual({ splat: 'foo/bar' });
+            expect(match.params).toEqual({ 0: 'foo/bar' });
 
             done();
           });
@@ -238,6 +261,61 @@ describe('RouteTraverser', function() {
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ CatchAllRoute ]);
+
+            done();
+          });
+      });
+
+      it('matches the "catch-all" route on a regex miss', function(done) {
+        traverser
+          .find('/int/foo')
+          .subscribe(match => {
+            expect(match).toBeDefined();
+            expect(match.routes).toEqual([ CatchAllRoute ]);
+
+            done();
+          });
+      });
+    });
+
+    describe('when the location matches a route with param regex', function() {
+      it('matches the correct routes and param', function(done) {
+        traverser
+          .find('/int/42')
+          .subscribe(match => {
+            expect(match).toBeDefined();
+            expect(match.routes).toEqual([ RegexRoute ]);
+            expect(match.params).toEqual({ int: '42' });
+
+            done();
+          });
+      });
+    });
+
+    describe('when the location matches a nested route with an unnamed param', function() {
+      it('matches the correct routes and params', function(done) {
+        traverser
+          .find('/unnamed-params/foo/bar')
+          .subscribe(match => {
+            expect(match).toBeDefined();
+            expect(match.routes).toEqual([ UnnamedParamsRoute, UnnamedParamsRouteChild ]);
+            expect(match.params).toEqual({ 0: 'foo', 1: 'bar' });
+
+            done();
+          });
+      });
+    });
+
+    describe('when the location matches pathless routes', function() {
+      it('matches the correct routes', function(done) {
+        traverser
+          .find('/pathless-child')
+          .subscribe(match => {
+            expect(match).toBeDefined();
+            expect(match.routes).toEqual([
+              PathlessRoute,
+              PathlessChildRoute
+            ]);
 
             done();
           });

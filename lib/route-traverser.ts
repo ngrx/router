@@ -16,7 +16,7 @@ import { OpaqueToken, Provider, Inject, Injectable } from 'angular2/core';
 
 import { ResourceLoader, Async } from './resource-loader';
 import { compose } from './util';
-import { matchPattern } from './match-pattern';
+import { matchPattern, makeParams } from './match-pattern';
 import { Route, IndexRoute, Routes, ROUTES } from './route';
 import { Middleware, provideMiddlewareForToken, identity } from './middleware';
 
@@ -109,7 +109,7 @@ export class RouteTraverser {
       .map<TraversalCandidate>(() => {
         return {
           route,
-          params: assignParams(paramNames, paramValues),
+          params: makeParams(paramNames, paramValues),
           isTerminal: remainingPathname === '' && !!route.path
         };
       })
