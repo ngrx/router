@@ -14,7 +14,6 @@
       "./docs/overview/params.md",
       "./docs/overview/redirect.md",
       "./docs/overview/guards.md",
-      "./docs/overview/index-route.md",
       "./docs/overview/code-splitting.md"
     ],
     "changelog": [

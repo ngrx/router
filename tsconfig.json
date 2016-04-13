@@ -13,6 +13,7 @@
   },
   "files": [
     "typings/main/ambient/query-string/index.d.ts",
+    "manual-typings/path-to-regexp.d.ts",
     "lib/index.ts"
   ]
 }

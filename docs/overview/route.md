@@ -76,7 +76,7 @@ const routes: Routes = [
       }
     ]
   }
-]
+];
 ```
 
 To get this working, all we have to do is provide the router with the route configuration when we bootstrap the application:
@@ -121,3 +121,68 @@ Then in our `App` template we give each `<route-view />` a name:
 })
 export class App { }
 ```
+
+# Index Routes
+Imagine if you wanted to show a list of posts when the user is just on `/blog`. When the user is on `/blog/:id`, don't show the list of posts and instead just show a single post. This can be accomplished using _Index Routes_.
+
+First we need to write a new `BlogPostsPage` component:
+
+```ts
+import { Component } from 'angular2/core';
+
+@Component({
+  selector: 'blog-posts-page',
+  template: `
+    <h3>All Posts</h3>
+  `
+})
+class BlogPostsPage { }
+```
+
+Now we just need to rewrite the `/blog` route configuration to specify an index route:
+
+```ts
+const routes: Routes = [
+  {
+    path: '/blog',
+    component: BlogPage
+    indexRoute: {
+      component: BlogPostsPage
+    },
+    children: [
+      {
+        path: ':id',
+        component: PostPage
+      }
+    ]
+  }
+]
+```
+
+## Pathless Routes
+Sometimes you want to share a common component and/or guards with a group of routes. To achieve this with @ngrx/router, you can write a _pathless_ route. Pathless routes have all of the features of a regular route except they do not define a path, preventing them from being routed to directly.
+
+Expanding on our blog example, lets change `/blog/:id` to `/posts/:id` but still preserve the same component tree:
+
+```ts
+import { Routes } from '@ngrx/router';
+
+const routes: Routes = [
+  {
+    component: BlogPage,
+    children: [
+      {
+        path: '/blog',
+        component: BlogPostsPage
+      },
+      {
+        path: '/posts/:id',
+        component: PostPage
+      }
+    ]
+  }
+];
+```
+
+## Pattern Matching
+Pattern matching in @ngrx/router is built on top of [path-to-regexp](https://github.com/pillarjs/path-to-regexp), a popular pattern matching library used by a large number of popular router projects like Express and Koa. For more information on what patterns @ngrx/router supports, checkout the [path-to-regexp documentation](https://github.com/pillarjs/path-to-regexp/blob/master/Readme.md#parameters). To play with pattern matching, use the [Express Route Tester](http://forbeslindesay.github.io/express-route-tester/?_ga=1.61903652.927460731.1460569779)

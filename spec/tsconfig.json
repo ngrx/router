@@ -11,7 +11,8 @@
   },
   "filesGlob": [
     "./**/*.ts",
-    "../typings/main.d.ts"
+    "../typings/main.d.ts",
+    "../manual-typings/path-to-regexp.d.ts"
   ],
   "files": [
     "./component-renderer.spec.ts",
@@ -29,7 +30,8 @@
     "./route.spec.ts",
     "./router.spec.ts",
     "./util.spec.ts",
-    "../typings/main.d.ts"
+    "../typings/main.d.ts",
+    "../manual-typings/path-to-regexp.d.ts"
   ],
   "atom": {
     "rewriteTsconfig": true
