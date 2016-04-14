@@ -1,3 +1,78 @@
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/ngrx/router/compare/v0.1.1...v0.2.0) (2016-04-14)
+
+
+### Code Refactoring
+
+* **core:** Updated core API for naming consistency (#53) ([d879a90](https://github.com/ngrx/router/commit/d879a90))
+* **location:** Renamed Location service to Router (#56) ([5b14ef9](https://github.com/ngrx/router/commit/5b14ef9))
+
+### Features
+
+* **NamedComponents:** Add ability to configure named components ([df895cf](https://github.com/ngrx/router/commit/df895cf)), closes [#6](https://github.com/ngrx/router/issues/6)
+* **patternMatching:** Switch to path-to-regexp for pattern matching (#57) ([4176112](https://github.com/ngrx/router/commit/4176112))
+
+
+### BREAKING CHANGES
+
+* location: Renamed `Location` service to `Router` and renamed `replaceState` method to `replace`
+
+Before:
+```ts
+import { Location } from '@ngrx/router';
+
+class App {
+    constructor(location: Location) {
+        location.replaceState('/path', { query: 1 });
+    }
+}
+```
+
+After:
+```ts
+import { Router } from '@ngrx/router';
+
+class App {
+    constructor(router: Router) {
+        router.replace('/path', { query: 1 });
+    }
+}
+```
+* core: Renamed `NextRoute` interface and `RouteSet` service to `NextInstruction` and `RouterInstruction` respectively.
+
+  Before:
+  ```ts
+  import { NextRoute, RouteSet } from '@ngrx/router';
+  ```
+
+  After:
+  ```ts
+  import { NextInstruction, RouterInstruction } from '@ngrx/router';
+  ```
+* core: Changed `NextInstruction` interface to include full `LocationChange` instead of just the path. Renamed `routes` to `routeConfigs`, `params` to `routeParams`, and `query` to `queryParams`
+
+  Before:
+  ```ts
+  interface NextRoute {
+    routes: Routes;
+    query: any;
+    params: any;
+    url: string
+  }
+  ```
+
+  After:
+  ```ts
+  interface NextInstruction {
+    routeConfigs: Routes;
+    queryParams: any;
+    routeParams: any;
+    locationChange: LocationChange;
+  }
+  ```
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/ngrx/router/compare/v0.0.7...v0.1.1) (2016-04-06)
 
@@ -205,3 +280,6 @@
 * **RouteView:** Added unit tests for route view ([09700ee](https://github.com/ngrx/router/commit/09700ee))
 * **test:** Added initial setup for testing ([aba3689](https://github.com/ngrx/router/commit/aba3689)), closes [#2](https://github.com/ngrx/router/issues/2)
 * **Util:** Added unit tests for utilities ([58b627c](https://github.com/ngrx/router/commit/58b627c))
+
+
+
