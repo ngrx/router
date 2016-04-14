@@ -1,3 +1,13 @@
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/ngrx/router/compare/v0.2.1...v0.2.2) (2016-04-14)
+
+
+### Bug Fixes
+
+* **guards:** Redirect in a guard on page load correctly causes location update ([b99e6fa](https://github.com/ngrx/router/commit/b99e6fa))
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/ngrx/router/compare/v0.2.0...v0.2.1) (2016-04-14)
 
