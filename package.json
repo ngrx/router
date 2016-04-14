@@ -28,7 +28,7 @@
     "karma:watch": "karma start",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "postbuild": "npm run prepare",
-    "preversion": "run run test",
+    "preversion": "npm run test",
     "version": "npm run changelog && git add CHANGELOG.md"
   },
   "authors": [
