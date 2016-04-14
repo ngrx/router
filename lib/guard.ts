@@ -14,8 +14,6 @@ import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/every';
-import 'rxjs/add/operator/observeOn';
-import { asap } from 'rxjs/scheduler/asap';
 import { Observable } from 'rxjs/Observable';
 import { provide, Provider, OpaqueToken, Injector } from 'angular2/core';
 
@@ -40,7 +38,6 @@ export const guardMiddleware = createMiddleware(function(injector: Injector) {
         const resolved = guards.map(guard => guard(route, params, isTerminal));
 
         return Observable.merge(...resolved)
-          .observeOn(asap)
           .every(value => !!value)
           .map(passed => {
             if ( passed ) {

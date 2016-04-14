@@ -65,12 +65,14 @@ describe('Route Set', function() {
     });
   });
 
-  it('should share a subscription amonst all subscribers', function() {
+  it('should share a subscription amonst all subscribers', function(done) {
     router.go('/');
 
     routerInstruction.subscribe();
-    routerInstruction.subscribe();
+    routerInstruction.subscribe(() => {
+      expect(mockTraverser.find).toHaveBeenCalledTimes(1);
 
-    expect(mockTraverser.find).toHaveBeenCalledTimes(1);
+      done();
+    });
   });
 });
