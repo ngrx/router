@@ -73,6 +73,28 @@ describe('Link To', () => {
       });
   }));
 
+  it('should remove trailing slashes from the path', injectAsync([TestComponentBuilder], (tcb) => {
+    return compile(tcb, '<a linkTo="/page/////">Page</a>')
+      .then((fixture) => {
+        fixture.detectChanges();
+        let compiled = fixture.debugElement.nativeElement;
+        let link: Element = compiled.querySelector('a');
+
+        expect(link.getAttribute('href')).toEqual('/page');
+      });
+  }));
+
+  it('should not remove single slash from the path', injectAsync([TestComponentBuilder], (tcb) => {
+    return compile(tcb, '<a linkTo="/">Page</a>')
+      .then((fixture) => {
+        fixture.detectChanges();
+        let compiled = fixture.debugElement.nativeElement;
+        let link: Element = compiled.querySelector('a');
+
+        expect(link.getAttribute('href')).toEqual('/');
+      });
+  }));
+
   describe('When Clicked', () => {
     it('should go to the provided URL', injectAsync([TestComponentBuilder, Router], (tcb, router) => {
       let linkHref = '/page';

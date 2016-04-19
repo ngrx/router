@@ -52,7 +52,9 @@ export class LinkTo {
   }
 
   private _updateHref() {
-    this.linkHref = this._router.prepareExternalUrl(this._href, this._query);
+    let path = this._cleanUpHref(this._href);
+
+    this.linkHref = this._router.prepareExternalUrl(path, this._query);
   }
 
   /**
@@ -62,6 +64,16 @@ export class LinkTo {
     let buttonEvent = event.which || event.button;
 
     return (buttonEvent > 1 || event.ctrlKey || event.metaKey || event.shiftKey);
+  }
+
+  private _cleanUpHref(href: string = ''): string {
+    // Check for trailing slashes in the path
+    while(href.length > 1 && href.substr(-1) === "/") {
+      // Remove trailing slashes
+      href = href.substring(0, href.length - 1);
+    }
+
+    return href;
   }
 }
 
