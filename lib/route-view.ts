@@ -36,8 +36,8 @@ import { ComponentRenderer } from './component-renderer';
 export class RouteView implements OnDestroy, OnInit {
   private _prev: ComponentRef;
   private _sub: any;
-  private _routeSetProvider = provide(RouterInstruction, {
-    useValue: this._routeSet$.map<NextInstruction>(set => {
+  private _routerInstructionProvider = provide(RouterInstruction, {
+    useValue: this._routerInstruction$.map<NextInstruction>(set => {
       return {
         locationChange: set.locationChange,
         routeConfigs: [ ...set.routeConfigs ].slice(1),
@@ -49,7 +49,7 @@ export class RouteView implements OnDestroy, OnInit {
 
   constructor(
     @Attribute('name') private _name: string,
-    protected _routeSet$: RouterInstruction,
+    protected _routerInstruction$: RouterInstruction,
     protected _injector: Injector,
     protected _renderer: ComponentRenderer,
     protected _dcl: DynamicComponentLoader,
@@ -57,7 +57,7 @@ export class RouteView implements OnDestroy, OnInit {
   ) { }
 
   ngOnInit() {
-    this._sub = this._routeSet$
+    this._sub = this._routerInstruction$
       .map(set => {
         const route = set.routeConfigs[0];
         const components = getNamedComponents(route, this._name);
@@ -71,7 +71,7 @@ export class RouteView implements OnDestroy, OnInit {
       .do(ins => this._cleanPreviousRef())
       .filter(({ components }) => !!components.component || !!components.loadComponent)
       .switchMap(({ route, components }) => this._renderer.render(
-        route, components, this._injector, this._ref, this._dcl, [ this._routeSetProvider ]
+        route, components, this._injector, this._ref, this._dcl, [ this._routerInstructionProvider ]
       ))
       .subscribe((ref: ComponentRef) => this._prev = ref);
   }
