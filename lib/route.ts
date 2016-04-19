@@ -31,6 +31,10 @@ export interface Route extends IndexRoute {
 export const ROUTES = new OpaqueToken('@ngrx/router Init Routes');
 
 export function getNamedComponents(route: IndexRoute, name?: string): BaseRoute {
+  if (!route) {
+    return { component: null, loadComponent: null };
+  }
+
   if (!name) {
     return { component: route.component, loadComponent: route.loadComponent };
   }

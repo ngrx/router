@@ -32,5 +32,12 @@ describe('Route', function() {
       expect(resolved.component).toBe(FixtureB);
       expect(resolved.loadComponent).toBe(FixctureD);
     });
+
+    it('should return null for undefined routes', function() {
+      const resolved = getNamedComponents(undefined, 'main');
+
+      expect(resolved.component).toBe(null);
+      expect(resolved.loadComponent).toBe(null);
+    });
   });
 });
