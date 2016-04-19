@@ -1,3 +1,14 @@
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/ngrx/router/compare/v0.2.2...v0.2.3) (2016-04-19)
+
+
+### Bug Fixes
+
+* **linkTo:** Remove trailing slashes from the linkTo path (#59) ([c048a51](https://github.com/ngrx/router/commit/c048a51))
+* **UndefinedRoutes:** Route view correctly ignores undefined routes (#60) ([1cdb67a](https://github.com/ngrx/router/commit/1cdb67a))
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/ngrx/router/compare/v0.2.1...v0.2.2) (2016-04-14)
 
