@@ -9,7 +9,7 @@ import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/observeOn';
 import { Observable } from 'rxjs/Observable';
-import { asap } from 'rxjs/scheduler/asap';
+import { async } from 'rxjs/scheduler/async';
 import { provide, Provider, Injector, OpaqueToken } from 'angular2/core';
 import { parse as parseQueryString } from 'query-string';
 
@@ -53,7 +53,7 @@ function createRouterInstruction(
   routerInstructionMiddleware: Middleware[]
 ): RouterInstruction {
   return router$
-    .observeOn(asap)
+    .observeOn(async)
     .distinctUntilChanged((prev, next) => prev.path === next.path)
     .let<LocationChange>(compose(...locationMiddleware))
     .switchMap(change => {
