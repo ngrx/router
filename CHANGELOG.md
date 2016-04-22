@@ -1,10 +1,11 @@
-<a name="0.2.3"></a>
-## [0.2.3](https://github.com/ngrx/router/compare/v0.2.2...v0.2.3) (2016-04-19)
+<a name="0.2.4"></a>
+## [0.2.4](https://github.com/ngrx/router/compare/v0.2.2...v0.2.4) (2016-04-22)
 
 
 ### Bug Fixes
 
 * **linkTo:** Remove trailing slashes from the linkTo path (#59) ([c048a51](https://github.com/ngrx/router/commit/c048a51))
+* **RouterInstruction:** Switched to async scheduler because zone.js (#61) ([da6f725](https://github.com/ngrx/router/commit/da6f725))
 * **UndefinedRoutes:** Route view correctly ignores undefined routes (#60) ([1cdb67a](https://github.com/ngrx/router/commit/1cdb67a))
 
 
