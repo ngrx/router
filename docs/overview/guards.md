@@ -65,7 +65,7 @@ const authGuard = createGuard(function(http: Http, router: Router) {
         return Observable.of(false);
       });
   }
-}, [ Http ]);
+}, [ Http, Router ]);
 ```
 
 ### Injection
