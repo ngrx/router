@@ -23,10 +23,10 @@ import { useTraversalMiddleware, TraversalCandidate } from './route-traverser';
 import { createMiddleware } from './middleware';
 
 export interface Guard {
-  (route: Route, params: any, isTerminal: boolean): Observable<boolean>;
+  (params: any, route: Route, isTerminal: boolean): Observable<boolean>;
 }
 
-export const createGuard = createProviderFactory<Guard>('@ngrx/router Guard');
+export const provideGuard = createProviderFactory<Guard>('@ngrx/router Guard');
 
 export const guardMiddleware = createMiddleware(function(injector: Injector) {
   return (route$: Observable<TraversalCandidate>) => route$
@@ -35,7 +35,7 @@ export const guardMiddleware = createMiddleware(function(injector: Injector) {
         const guards: Guard[] = route.guards
           .map(provider => injector.resolveAndInstantiate(provider));
 
-        const resolved = guards.map(guard => guard(route, params, isTerminal));
+        const resolved = guards.map(guard => guard(params, route, isTerminal));
 
         return Observable.merge(...resolved)
           .every(value => !!value)
