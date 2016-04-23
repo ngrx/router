@@ -3,7 +3,7 @@ The Router exposes route and query parameters using observable services.
 
 Using `RouteParams`:
 ```ts
-import { QueryParams } from '@ngrx/router';
+import { RouteParams } from '@ngrx/router';
 
 @Component({
   selector: 'post-page',
