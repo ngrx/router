@@ -59,7 +59,7 @@ describe('Link Active', () => {
       });
   }));
 
-  iit('should add a default class to the active element if not provided', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+  it('should add a default class to the active element if not provided', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
     router$.next({
       path: '/page'
     });

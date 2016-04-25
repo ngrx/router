@@ -34,7 +34,7 @@ export function provideRouter(routes: Routes) {
 }
 
 
-export { Guard, createGuard } from './guard';
+export { Guard, provideGuard } from './guard';
 export { LocationChange, Router } from './router';
 export { Middleware, createMiddleware } from './middleware';
 export { RouteParams, QueryParams } from './params';
