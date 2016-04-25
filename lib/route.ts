@@ -17,6 +17,7 @@ export interface IndexRoute extends BaseRoute {
   components?: { [name: string]: Type };
   loadComponents?: { [name: string]: Async<Type> };
   redirectTo?: string;
+  options?: any;
 }
 
 export interface Route extends IndexRoute {
