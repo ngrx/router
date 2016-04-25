@@ -59,6 +59,22 @@ describe('Link Active', () => {
       });
   }));
 
+  iit('should add a default class to the active element if not provided', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+    router$.next({
+      path: '/page'
+    });
+
+    return compile(tcb, '<a [linkActive] linkTo="/page">Page</a>')
+      .then((fixture) => {
+        fixture.detectChanges();
+        let compiled = fixture.debugElement.nativeElement;
+        let link: Element = compiled.querySelector('a');
+
+        fixture.detectChanges();
+        expect(link.getAttribute('class')).toEqual('active');
+      });
+  }));
+
   it('should support multiple classes on the active element', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
     router$.next({
       path: '/page'
