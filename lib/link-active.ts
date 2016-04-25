@@ -30,7 +30,7 @@ export interface LinkActiveOptions {
  */
  @Directive({ selector: '[linkActive]' })
  export class LinkActive implements AfterViewInit, OnDestroy {
-   @Input('linkActive') activeClass: string;
+   @Input('linkActive') activeClass: string = 'active';
    @Input() activeOptions: LinkActiveOptions = { exact: true };
    private _sub: any;
 
