@@ -24,7 +24,7 @@
     "./middleware.spec.ts",
     "./params.spec.ts",
     "./redirect.spec.ts",
-    "./route-set.spec.ts",
+    "./router-instruction.spec.ts",
     "./route-traverser.spec.ts",
     "./route-view.spec.ts",
     "./route.spec.ts",
