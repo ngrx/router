@@ -7,14 +7,14 @@ import { OpaqueToken, Provider, provide, Injector } from 'angular2/core';
 
 import { compose, createProviderFactory } from './util';
 
-export interface Middleware {
-  (input$: Observable<any>): Observable<any>;
+export interface Middleware<T> {
+  (input$: Observable<T>): Observable<T>;
 }
 
-export const identity: Middleware = t => t;
+export const identity: Middleware<any> = t => t;
 
-export function createMiddleware(
-  useFactory: (...deps: any[]) => Middleware, deps?: any[]
+export function createMiddleware<T>(
+  useFactory: (...deps: any[]) => Middleware<T>, deps?: any[]
 ): Provider {
   return provide(new OpaqueToken('@ngrx/store middleware'), {
     deps,
@@ -27,7 +27,7 @@ export function provideMiddlewareForToken(token) {
     return t instanceof Provider;
   }
 
-  return function(..._middleware: Array<Middleware | Provider>): Provider[] {
+  return function(..._middleware: Array<Middleware<any> | Provider>): Provider[] {
     const provider = provide(token, {
       multi: true,
       deps: [ Injector ],

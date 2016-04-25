@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
-import { OpaqueToken, Provider, Inject, Injectable } from 'angular2/core';
+import { OpaqueToken, Provider, Inject, Injectable, Optional } from 'angular2/core';
 
 import { ResourceLoader, Async } from './resource-loader';
 import { compose } from './util';
@@ -42,11 +42,15 @@ export interface TraversalCandidate {
 
 @Injectable()
 export class RouteTraverser {
+  private _traversalMiddleware: Middleware<TraversalCandidate>;
+
   constructor(
     private _loader: ResourceLoader,
-    @Inject(TRAVERSAL_MIDDLEWARE) private _middleware: Middleware[],
-    @Inject(ROUTES) private _routes: Routes
-  ) { }
+    @Inject(ROUTES) private _routes: Routes,
+    @Inject(TRAVERSAL_MIDDLEWARE) allTraversalMiddleware: Middleware<TraversalCandidate>[]
+  ) {
+    this._traversalMiddleware = compose(...allTraversalMiddleware);
+  }
 
   /**
   * Asynchronously matches the given location to a set of routes. The state
@@ -113,7 +117,7 @@ export class RouteTraverser {
           isTerminal: remainingPathname === '' && !!route.path
         };
       })
-      .let<TraversalCandidate>(compose(...this._middleware))
+      .let(this._traversalMiddleware)
       .filter(({ route }) => !!route)
       .mergeMap(({ route, params, isTerminal }) => {
         if ( isTerminal ) {

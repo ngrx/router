@@ -27,7 +27,7 @@ describe('Middleware', function() {
     ]);
 
     const middlewareArray = injector.get(testToken);
-    compose(...middlewareArray)();
+    compose(...middlewareArray)(null);
 
     expect(first.apply).toHaveBeenCalled();
     expect(second.apply).toHaveBeenCalled();
