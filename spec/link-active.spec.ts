@@ -169,4 +169,23 @@ describe('Link Active', () => {
         expect(link.getAttribute('class')).toEqual('active');
       });
   })));
+
+  describe('With Hash', () => {
+    it('should add the provided class to the active element', async(inject([TestComponentBuilder, Router, LocationStrategy], (tcb, router$, ls) => {
+      ls.internalBaseHref = '#';
+
+      router$.next({
+        path: '/'
+      });
+
+      return compile(tcb, '<a linkActive="active" linkTo="/">Page</a>')
+        .then((fixture) => {
+          fixture.detectChanges();
+          let compiled = fixture.debugElement.nativeElement;
+          let link: Element = compiled.querySelector('a');
+
+          expect(link.getAttribute('class')).toEqual('active');
+        });
+    })));
+  });
 });
