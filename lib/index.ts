@@ -1,6 +1,5 @@
 import { Provider, provide } from 'angular2/core';
-import { LocationStrategy } from 'angular2/src/router/location/location_strategy';
-import { PathLocationStrategy } from 'angular2/src/router/location/path_location_strategy';
+import { LocationStrategy, PathLocationStrategy } from 'angular2/platform/common';
 
 import { ROUTER_PROVIDERS } from './router';
 import { ROUTE_SET_PROVIDERS } from './router-instruction';

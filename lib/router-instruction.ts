@@ -10,7 +10,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/observeOn';
 import { Observable } from 'rxjs/Observable';
 import { async } from 'rxjs/scheduler/async';
-import { provide, Provider, Injector, OpaqueToken } from 'angular2/core';
+import { provide, Provider, ReflectiveInjector, OpaqueToken } from 'angular2/core';
 import { parse as parseQueryString } from 'query-string';
 
 import { compose } from './util';

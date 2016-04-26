@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs/Subject';
-import { Injector, provide } from 'angular2/core';
+import { ReflectiveInjector, provide } from 'angular2/core';
 import { NextInstruction, RouterInstruction } from '../lib/router-instruction';
 import { RouteParams, QueryParams, PARAMS_PROVIDERS } from '../lib/params';
 
@@ -23,7 +23,7 @@ describe('Params Services', function() {
 
   beforeEach(function() {
     routerInstruction$ = new Subject<NextInstruction>();
-    const injector = Injector.resolveAndCreate([
+    const injector = ReflectiveInjector.resolveAndCreate([
       PARAMS_PROVIDERS,
       provide(RouterInstruction, { useValue: routerInstruction$ })
     ]);

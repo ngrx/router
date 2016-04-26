@@ -13,13 +13,14 @@ import 'rxjs/add/operator/switchMap';
 import {
   Component,
   ComponentRef,
+  ReflectiveInjector,
   Injector,
   provide,
   OnDestroy,
   OnInit,
   Provider,
   PLATFORM_DIRECTIVES,
-  ElementRef,
+  ViewContainerRef,
   DynamicComponentLoader,
   Attribute
 } from 'angular2/core';
@@ -53,7 +54,7 @@ export class RouteView implements OnDestroy, OnInit {
     protected _injector: Injector,
     protected _renderer: ComponentRenderer,
     protected _dcl: DynamicComponentLoader,
-    protected _ref: ElementRef
+    protected _ref: ViewContainerRef
   ) { }
 
   ngOnInit() {
@@ -83,7 +84,7 @@ export class RouteView implements OnDestroy, OnInit {
 
   protected _cleanPreviousRef() {
     if (this._prev) {
-      this._prev.dispose();
+      this._prev.destroy();
       this._prev = null;
     }
   }

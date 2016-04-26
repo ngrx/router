@@ -1,4 +1,4 @@
-import { Injector, provide } from 'angular2/core';
+import { ReflectiveInjector, provide } from 'angular2/core';
 
 import { RESOURCE_LOADER_PROVIDERS } from '../lib/resource-loader';
 import { Routes, Route, ROUTES } from '../lib/route';
@@ -93,7 +93,7 @@ describe('RouteTraverser', function() {
   ];
 
   beforeEach(function() {
-    const injector = Injector.resolveAndCreate([
+    const injector = ReflectiveInjector.resolveAndCreate([
       MATCH_ROUTE_PROVIDERS,
       RESOURCE_LOADER_PROVIDERS,
       provide(ROUTES, { useValue: routes })

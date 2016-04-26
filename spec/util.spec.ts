@@ -1,4 +1,4 @@
-import { Injector, Provider, OpaqueToken } from 'angular2/core';
+import { ReflectiveInjector, Provider, OpaqueToken } from 'angular2/core';
 import { createProviderFactory, compose } from '../lib/util';
 
 

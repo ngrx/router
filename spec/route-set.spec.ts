@@ -1,8 +1,8 @@
 import 'rxjs/add/operator/withLatestFrom';
-import { Injector, provide } from 'angular2/core';
+import { ReflectiveInjector, provide } from 'angular2/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { LocationStrategy } from 'angular2/src/router/location/location_strategy';
+import { LocationStrategy } from 'angular2/platform/common';
 import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
 
 import { RouteTraverser } from '../lib/route-traverser';
@@ -27,7 +27,7 @@ describe('Route Set', function() {
 
     spyOn(mockTraverser, 'find').and.callThrough();
 
-    const injector = Injector.resolveAndCreate([
+    const injector = ReflectiveInjector.resolveAndCreate([
       ROUTER_PROVIDERS,
       ROUTE_SET_PROVIDERS,
       provide(RouteTraverser, { useValue: mockTraverser }),

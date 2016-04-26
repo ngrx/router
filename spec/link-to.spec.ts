@@ -5,14 +5,15 @@ import {
   it,
   iit,
   TestComponentBuilder,
-  injectAsync,
+  async,
+  inject,
   expect
 } from 'angular2/testing';
 import { Component, provide, ViewChild } from 'angular2/core';
 import { LinkTo } from '../lib/link-to';
 import { ROUTER_PROVIDERS, Router } from '../lib/router';
 import { Observable } from 'rxjs/Observable';
-import { LocationStrategy } from 'angular2/src/router/location/location_strategy';
+import { LocationStrategy } from 'angular2/platform/common';
 import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
 
 @Component({
@@ -40,7 +41,7 @@ describe('Link To', () => {
     expect(LinkTo).toBeDefined();
   });
 
-  it('should generate an href', injectAsync([TestComponentBuilder], (tcb) => {
+  it('should generate an href', async(inject([TestComponentBuilder], (tcb) => {
     return compile(tcb, '<a linkTo="/page">Page</a>')
       .then((fixture) => {
         fixture.detectChanges();
@@ -49,9 +50,9 @@ describe('Link To', () => {
 
         expect(link.getAttribute('href')).toEqual('/page');
       });
-  }));
+  })));
 
-  it('should generate an href with a provided query params object', injectAsync([TestComponentBuilder], (tcb) => {
+  it('should generate an href with a provided query params object', async(inject([TestComponentBuilder], (tcb) => {
     return compile(tcb, '<a linkTo="/page" [queryParams]="{id: 1}">Page</a>')
       .then((fixture) => {
         fixture.detectChanges();
@@ -60,9 +61,9 @@ describe('Link To', () => {
 
         expect(link.getAttribute('href')).toEqual('/page?id=1');
       });
-  }));
+  })));
 
-  it('should generate an href with a provided query params string', injectAsync([TestComponentBuilder], (tcb) => {
+  it('should generate an href with a provided query params string', async(inject([TestComponentBuilder], (tcb) => {
     return compile(tcb, '<a linkTo="/page" queryParams="id=1">Page</a>')
       .then((fixture) => {
         fixture.detectChanges();
@@ -71,9 +72,9 @@ describe('Link To', () => {
 
         expect(link.getAttribute('href')).toEqual('/page?id=1');
       });
-  }));
+  })));
 
-  it('should remove trailing slashes from the path', injectAsync([TestComponentBuilder], (tcb) => {
+  it('should remove trailing slashes from the path', async(inject([TestComponentBuilder], (tcb) => {
     return compile(tcb, '<a linkTo="/page/////">Page</a>')
       .then((fixture) => {
         fixture.detectChanges();
@@ -82,9 +83,9 @@ describe('Link To', () => {
 
         expect(link.getAttribute('href')).toEqual('/page');
       });
-  }));
+  })));
 
-  it('should not remove single slash from the path', injectAsync([TestComponentBuilder], (tcb) => {
+  it('should not remove single slash from the path', async(inject([TestComponentBuilder], (tcb) => {
     return compile(tcb, '<a linkTo="/">Page</a>')
       .then((fixture) => {
         fixture.detectChanges();
@@ -93,10 +94,10 @@ describe('Link To', () => {
 
         expect(link.getAttribute('href')).toEqual('/');
       });
-  }));
+  })));
 
   describe('When Clicked', () => {
-    it('should go to the provided URL', injectAsync([TestComponentBuilder, Router], (tcb, router) => {
+    it('should go to the provided URL', async(inject([TestComponentBuilder, Router], (tcb, router) => {
       let linkHref = '/page';
       let queryParams = '{id: 1}';
 
@@ -112,9 +113,9 @@ describe('Link To', () => {
 
           expect(router.go).toHaveBeenCalledWith(linkHref, queryParams);
         });
-    }));
+    })));
 
-    it('should not prevent default behavior with a provided target', injectAsync([TestComponentBuilder, Router], (tcb, router) => {
+    it('should not prevent default behavior with a provided target', async(inject([TestComponentBuilder, Router], (tcb, router) => {
       let linkHref = '/page';
       let queryParams = 'id=1';
 
@@ -132,9 +133,9 @@ describe('Link To', () => {
 
           expect(router.go).not.toHaveBeenCalled();
         });
-    }));
+    })));
 
-    it('should not prevent default behavior with a combo click', injectAsync([TestComponentBuilder, Router], (tcb, router) => {
+    it('should not prevent default behavior with a combo click', async(inject([TestComponentBuilder, Router], (tcb, router) => {
       let linkHref = '/page';
       let queryParams = 'id=1';
 
@@ -166,6 +167,6 @@ describe('Link To', () => {
 
           expect(router.go.calls.count()).toEqual(0);
         });
-    }));
+    })));
   });
 });

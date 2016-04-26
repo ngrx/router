@@ -7,7 +7,7 @@
  * the route a candidate. Using guards, you can auth protect routes, run data
  * fetching, etc.
  *
- * A limitation of guards is that they are instantiated with the _root_ Injector.
+ * A limitation of guards is that they are instantiated with the _root_ ReflectiveInjector.
  * For more powerful injection, consider looking at render middleware
  */
 import 'rxjs/add/observable/merge';
@@ -15,7 +15,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/every';
 import { Observable } from 'rxjs/Observable';
-import { provide, Provider, OpaqueToken, Injector } from 'angular2/core';
+import { provide, Provider, OpaqueToken, Injector, ReflectiveInjector } from 'angular2/core';
 
 import { createProviderFactory } from './util';
 import { Route } from './route';
@@ -28,7 +28,7 @@ export interface Guard {
 
 export const provideGuard = createProviderFactory<Guard>('@ngrx/router Guard');
 
-export const guardMiddleware = createMiddleware(function(injector: Injector) {
+export const guardMiddleware = createMiddleware(function(injector: ReflectiveInjector) {
   return (route$: Observable<TraversalCandidate>) => route$
     .mergeMap<TraversalCandidate>(({ route, params, isTerminal }) => {
       if ( !!route.guards && Array.isArray(route.guards) && route.guards.length > 0 ) {
