@@ -4,13 +4,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {
   DynamicComponentLoader,
-  ElementRef,
+  ViewContainerRef,
+  ReflectiveInjector,
   Injector,
   Injectable,
   Inject,
   Type,
   Provider,
-  ResolvedProvider,
+  ResolvedReflectiveProvider,
   OpaqueToken,
   ComponentRef
 } from 'angular2/core';
@@ -55,7 +56,7 @@ export class ComponentRenderer {
     route: Route,
     components: BaseRoute,
     injector: Injector,
-    ref: ElementRef,
+    ref: ViewContainerRef,
     dcl: DynamicComponentLoader,
     providers: Provider[]
   ) {
@@ -66,7 +67,7 @@ export class ComponentRenderer {
       })
       .let<RenderInstruction>(compose(...this._preMiddleware))
       .mergeMap(instruction => {
-        const providers = Injector.resolve(instruction.providers);
+        const providers = ReflectiveInjector.resolve(instruction.providers);
         const component = instruction.component;
 
         return dcl.loadNextToLocation(component, ref, providers);

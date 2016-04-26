@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs/Subject';
-import { Injector, provide } from 'angular2/core';
+import { ReflectiveInjector, provide } from 'angular2/core';
 import { NextInstruction } from '../lib/router-instruction';
 import { Middleware } from '../lib/middleware';
 import { redirectMiddleware } from '../lib/redirect';
@@ -27,7 +27,7 @@ describe('Redirect Middleware', function() {
     routeSet$ = new Subject<NextInstruction>();
     spyOn(router, 'replace');
     spyOn(observer, 'next');
-    const injector = Injector.resolveAndCreate([
+    const injector = ReflectiveInjector.resolveAndCreate([
       provide(Router, { useValue: router })
     ]);
 

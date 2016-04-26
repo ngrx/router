@@ -5,7 +5,8 @@ import {
   it,
   iit,
   TestComponentBuilder,
-  injectAsync,
+  async,
+  inject,
   expect
 } from 'angular2/testing';
 import {
@@ -18,7 +19,7 @@ import { ROUTER_PROVIDERS, Router } from '../lib/router';
 import { SpyLocation } from 'angular2/router/testing';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
-import { LocationStrategy } from 'angular2/src/router/location/location_strategy';
+import { LocationStrategy } from 'angular2/platform/common';
 import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
 
 @Component({
@@ -44,7 +45,7 @@ describe('Link Active', () => {
     expect(LinkActive).toBeDefined();
   });
 
-  it('should add the provided class to the active element', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+  it('should add the provided class to the active element', async(inject([TestComponentBuilder, Router], (tcb, router$) => {
     router$.next({
       path: '/page'
     });
@@ -57,9 +58,9 @@ describe('Link Active', () => {
 
         expect(link.getAttribute('class')).toEqual('active');
       });
-  }));
+  })));
 
-  it('should add a default class to the active element if not provided', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+  it('should add a default class to the active element if not provided', async(inject([TestComponentBuilder, Router], (tcb, router$) => {
     router$.next({
       path: '/page'
     });
@@ -73,9 +74,9 @@ describe('Link Active', () => {
         fixture.detectChanges();
         expect(link.getAttribute('class')).toEqual('active');
       });
-  }));
+  })));
 
-  it('should support multiple classes on the active element', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+  it('should support multiple classes on the active element', async(inject([TestComponentBuilder, Router], (tcb, router$) => {
     router$.next({
       path: '/page'
     });
@@ -88,9 +89,9 @@ describe('Link Active', () => {
 
         expect(link.getAttribute('class')).toEqual('active orange');
       });
-  }));
+  })));
 
-  it('should add the provided class to a child element', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+  it('should add the provided class to a child element', async(inject([TestComponentBuilder, Router], (tcb, router$) => {
     router$.next({
       path: '/page'
     });
@@ -107,9 +108,9 @@ describe('Link Active', () => {
 
         expect(parentElement.getAttribute('class')).toEqual('active');
       });
-  }));
+  })));
 
-  it('should add the provided class to a parent element with one active child element', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+  it('should add the provided class to a parent element with one active child element', async(inject([TestComponentBuilder, Router], (tcb, router$) => {
     router$.next({
       path: '/page2'
     });
@@ -128,9 +129,9 @@ describe('Link Active', () => {
 
         expect(parentElement.getAttribute('class')).toEqual('active');
       });
-  }));
+  })));
 
-  it('should match parent/child elements when using non-exact match', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+  it('should match parent/child elements when using non-exact match', async(inject([TestComponentBuilder, Router], (tcb, router$) => {
     router$.next({
       path: '/pages/page2'
     });
@@ -148,9 +149,9 @@ describe('Link Active', () => {
         expect(pagesLink.getAttribute('class')).toEqual('active');
         expect(page2Link.getAttribute('class')).toEqual('active');
       });
-  }));
+  })));
 
-  it('should only check path for active link', injectAsync([TestComponentBuilder, Router], (tcb, router$) => {
+  it('should only check path for active link', async(inject([TestComponentBuilder, Router], (tcb, router$) => {
     return compile(tcb, `
           <a linkActive="active" linkTo="/pages/page2" [queryParams]="{ search: 'criteria' }">Page 2</a><br>
       `)
@@ -167,5 +168,5 @@ describe('Link Active', () => {
         expect(link.getAttribute('href')).toEqual('/pages/page2?search=criteria');
         expect(link.getAttribute('class')).toEqual('active');
       });
-  }));
+  })));
 });

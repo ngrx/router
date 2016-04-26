@@ -1,6 +1,6 @@
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { Injector } from 'angular2/core';
+import { ReflectiveInjector } from 'angular2/core';
 
 import { Route } from '../lib/route';
 import { Middleware } from '../lib/middleware';
@@ -10,14 +10,14 @@ import { Guard, provideGuard, guardMiddleware } from '../lib/guard';
 
 describe('Guard Middleware', function() {
   let guardRunner: Middleware;
-  let injector: Injector;
+  let injector: ReflectiveInjector;
 
   function route(route: Route, params = {}, isTerminal = false) {
     return Observable.of({ route, params, isTerminal });
   }
 
   beforeEach(function() {
-    injector = Injector.resolveAndCreate([]);
+    injector = ReflectiveInjector.resolveAndCreate([]);
     guardRunner = injector.resolveAndInstantiate(guardMiddleware);
   });
 

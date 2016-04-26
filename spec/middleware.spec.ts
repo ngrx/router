@@ -1,4 +1,4 @@
-import { Injector, OpaqueToken, provide } from 'angular2/core';
+import { ReflectiveInjector, OpaqueToken, provide } from 'angular2/core';
 
 import { compose } from '../lib/util';
 import { Middleware, createMiddleware, provideMiddlewareForToken } from '../lib/middleware';
@@ -22,7 +22,7 @@ describe('Middleware', function() {
 
     const thirdProvider = createMiddleware(() => third.apply);
 
-    const injector = Injector.resolveAndCreate([
+    const injector = ReflectiveInjector.resolveAndCreate([
       middlewareProvider(first.apply, secondProvider, thirdProvider)
     ]);
 

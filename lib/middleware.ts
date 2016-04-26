@@ -3,7 +3,7 @@
  * for quickly creating injector-friendly middleware.
  */
 import { Observable } from 'rxjs/Observable';
-import { OpaqueToken, Provider, provide, Injector } from 'angular2/core';
+import { OpaqueToken, Provider, provide, Injector, ReflectiveInjector } from 'angular2/core';
 
 import { compose, createProviderFactory } from './util';
 
@@ -31,7 +31,7 @@ export function provideMiddlewareForToken(token) {
     const provider = provide(token, {
       multi: true,
       deps: [ Injector ],
-      useFactory(injector: Injector) {
+      useFactory(injector: ReflectiveInjector) {
         const middleware = _middleware.map(m => {
           if (isProvider(m)) {
             return injector.get(m.token);

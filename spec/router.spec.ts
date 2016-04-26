@@ -13,11 +13,11 @@ import {
   beforeEachProviders
 } from 'angular2/testing';
 
-import {Injector, provide} from 'angular2/core';
+import {ReflectiveInjector, provide} from 'angular2/core';
 import {CONST_EXPR} from 'angular2/src/facade/lang';
 
 import {Router} from '../lib/router';
-import {LocationStrategy, APP_BASE_HREF} from 'angular2/src/router/location/location_strategy';
+import {LocationStrategy, APP_BASE_HREF} from 'angular2/platform/common';
 import {MockLocationStrategy} from 'angular2/src/mock/mock_location_strategy';
 
 describe('Router', () => {
@@ -27,7 +27,7 @@ describe('Router', () => {
   function makeRouter(baseHref: string = '/my/app', provider: any = CONST_EXPR([])): Router {
     locationStrategy = new MockLocationStrategy();
     locationStrategy.internalBaseHref = baseHref;
-    let injector = Injector.resolveAndCreate(
+    let injector = ReflectiveInjector.resolveAndCreate(
         [Router, provide(LocationStrategy, {useValue: locationStrategy}), provider]);
     return router = injector.get(Router);
   }

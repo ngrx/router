@@ -5,7 +5,8 @@ import {
   it,
   iit,
   TestComponentBuilder,
-  injectAsync
+  async,
+  inject
 } from 'angular2/testing';
 import {
   provide
@@ -23,7 +24,7 @@ class TestRoute2 {}
 
 class MockRenderer {
   render: Function = jasmine.createSpy('_render').and.returnValue(
-    Observable.of(jasmine.createSpyObj('ComponentRef', ['dispose']))
+    Observable.of(jasmine.createSpyObj('ComponentRef', ['destroy']))
   );
 }
 
@@ -46,16 +47,16 @@ describe('Route View', () => {
     provide(RouterInstruction, {useClass: MockRouterInstruction})
   ]);
 
-  it('should not render without a route set', injectAsync([TestComponentBuilder], (tcb) => {
+  it('should not render without a route set', async(inject([TestComponentBuilder], (tcb) => {
     return compile(tcb)
       .then((fixture) => {
         let instance = fixture.componentInstance;
 
         expect(instance._renderer.render).not.toHaveBeenCalled();
       });
-  }));
+  })));
 
-  it('should not render if missing a route component and component loader', injectAsync([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
+  it('should not render if missing a route component and component loader', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
       routeConfigs: [{
         component: undefined,
@@ -70,9 +71,9 @@ describe('Route View', () => {
 
         expect(instance._renderer.render).not.toHaveBeenCalled();
       });
-  }));
+  })));
 
-  it('should render with a component', injectAsync([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
+  it('should render with a component', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
       routeConfigs: [{
         component: TestRoute
@@ -86,9 +87,9 @@ describe('Route View', () => {
 
         expect(instance._renderer.render).toHaveBeenCalled();
       });
-  }));
+  })));
 
-  it('should render with a named component', injectAsync([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
+  it('should render with a named component', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
       routeConfigs: [{
         components: {
@@ -105,9 +106,9 @@ describe('Route View', () => {
 
         expect(instance._renderer.render).toHaveBeenCalled();
       });
-  }));
+  })));
 
-  it('should render with a component loader', injectAsync([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
+  it('should render with a component loader', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
       routeConfigs: [{
         loadComponent: () => Promise.resolve(TestRoute)
@@ -121,9 +122,9 @@ describe('Route View', () => {
 
         expect(instance._renderer.render).toHaveBeenCalled();
       });
-  }));
+  })));
 
-  it('should dispose the previous component on when the route set changes', injectAsync([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
+  it('should destroy the previous component on when the route set changes', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
       routeConfigs: [{
         component: TestRoute
@@ -143,11 +144,11 @@ describe('Route View', () => {
 
         instance.ngOnInit();
 
-        expect(instance._prev.dispose).toHaveBeenCalled();
+        expect(instance._prev.destroy).toHaveBeenCalled();
       });
-  }));
+  })));
 
-  it('should not dispose if the component doesn\'t change when the route set changes', injectAsync([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
+  it('should not destroy if the component doesn\'t change when the route set changes', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
       routeConfigs: [{
         component: TestRoute
@@ -166,11 +167,11 @@ describe('Route View', () => {
         });
 
 
-        expect(instance._prev.dispose).not.toHaveBeenCalled();
+        expect(instance._prev.destroy).not.toHaveBeenCalled();
       });
-  }));
+  })));
 
-  it('should not dispose if the component doesn\'t change when the route set changes with named routes', injectAsync([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
+  it('should not destroy if the component doesn\'t change when the route set changes with named routes', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
       routeConfigs: [{
         components: {
@@ -194,11 +195,11 @@ describe('Route View', () => {
         });
 
 
-        expect(instance._prev.dispose).not.toHaveBeenCalled();
+        expect(instance._prev.destroy).not.toHaveBeenCalled();
       });
-  }));
+  })));
 
-  it('should dispose if the component does change when the route set changes', injectAsync([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
+  it('should destroy if the component does change when the route set changes', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
       routeConfigs: [{
         component: TestRoute
@@ -217,11 +218,11 @@ describe('Route View', () => {
         });
 
 
-        expect(instance._prev.dispose).toHaveBeenCalledTimes(1);
+        expect(instance._prev.destroy).toHaveBeenCalledTimes(1);
       });
-  }));
+  })));
 
-  it('should dispose if the component does change when the route set changes with named routes', injectAsync([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
+  it('should destroy if the component does change when the route set changes with named routes', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
       routeConfigs: [{
         components: {
@@ -245,11 +246,11 @@ describe('Route View', () => {
         });
 
 
-        expect(instance._prev.dispose).toHaveBeenCalledTimes(1);
+        expect(instance._prev.destroy).toHaveBeenCalledTimes(1);
       });
-  }));
+  })));
 
-  it('should dispose the component when destroyed', injectAsync([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
+  it('should destroy the component when destroyed', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
       routeConfigs: [{
         component: TestRoute
@@ -261,11 +262,11 @@ describe('Route View', () => {
         let instance = fixture.componentInstance;
         instance.ngOnInit();
 
-        let spy = instance._prev.dispose;
+        let spy = instance._prev.destroy;
 
         instance.ngOnDestroy();
 
         expect(spy).toHaveBeenCalled();
       });
-  }));
+  })));
 });
