@@ -43,7 +43,7 @@ export interface LinkActiveOptions {
 
    ngAfterViewInit() {
      this._sub = this.router$
-     .map(({path}) => this.router$.prepareExternalUrl(path))
+     .map(({path}) => this.router$.prepareExternalUrl(path || '/'))
      .subscribe(path => {
        this.checkActive(path);
      });
@@ -53,12 +53,12 @@ export interface LinkActiveOptions {
     let active = this.links.reduce((active, current) => {
       let [href, query] = current.linkHref.split('?');
 
-       if (this.activeOptions.exact) {
-         return active ? active : href === path;
-       } else {
-         return active ? active : path.startsWith(href);
-       }
-     }, false);
+      if (this.activeOptions.exact) {
+        return active ? active : href === path;
+      } else {
+        return active ? active : path.startsWith(href);
+      }
+    }, false);
 
      let activeClasses = this.activeClass.split(' ');
      activeClasses.forEach((activeClass) => {
