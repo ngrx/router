@@ -9,10 +9,11 @@ import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/observeOn';
 import { Observable } from 'rxjs/Observable';
-import { async } from 'rxjs/scheduler/async';
-import { provide, Provider, Injector, OpaqueToken } from 'angular2/core';
+import { asap } from 'rxjs/scheduler/asap';
+import { provide, Provider, Injector, OpaqueToken, NgZone } from 'angular2/core';
 import { parse as parseQueryString } from 'query-string';
 
+import { ZoneOperator } from './zone';
 import { compose } from './util';
 import { Router, LocationChange } from './router';
 import { Routes, Route, ROUTES } from './route';
@@ -47,13 +48,14 @@ export class RouterInstruction extends Observable<NextInstruction> { }
 
 
 function createRouterInstruction(
+  zone: NgZone,
   router$: Router,
   traverser: RouteTraverser,
   locationMiddleware: Middleware[],
   routerInstructionMiddleware: Middleware[]
 ): RouterInstruction {
   return router$
-    .observeOn(async)
+    .observeOn(asap)
     .distinctUntilChanged((prev, next) => prev.path === next.path)
     .let<LocationChange>(compose(...locationMiddleware))
     .switchMap(change => {
@@ -71,6 +73,7 @@ function createRouterInstruction(
     })
     .filter(match => !!match)
     .let<NextInstruction>(compose(...routerInstructionMiddleware))
+    .lift(new ZoneOperator(zone))
     .publishReplay(1)
     .refCount();
 }
@@ -78,7 +81,7 @@ function createRouterInstruction(
 
 export const ROUTE_SET_PROVIDERS = [
   provide(RouterInstruction, {
-    deps: [ Router, RouteTraverser, ROUTER_MIDDLEWARE, ROUTER_INSTRUCTION_MIDDLEWARE ],
+    deps: [ NgZone, Router, RouteTraverser, ROUTER_MIDDLEWARE, ROUTER_INSTRUCTION_MIDDLEWARE ],
     useFactory: createRouterInstruction
   }),
   useRouterMiddleware(identity),
