@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/toPromise';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { Injector, provide, DynamicComponentLoader, ElementRef } from 'angular2/core';
+import { ReflectiveInjector, provide, DynamicComponentLoader, ViewContainerRef } from 'angular2/core';
 
 import { RESOURCE_LOADER_PROVIDERS } from '../lib/resource-loader';
 
@@ -24,16 +24,16 @@ describe('Component Renderer', function() {
   let route: Route,
       components: BaseRoute,
       renderer: ComponentRenderer,
-      injector: Injector,
+      injector: ReflectiveInjector,
       loader: any;
 
   describe('when rendering', () => {
     let route;
-    let elementRef = {};
+    let viewContainerRef = {};
     let providers = [];
 
     beforeEach(() => {
-      injector = Injector.resolveAndCreate([
+      injector = ReflectiveInjector.resolveAndCreate([
         ComponentRenderer,
         usePreRenderMiddleware(identity),
         usePostRenderMiddleware(identity),
@@ -49,10 +49,10 @@ describe('Component Renderer', function() {
       route = {};
       components = { component: TestComponent };
 
-      let render = renderer.render(route, components, injector, <ElementRef>elementRef, loader, providers);
+      let render = renderer.render(route, components, injector, <ViewContainerRef>viewContainerRef, loader, providers);
 
       render.subscribe(() => {
-        expect(loader.loadNextToLocation).toHaveBeenCalledWith(TestComponent, elementRef, providers);
+        expect(loader.loadNextToLocation).toHaveBeenCalledWith(TestComponent, viewContainerRef, providers);
         done();
       });
     });
@@ -63,10 +63,10 @@ describe('Component Renderer', function() {
         loadComponent: () => Promise.resolve(TestComponent)
       };
 
-      let render = renderer.render(route, components, injector, <ElementRef>elementRef, loader, providers);
+      let render = renderer.render(route, components, injector, <ViewContainerRef>viewContainerRef, loader, providers);
 
       render.subscribe(() => {
-        expect(loader.loadNextToLocation).toHaveBeenCalledWith(TestComponent, elementRef, providers);
+        expect(loader.loadNextToLocation).toHaveBeenCalledWith(TestComponent, viewContainerRef, providers);
         done();
       });
     });
@@ -75,7 +75,7 @@ describe('Component Renderer', function() {
   describe('Pre Middleware', () => {
     let route: Route = { component: TestComponent };
     let providers = [];
-    let elementRef = {};
+    let viewContainerRef = {};
     let middlewareProviders = [
       provide('test', {useValue: 'tester'})
     ];
@@ -96,7 +96,7 @@ describe('Component Renderer', function() {
         });
       }, []);
 
-      injector = Injector.resolveAndCreate([
+      injector = ReflectiveInjector.resolveAndCreate([
         ComponentRenderer,
         usePreRenderMiddleware(renderMiddleware),
         usePostRenderMiddleware(identity),
@@ -109,7 +109,7 @@ describe('Component Renderer', function() {
     });
 
     beforeEach(() => {
-      render = renderer.render(route, route, injector, <ElementRef>elementRef, loader, providers);
+      render = renderer.render(route, route, injector, <ViewContainerRef>viewContainerRef, loader, providers);
     });
 
     it('should execute before rendering', (done) => {
@@ -140,7 +140,7 @@ describe('Component Renderer', function() {
   describe('Post Middleware', () => {
     let route: Route = { component: TestComponent };
     let providers = [];
-    let elementRef = {};
+    let viewContainerRef = {};
     let middlewareSpy = jasmine.createSpy('middleware');
     let renderMiddleware;
     let render;
@@ -154,7 +154,7 @@ describe('Component Renderer', function() {
         });
       }, []);
 
-      injector = Injector.resolveAndCreate([
+      injector = ReflectiveInjector.resolveAndCreate([
         ComponentRenderer,
         usePreRenderMiddleware(identity),
         usePostRenderMiddleware(renderMiddleware),
@@ -167,7 +167,7 @@ describe('Component Renderer', function() {
     });
 
     beforeEach(() => {
-      render = renderer.render(route, route, injector, <ElementRef>elementRef, loader, providers);
+      render = renderer.render(route, route, injector, <ViewContainerRef>viewContainerRef, loader, providers);
     });
 
     it('should execute after rendering', (done) => {

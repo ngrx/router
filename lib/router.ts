@@ -5,9 +5,9 @@
  */
 import { ReplaySubject } from 'rxjs/subject/ReplaySubject';
 import { Subscriber } from 'rxjs/Subscriber';
-import { LocationStrategy } from 'angular2/src/router/location/location_strategy';
-import { UrlChangeEvent, PlatformLocation } from 'angular2/src/router/location/platform_location';
-import { BrowserPlatformLocation } from 'angular2/src/router/location/browser_platform_location';
+import { LocationStrategy } from 'angular2/platform/common';
+import { UrlChangeEvent, PlatformLocation } from 'angular2/platform/common';
+import { BrowserPlatformLocation } from 'angular2/src/platform/browser/location/browser_platform_location';
 import { Injectable, Inject, Provider, provide } from 'angular2/core';
 import { stringify as stringifyQueryParams } from 'query-string';
 
