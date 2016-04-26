@@ -43,3 +43,4 @@ export { Routes, Route, IndexRoute } from './route';
 export { useTraversalMiddleware, TraversalCandidate } from './route-traverser';
 export { LinkTo } from './link-to';
 export { LinkActive, LinkActiveOptions } from './link-active';
+export { RouteView } from './route-view';
