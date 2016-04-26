@@ -1,11 +1,60 @@
+<a name="0.2.5"></a>
+## [0.2.5](https://github.com/ngrx/router/compare/v0.2.4...v0.2.5) (2016-04-26)
+
+
+### Code Refactoring
+
+* **Guards:** Improve guards API based on common usage (#62) ([1ea2806](https://github.com/ngrx/router/commit/1ea2806))
+
+### Features
+
+* **LinkActive:** Added default class when link is active (#72) ([e6a2920](https://github.com/ngrx/router/commit/e6a2920)), closes [#71](https://github.com/ngrx/router/issues/71)
+* **RouteInterface:** Add options key to route interface used to store arbitrary metadata (#69) ([900822e](https://github.com/ngrx/router/commit/900822e)), closes [#68](https://github.com/ngrx/router/issues/68)
+
+
+### BREAKING CHANGES
+
+* Guards:   Before:
+  ```ts
+  const auth = createGuard(function(http: Http) {
+
+    return function(route: Route, params: any, isTerminal: boolean) {
+      return http.get(...);
+    };
+
+  }, [ Http ]);
+  ```
+
+  After:
+  ```ts
+  const auth = provideGuard(function(http: Http) {
+
+    return function(params: any, route: Route, isTerminal: boolean) {
+      return http.get(...);
+    };
+
+  }, [ Http ]);
+  ```
+
+
+
 <a name="0.2.4"></a>
-## [0.2.4](https://github.com/ngrx/router/compare/v0.2.2...v0.2.4) (2016-04-22)
+## [0.2.4](https://github.com/ngrx/router/compare/v0.2.3...v0.2.4) (2016-04-22)
+
+
+### Bug Fixes
+
+* **RouterInstruction:** Switched to async scheduler because zone.js (#61) ([da6f725](https://github.com/ngrx/router/commit/da6f725))
+
+
+
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/ngrx/router/compare/v0.2.2...v0.2.3) (2016-04-19)
 
 
 ### Bug Fixes
 
 * **linkTo:** Remove trailing slashes from the linkTo path (#59) ([c048a51](https://github.com/ngrx/router/commit/c048a51))
-* **RouterInstruction:** Switched to async scheduler because zone.js (#61) ([da6f725](https://github.com/ngrx/router/commit/da6f725))
 * **UndefinedRoutes:** Route view correctly ignores undefined routes (#60) ([1cdb67a](https://github.com/ngrx/router/commit/1cdb67a))
 
 
