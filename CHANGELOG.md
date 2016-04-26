@@ -1,3 +1,47 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/ngrx/router/compare/v0.2.4...v0.3.0) (2016-04-26)
+
+
+### Bug Fixes
+
+* **RouterInstruction:** Pass the subscriber back through NgZone (#70) ([894b088](https://github.com/ngrx/router/commit/894b088))
+
+### Code Refactoring
+
+* **Guards:** Improve guards API based on common usage (#62) ([1ea2806](https://github.com/ngrx/router/commit/1ea2806))
+
+### Features
+
+* **LinkActive:** Added default class when link is active (#72) ([e6a2920](https://github.com/ngrx/router/commit/e6a2920)), closes [#71](https://github.com/ngrx/router/issues/71)
+* **RouteInterface:** Add options key to route interface used to store arbitrary metadata (#69) ([900822e](https://github.com/ngrx/router/commit/900822e)), closes [#68](https://github.com/ngrx/router/issues/68)
+
+
+### BREAKING CHANGES
+
+* Guards:   Before:
+  ```ts
+  const auth = createGuard(function(http: Http) {
+
+    return function(route: Route, params: any, isTerminal: boolean) {
+      return http.get(...);
+    };
+
+  }, [ Http ]);
+  ```
+
+  After:
+  ```ts
+  const auth = provideGuard(function(http: Http) {
+
+    return function(params: any, route: Route, isTerminal: boolean) {
+      return http.get(...);
+    };
+
+  }, [ Http ]);
+  ```
+
+
+
 <a name="0.2.4"></a>
 ## [0.2.4](https://github.com/ngrx/router/compare/v0.2.2...v0.2.4) (2016-04-22)
 
