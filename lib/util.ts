@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
-import { provide, Provider, OpaqueToken } from 'angular2/core';
+import { provide, Provider, OpaqueToken } from '@angular/core';
 
 export function createProviderFactory<T>(
   name: string,

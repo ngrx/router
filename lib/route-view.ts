@@ -15,15 +15,13 @@ import {
   ComponentRef,
   ReflectiveInjector,
   Injector,
-  provide,
   OnDestroy,
   OnInit,
-  Provider,
-  PLATFORM_DIRECTIVES,
   ViewContainerRef,
   DynamicComponentLoader,
-  Attribute
-} from 'angular2/core';
+  Attribute,
+  Provider
+} from '@angular/core';
 
 import { Route, getNamedComponents } from './route';
 import { RouterInstruction, NextInstruction } from './router-instruction';
@@ -37,7 +35,7 @@ import { ComponentRenderer } from './component-renderer';
 export class RouteView implements OnDestroy, OnInit {
   private _prev: ComponentRef;
   private _sub: any;
-  private _routerInstructionProvider = provide(RouterInstruction, {
+  private _routerInstructionProvider = new Provider(RouterInstruction, {
     useValue: this._routerInstruction$.map<NextInstruction>(set => {
       return {
         locationChange: set.locationChange,
@@ -89,10 +87,3 @@ export class RouteView implements OnDestroy, OnInit {
     }
   }
 }
-
-export const ROUTE_VIEW_PROVIDERS = [
-  provide(PLATFORM_DIRECTIVES, {
-    multi: true,
-    useValue: [ RouteView ]
-  })
-];

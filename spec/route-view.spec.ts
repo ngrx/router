@@ -4,18 +4,16 @@ import {
   beforeEachProviders,
   it,
   iit,
-  TestComponentBuilder,
   async,
   inject
-} from 'angular2/testing';
-import {
-  provide
-} from 'angular2/core';
-import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
+} from '@angular/core/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
+import { provide } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 import { RouteView } from '../lib/route-view';
 import { ComponentRenderer } from '../lib/component-renderer';
-import { Observable } from 'rxjs/Observable';
 import { RouterInstruction, NextInstruction } from '../lib/router-instruction';
 
 class TestRoute {}

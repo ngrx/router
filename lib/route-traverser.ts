@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
-import { OpaqueToken, Provider, Inject, Injectable, Optional } from 'angular2/core';
+import { OpaqueToken, Provider, Inject, Injectable, Optional } from '@angular/core';
 
 import { ResourceLoader, Async } from './resource-loader';
 import { matchPattern, makeParams } from './match-pattern';

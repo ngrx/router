@@ -10,7 +10,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/observeOn';
 import { Observable } from 'rxjs/Observable';
 import { asap } from 'rxjs/scheduler/asap';
-import { Provider, Injector, OpaqueToken, Inject, Optional, Injectable } from 'angular2/core';
+import { Provider, Injector, OpaqueToken, Inject, Optional, Injectable } from '@angular/core';
 import { parse as parseQueryString } from 'query-string';
 
 import { ZoneOperator } from './zone';

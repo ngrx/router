@@ -1,6 +1,6 @@
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
-import { Provider } from 'angular2/core';
+import { Provider } from '@angular/core';
 
 import { RouterInstruction } from './router-instruction';
 

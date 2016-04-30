@@ -15,7 +15,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/every';
 import { Observable } from 'rxjs/Observable';
-import { Inject, Injectable, Provider, OpaqueToken, Injector, ReflectiveInjector } from 'angular2/core';
+import { Inject, Injectable, Provider, OpaqueToken, Injector, ReflectiveInjector } from '@angular/core';
 
 import { createProviderFactory } from './util';
 import { Route } from './route';

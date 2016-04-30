@@ -15,7 +15,7 @@ import {
   OpaqueToken,
   ComponentRef,
   Optional
-} from 'angular2/core';
+} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Async, ResourceLoader } from './resource-loader';

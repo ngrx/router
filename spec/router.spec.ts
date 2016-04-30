@@ -11,20 +11,18 @@ import {
   expect,
   beforeEach,
   beforeEachProviders
-} from 'angular2/testing';
-
-import {ReflectiveInjector, provide} from 'angular2/core';
-import {CONST_EXPR} from 'angular2/src/facade/lang';
+} from '@angular/core/testing';
+import { MockLocationStrategy } from '@angular/common/testing';
+import {LocationStrategy, APP_BASE_HREF} from '@angular/common';
+import {ReflectiveInjector, provide} from '@angular/core';
 
 import {Router} from '../lib/router';
-import {LocationStrategy, APP_BASE_HREF} from 'angular2/platform/common';
-import {MockLocationStrategy} from 'angular2/src/mock/mock_location_strategy';
 
 describe('Router', () => {
 
   let locationStrategy, router: Router;
 
-  function makeRouter(baseHref: string = '/my/app', provider: any = CONST_EXPR([])): Router {
+  function makeRouter(baseHref: string = '/my/app', provider: any = []): Router {
     locationStrategy = new MockLocationStrategy();
     locationStrategy.internalBaseHref = baseHref;
     let injector = ReflectiveInjector.resolveAndCreate(

@@ -2,7 +2,7 @@
  * Route and IndexRoute interfaces are similar to react-router's interfaces.
  */
 import { Observable } from 'rxjs/Observable';
-import { Provider, Type, OpaqueToken } from 'angular2/core';
+import { Provider, Type, OpaqueToken } from '@angular/core';
 
 import { Async } from './resource-loader';
 

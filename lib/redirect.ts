@@ -4,7 +4,7 @@
  */
 import 'rxjs/add/operator/filter';
 import { Observable } from 'rxjs/Observable';
-import { Provider, Injectable } from 'angular2/core';
+import { Provider, Injectable } from '@angular/core';
 
 import { Router } from './router';
 import { Routes, Route } from './route';

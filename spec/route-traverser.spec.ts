@@ -1,4 +1,4 @@
-import { ReflectiveInjector, provide } from 'angular2/core';
+import { ReflectiveInjector, provide } from '@angular/core';
 
 import { RESOURCE_LOADER_PROVIDERS } from '../lib/resource-loader';
 import { Routes, Route, ROUTES } from '../lib/route';

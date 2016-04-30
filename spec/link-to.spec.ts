@@ -4,17 +4,18 @@ import {
   beforeEachProviders,
   it,
   iit,
-  TestComponentBuilder,
   async,
   inject,
   expect
-} from 'angular2/testing';
-import { Component, provide, ViewChild } from 'angular2/core';
+} from '@angular/core/testing';
+import { MockLocationStrategy } from '@angular/common/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
+import { Component, provide, ViewChild } from '@angular/core';
+import { LocationStrategy } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
+
 import { LinkTo } from '../lib/link-to';
 import { ROUTER_PROVIDERS, Router } from '../lib/router';
-import { Observable } from 'rxjs/Observable';
-import { LocationStrategy } from 'angular2/platform/common';
-import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
 
 @Component({
   selector: 'link-test',

@@ -12,8 +12,8 @@ require('reflect-metadata');
 const testContext = require.context('./spec', true, /\.spec\.ts/);
 testContext.keys().forEach(testContext);
 
-const testing = require('angular2/testing');
-const browser = require('angular2/platform/testing/browser');
+const testing = require('@angular/core/testing');
+const browser = require('@angular/platform-browser-dynamic/testing');
 testing.setBaseTestProviders(
   browser.TEST_BROWSER_PLATFORM_PROVIDERS,
   browser.TEST_BROWSER_APPLICATION_PROVIDERS);

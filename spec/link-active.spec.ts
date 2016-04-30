@@ -4,23 +4,20 @@ import {
   beforeEachProviders,
   it,
   iit,
-  TestComponentBuilder,
   async,
   inject,
   expect
-} from 'angular2/testing';
-import {
-  Component,
-  provide
-} from 'angular2/core';
+} from '@angular/core/testing';
+import { MockLocationStrategy, SpyLocation } from '@angular/common/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
+import { Component, provide } from '@angular/core';
+import { LocationStrategy } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
+
 import { LinkTo } from '../lib/link-to';
 import { LinkActive } from '../lib/link-active';
 import { ROUTER_PROVIDERS, Router } from '../lib/router';
-import { SpyLocation } from 'angular2/router/testing';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
-import { LocationStrategy } from 'angular2/platform/common';
-import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
 
 @Component({
   selector: 'link-active-test',

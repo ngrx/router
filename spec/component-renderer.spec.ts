@@ -1,15 +1,10 @@
 import 'rxjs/add/operator/toPromise';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { ReflectiveInjector, provide, DynamicComponentLoader, ViewContainerRef } from 'angular2/core';
+import { ReflectiveInjector, provide, DynamicComponentLoader, ViewContainerRef } from '@angular/core';
 
 import { RESOURCE_LOADER_PROVIDERS } from '../lib/resource-loader';
-
-import {
-  ComponentRenderer,
-  PRE_RENDER_HOOKS,
-  POST_RENDER_HOOKS
-} from '../lib/component-renderer';
+import { ComponentRenderer, PRE_RENDER_HOOKS, POST_RENDER_HOOKS } from '../lib/component-renderer';
 import { Route, BaseRoute } from '../lib/route';
 import { Hook } from '../lib/hooks';
 

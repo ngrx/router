@@ -1,6 +1,6 @@
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { ReflectiveInjector } from 'angular2/core';
+import { ReflectiveInjector } from '@angular/core';
 
 import { Route } from '../lib/route';
 import { TraversalCandidate } from '../lib/route-traverser';

@@ -1,9 +1,9 @@
 import 'rxjs/add/operator/withLatestFrom';
-import { ReflectiveInjector, provide, NgZone } from 'angular2/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { LocationStrategy } from 'angular2/platform/common';
-import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
+import { ReflectiveInjector, provide, NgZone } from '@angular/core';
+import { LocationStrategy } from '@angular/common';
+import { MockLocationStrategy } from '@angular/common/testing';
 
 import { RouteTraverser } from '../lib/route-traverser';
 import { Router, ROUTER_PROVIDERS } from '../lib/router';
@@ -11,7 +11,7 @@ import { NextInstruction, RouterInstruction, ROUTER_INSTRUCTION_PROVIDERS } from
 import { ZONE_OPERATOR_PROVIDERS } from '../lib/zone';
 
 
-describe('Route Set', function() {
+describe('Router Instruction', function() {
   const params = [1, 2, 3];
   const routes = ['a', 'c', 'c'];
 

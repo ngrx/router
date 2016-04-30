@@ -1,5 +1,6 @@
 import { Subject } from 'rxjs/Subject';
-import { ReflectiveInjector, provide } from 'angular2/core';
+import { ReflectiveInjector, provide } from '@angular/core';
+
 import { NextInstruction } from '../lib/router-instruction';
 import { RedirectHook } from '../lib/redirect';
 import { Router } from '../lib/router';

@@ -1,12 +1,4 @@
-import {
-  Directive,
-  HostBinding,
-  HostListener,
-  Input,
-  PLATFORM_DIRECTIVES,
-  provide,
-  Provider
-} from  'angular2/core';
+import { Directive, HostBinding, HostListener, Input } from  '@angular/core';
 import { Router } from './router';
 
 /**
@@ -76,10 +68,3 @@ export class LinkTo {
     return href;
   }
 }
-
-export const LINK_TO_PROVIDERS = [
-  provide(PLATFORM_DIRECTIVES, {
-    multi: true,
-    useValue: [ LinkTo ]
-  })
-];

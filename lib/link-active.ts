@@ -6,11 +6,8 @@ import {
   OnDestroy,
   Query,
   QueryList,
-  PLATFORM_DIRECTIVES,
-  provide,
-  Provider,
   Renderer
-} from 'angular2/core';
+} from '@angular/core';
 import { LinkTo } from './link-to';
 import { Router } from './router';
 
@@ -72,10 +69,3 @@ export interface LinkActiveOptions {
      }
    }
  }
-
- export const LINK_ACTIVE_PROVIDERS = [
-   provide(PLATFORM_DIRECTIVES, {
-     multi: true,
-     useValue: [ LinkActive ]
-   })
- ];

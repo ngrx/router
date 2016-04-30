@@ -1,5 +1,6 @@
 import { Subject } from 'rxjs/Subject';
-import { ReflectiveInjector, provide } from 'angular2/core';
+import { ReflectiveInjector, provide } from '@angular/core';
+
 import { NextInstruction, RouterInstruction } from '../lib/router-instruction';
 import { RouteParams, QueryParams, PARAMS_PROVIDERS } from '../lib/params';
 
