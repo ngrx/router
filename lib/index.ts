@@ -2,7 +2,7 @@ import { Provider, provide } from 'angular2/core';
 import { LocationStrategy, PathLocationStrategy } from 'angular2/platform/common';
 
 import { ROUTER_PROVIDERS } from './router';
-import { ROUTE_SET_PROVIDERS } from './router-instruction';
+import { ROUTER_INSTRUCTION_PROVIDERS } from './router-instruction';
 import { ROUTE_VIEW_PROVIDERS } from './route-view';
 import { REDIRECT_PROVIDERS } from './redirect';
 import { ROUTES, Routes } from './route';
@@ -13,6 +13,7 @@ import { LINK_TO_PROVIDERS } from './link-to';
 import { LINK_ACTIVE_PROVIDERS } from './link-active';
 import { PARAMS_PROVIDERS } from './params';
 import { RESOURCE_LOADER_PROVIDERS } from './resource-loader';
+import { ZONE_OPERATOR_PROVIDERS } from './zone';
 
 export function provideRouter(routes: Routes) {
   return [
@@ -26,21 +27,22 @@ export function provideRouter(routes: Routes) {
     PARAMS_PROVIDERS,
     REDIRECT_PROVIDERS,
     RESOURCE_LOADER_PROVIDERS,
-    ROUTE_SET_PROVIDERS,
+    ROUTER_INSTRUCTION_PROVIDERS,
     ROUTE_VIEW_PROVIDERS,
-    ROUTER_PROVIDERS
+    ROUTER_PROVIDERS,
+    ZONE_OPERATOR_PROVIDERS
   ];
 }
 
 
 export { Guard, provideGuard } from './guard';
 export { LocationChange, Router } from './router';
-export { Middleware, createMiddleware } from './middleware';
 export { RouteParams, QueryParams } from './params';
-export { useRouterMiddleware, useRouterInstructionMiddleware, RouterInstruction, NextInstruction } from './router-instruction';
-export { usePreRenderMiddleware, usePostRenderMiddleware, RenderInstruction } from './component-renderer';
+export { ROUTER_HOOKS, INSTRUCTION_HOOKS, RouterInstruction, NextInstruction } from './router-instruction';
+export { PRE_RENDER_HOOKS, POST_RENDER_HOOKS, RenderInstruction } from './component-renderer';
 export { Routes, Route, IndexRoute } from './route';
-export { useTraversalMiddleware, TraversalCandidate } from './route-traverser';
+export { TRAVERSAL_HOOKS, TraversalCandidate } from './route-traverser';
 export { LinkTo } from './link-to';
 export { LinkActive, LinkActiveOptions } from './link-active';
 export { RouteView } from './route-view';
+export { Hook } from './hooks';

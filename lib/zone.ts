@@ -1,8 +1,9 @@
-import { NgZone } from 'angular2/core';
+import { Injectable, NgZone, Provider } from 'angular2/core';
 import { Operator } from 'rxjs/Operator';
 import { Subscriber } from 'rxjs/Subscriber';
 
 
+@Injectable()
 export class ZoneOperator<T> implements Operator<T, T> {
   constructor(private _zone: NgZone) { }
 
@@ -20,3 +21,7 @@ class ZoneSubscriber<T> extends Subscriber<T> {
     this._zone.run(() => this.destination.next(value));
   }
 }
+
+export const ZONE_OPERATOR_PROVIDERS = [
+  new Provider(ZoneOperator, { useClass: ZoneOperator })
+];

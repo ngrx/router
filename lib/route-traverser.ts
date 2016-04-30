@@ -12,20 +12,15 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
-import { OpaqueToken, Provider, Inject, Injectable } from 'angular2/core';
+import { OpaqueToken, Provider, Inject, Injectable, Optional } from 'angular2/core';
 
 import { ResourceLoader, Async } from './resource-loader';
-import { compose } from './util';
 import { matchPattern, makeParams } from './match-pattern';
 import { Route, IndexRoute, Routes, ROUTES } from './route';
-import { Middleware, provideMiddlewareForToken, identity } from './middleware';
+import { Hook, composeHooks } from './hooks';
 
-const TRAVERSAL_MIDDLEWARE = new OpaqueToken(
-  '@ngrx/router Traversal Middleware'
-);
-
-export const useTraversalMiddleware = provideMiddlewareForToken(
-  TRAVERSAL_MIDDLEWARE
+export const TRAVERSAL_HOOKS = new OpaqueToken(
+  '@ngrx/router Traversal Hooks'
 );
 
 export interface Match {
@@ -44,8 +39,9 @@ export interface TraversalCandidate {
 export class RouteTraverser {
   constructor(
     private _loader: ResourceLoader,
-    @Inject(TRAVERSAL_MIDDLEWARE) private _middleware: Middleware[],
-    @Inject(ROUTES) private _routes: Routes
+    @Inject(ROUTES) private _routes: Routes,
+    @Optional() @Inject(TRAVERSAL_HOOKS)
+      private _hooks: Hook<TraversalCandidate>[] = []
   ) { }
 
   /**
@@ -113,7 +109,7 @@ export class RouteTraverser {
           isTerminal: remainingPathname === '' && !!route.path
         };
       })
-      .let<TraversalCandidate>(compose(...this._middleware))
+      .let<TraversalCandidate>(composeHooks(this._hooks))
       .filter(({ route }) => !!route)
       .mergeMap(({ route, params, isTerminal }) => {
         if ( isTerminal ) {
@@ -164,8 +160,7 @@ export class RouteTraverser {
 }
 
 export const MATCH_ROUTE_PROVIDERS = [
-  new Provider(RouteTraverser, { useClass: RouteTraverser }),
-  useTraversalMiddleware(identity)
+  new Provider(RouteTraverser, { useClass: RouteTraverser })
 ];
 
 

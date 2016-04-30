@@ -68,7 +68,7 @@ export class LinkTo {
 
   private _cleanUpHref(href: string = ''): string {
     // Check for trailing slashes in the path
-    while(href.length > 1 && href.substr(-1) === "/") {
+    while (href.length > 1 && href.substr(-1) === '/') {
       // Remove trailing slashes
       href = href.substring(0, href.length - 1);
     }
