@@ -1,12 +1,11 @@
 import { Subject } from 'rxjs/Subject';
 import { ReflectiveInjector, provide } from 'angular2/core';
 import { NextInstruction } from '../lib/router-instruction';
-import { Middleware } from '../lib/middleware';
-import { redirectMiddleware } from '../lib/redirect';
+import { RedirectHook } from '../lib/redirect';
 import { Router } from '../lib/router';
 
 describe('Redirect Middleware', function() {
-  let redirect: Middleware;
+  let redirect: RedirectHook;
   let routeSet$: Subject<NextInstruction>;
   let router = { replace(next: string) { } };
   let observer = { next() { } };
@@ -31,7 +30,7 @@ describe('Redirect Middleware', function() {
       provide(Router, { useValue: router })
     ]);
 
-    redirect = injector.resolveAndInstantiate(redirectMiddleware);
+    redirect = injector.resolveAndInstantiate(RedirectHook);
   });
 
   afterEach(function() {
@@ -49,7 +48,7 @@ describe('Redirect Middleware', function() {
       }
     };
 
-    redirect(routeSet$).subscribe(value => {
+    redirect.apply(routeSet$).subscribe(value => {
       expect(value).toBe(NextInstruction);
       done();
     });
@@ -58,7 +57,7 @@ describe('Redirect Middleware', function() {
   });
 
   it('should correctly redirect basic paths', function() {
-    redirect(routeSet$).subscribe(observer);
+    redirect.apply(routeSet$).subscribe(observer);
 
     nextInstruction('/test');
 
@@ -67,7 +66,7 @@ describe('Redirect Middleware', function() {
   });
 
   it('should correctly redirect paths with params', function() {
-    redirect(routeSet$).subscribe(observer);
+    redirect.apply(routeSet$).subscribe(observer);
 
     nextInstruction('/posts/:id', { id: '543' });
 
@@ -76,7 +75,7 @@ describe('Redirect Middleware', function() {
   });
 
   it('should redirect relative paths', function() {
-    redirect(routeSet$).subscribe(observer);
+    redirect.apply(routeSet$).subscribe(observer);
 
     routeSet$.next({
       routeConfigs: [ { path: '/first' }, { path: 'second', redirectTo: '/home' } ],
@@ -93,7 +92,7 @@ describe('Redirect Middleware', function() {
   });
 
   it('should redirect relative paths with params', function() {
-    redirect(routeSet$).subscribe(observer);
+    redirect.apply(routeSet$).subscribe(observer);
 
     routeSet$.next({
       routeConfigs: [ { path: '/blog' }, { path: ':id', redirectTo: '/posts/:id' } ],
