@@ -13,30 +13,17 @@ import {
   Provider,
   ResolvedReflectiveProvider,
   OpaqueToken,
-  ComponentRef
+  ComponentRef,
+  Optional
 } from 'angular2/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Async, ResourceLoader } from './resource-loader';
-import { compose } from './util';
 import { Route, BaseRoute } from './route';
-import { Middleware, identity, provideMiddlewareForToken } from './middleware';
+import { Hook, composeHooks } from './hooks';
 
-const PRE_RENDER_MIDDLEWARE = new OpaqueToken(
-  '@ngrx/router Pre Render Middleware'
-);
-
-const POST_RENDER_MIDDLEWARE = new OpaqueToken(
-  '@ngrx/router Post Render Middleware'
-);
-
-export const usePreRenderMiddleware = provideMiddlewareForToken(
-  PRE_RENDER_MIDDLEWARE
-);
-
-export const usePostRenderMiddleware = provideMiddlewareForToken(
-  POST_RENDER_MIDDLEWARE
-);
+export const PRE_RENDER_HOOKS = new OpaqueToken('@ngrx/router Pre-Render Hooks');
+export const POST_RENDER_HOOKS = new OpaqueToken('@ngrx/router Post-Render Hooks');
 
 export interface RenderInstruction {
   component: Type;
@@ -48,8 +35,10 @@ export interface RenderInstruction {
 export class ComponentRenderer {
   constructor(
     private _loader: ResourceLoader,
-    @Inject(PRE_RENDER_MIDDLEWARE) private _preMiddleware: Middleware[],
-    @Inject(POST_RENDER_MIDDLEWARE) private _postMiddleware: Middleware[]
+    @Optional() @Inject(PRE_RENDER_HOOKS)
+      private _preRenderHooks: Hook<RenderInstruction>[],
+    @Optional() @Inject(POST_RENDER_HOOKS)
+      private _postRenderHooks: Hook<ComponentRef>[]
   ) { }
 
   render(
@@ -65,14 +54,14 @@ export class ComponentRenderer {
       .map<RenderInstruction>(component => {
         return { component, injector, providers };
       })
-      .let<RenderInstruction>(compose(...this._preMiddleware))
+      .let(composeHooks(this._preRenderHooks))
       .mergeMap(instruction => {
         const providers = ReflectiveInjector.resolve(instruction.providers);
         const component = instruction.component;
 
         return dcl.loadNextToLocation(component, ref, providers);
       })
-      .let<ComponentRef>(compose(...this._postMiddleware));
+      .let(composeHooks(this._postRenderHooks));
   }
 
   private _loadComponent(route: BaseRoute): Promise<Type> {
@@ -81,7 +70,5 @@ export class ComponentRenderer {
 }
 
 export const COMPONENT_RENDERER_PROVIDERS = [
-  usePreRenderMiddleware(identity),
-  usePostRenderMiddleware(identity),
   new Provider(ComponentRenderer, { useClass: ComponentRenderer })
 ];

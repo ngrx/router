@@ -3,13 +3,12 @@ import { Observable } from 'rxjs/Observable';
 import { ReflectiveInjector } from 'angular2/core';
 
 import { Route } from '../lib/route';
-import { Middleware } from '../lib/middleware';
 import { TraversalCandidate } from '../lib/route-traverser';
-import { Guard, provideGuard, guardMiddleware } from '../lib/guard';
+import { Guard, provideGuard, GuardHook } from '../lib/guard';
 
 
 describe('Guard Middleware', function() {
-  let guardRunner: Middleware;
+  let guardHook: GuardHook;
   let injector: ReflectiveInjector;
 
   function route(route: Route, params = {}, isTerminal = false) {
@@ -18,12 +17,12 @@ describe('Guard Middleware', function() {
 
   beforeEach(function() {
     injector = ReflectiveInjector.resolveAndCreate([]);
-    guardRunner = injector.resolveAndInstantiate(guardMiddleware);
+    guardHook = injector.resolveAndInstantiate(GuardHook);
   });
 
   it('should always return true for routes with no gaurds', function(done) {
     route({ })
-      .let<TraversalCandidate>(guardRunner)
+      .let<TraversalCandidate>(t => guardHook.apply(t))
       .subscribe(({ route }) => {
         expect(route).toBeTruthy();
 
@@ -33,7 +32,7 @@ describe('Guard Middleware', function() {
 
   it('should return true for routes with an empty guard array', function(done) {
     route({ guards: [] })
-      .let<TraversalCandidate>(guardRunner)
+      .let<TraversalCandidate>(t => guardHook.apply(t))
       .subscribe(({ route }) => {
         expect(route).toBeTruthy();
 
@@ -45,7 +44,7 @@ describe('Guard Middleware', function() {
     spyOn(injector, 'resolveAndInstantiate').and.callThrough();
     const guard = provideGuard(() => () => Observable.of(true));
 
-    route({ guards: [ guard ] }).let(guardRunner).subscribe();
+    route({ guards: [ guard ] }).let(t => guardHook.apply(t)).subscribe();
 
     expect(injector.resolveAndInstantiate).toHaveBeenCalledWith(guard);
   });
@@ -58,7 +57,7 @@ describe('Guard Middleware', function() {
     const params = { abc: 123 };
     const isTerminal = true;
 
-    route(nextRoute, params, isTerminal).let(guardRunner).subscribe();
+    route(nextRoute, params, isTerminal).let(t => guardHook.apply(t)).subscribe();
 
     expect(testGuard.run).toHaveBeenCalledWith(params, nextRoute, isTerminal);
   });
@@ -67,7 +66,7 @@ describe('Guard Middleware', function() {
     const pass = provideGuard(() => () => Observable.of(true));
 
     route({ guards: [ pass ] })
-      .let<TraversalCandidate>(guardRunner)
+      .let<TraversalCandidate>(t => guardHook.apply(t))
       .subscribe(({ route }) => {
         expect(route).toBeTruthy();
 
@@ -80,7 +79,7 @@ describe('Guard Middleware', function() {
     const fail = provideGuard(() => () => Observable.of(false));
 
     route({ guards: [ pass, fail ] })
-      .let(guardRunner)
+      .let<any>(t => guardHook.apply(t))
       .subscribe(({ route }) => {
         expect(route).toBeFalsy();
 

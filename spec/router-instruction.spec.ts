@@ -7,7 +7,8 @@ import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
 
 import { RouteTraverser } from '../lib/route-traverser';
 import { Router, ROUTER_PROVIDERS } from '../lib/router';
-import { NextInstruction, RouterInstruction, ROUTE_SET_PROVIDERS } from '../lib/router-instruction';
+import { NextInstruction, RouterInstruction, ROUTER_INSTRUCTION_PROVIDERS } from '../lib/router-instruction';
+import { ZONE_OPERATOR_PROVIDERS } from '../lib/zone';
 
 
 describe('Route Set', function() {
@@ -37,7 +38,8 @@ describe('Route Set', function() {
 
     const injector = ReflectiveInjector.resolveAndCreate([
       ROUTER_PROVIDERS,
-      ROUTE_SET_PROVIDERS,
+      ROUTER_INSTRUCTION_PROVIDERS,
+      ZONE_OPERATOR_PROVIDERS,
       provide(RouteTraverser, { useValue: mockTraverser }),
       provide(LocationStrategy, { useClass: MockLocationStrategy }),
       provide(NgZone, { useValue: mockZone })

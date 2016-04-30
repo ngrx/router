@@ -15,12 +15,12 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/every';
 import { Observable } from 'rxjs/Observable';
-import { provide, Provider, OpaqueToken, Injector, ReflectiveInjector } from 'angular2/core';
+import { Inject, Injectable, Provider, OpaqueToken, Injector, ReflectiveInjector } from 'angular2/core';
 
 import { createProviderFactory } from './util';
 import { Route } from './route';
-import { useTraversalMiddleware, TraversalCandidate } from './route-traverser';
-import { createMiddleware } from './middleware';
+import { TRAVERSAL_HOOKS, TraversalCandidate } from './route-traverser';
+import { Hook } from './hooks';
 
 export interface Guard {
   (params: any, route: Route, isTerminal: boolean): Observable<boolean>;
@@ -28,12 +28,16 @@ export interface Guard {
 
 export const provideGuard = createProviderFactory<Guard>('@ngrx/router Guard');
 
-export const guardMiddleware = createMiddleware(function(injector: ReflectiveInjector) {
-  return (route$: Observable<TraversalCandidate>) => route$
-    .mergeMap<TraversalCandidate>(({ route, params, isTerminal }) => {
+
+@Injectable()
+export class GuardHook implements Hook<TraversalCandidate> {
+  constructor(@Inject(Injector) private _injector: ReflectiveInjector) { }
+
+  apply(route$) {
+    return route$.mergeMap(({ route, params, isTerminal }) => {
       if ( !!route.guards && Array.isArray(route.guards) && route.guards.length > 0 ) {
         const guards: Guard[] = route.guards
-          .map(provider => injector.resolveAndInstantiate(provider));
+          .map(provider => this._injector.resolveAndInstantiate(provider));
 
         const resolved = guards.map(guard => guard(params, route, isTerminal));
 
@@ -50,8 +54,9 @@ export const guardMiddleware = createMiddleware(function(injector: ReflectiveInj
 
       return Observable.of({ route, params, isTerminal });
     });
-}, [ Injector ]);
+  }
+}
 
 export const GUARD_PROVIDERS = [
-  useTraversalMiddleware(guardMiddleware)
+  new Provider(TRAVERSAL_HOOKS, { useClass: GuardHook, multi: true })
 ];
