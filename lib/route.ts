@@ -22,7 +22,7 @@ export interface IndexRoute extends BaseRoute {
 
 export interface Route extends IndexRoute {
   path?: string;
-  guards?: Provider[];
+  guards?: any[];
   indexRoute?: IndexRoute;
   loadIndexRoute?: Async<IndexRoute>;
   children?: Routes;
