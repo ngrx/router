@@ -13,7 +13,7 @@ import { TestComponentBuilder } from '@angular/compiler/testing';
 import { Component, provide } from '@angular/core';
 import { LocationStrategy } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { LinkTo } from '../lib/link-to';
 import { LinkActive } from '../lib/link-active';
