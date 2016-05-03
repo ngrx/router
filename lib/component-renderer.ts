@@ -3,7 +3,7 @@ import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {
-  DynamicComponentLoader,
+  ComponentResolver,
   ViewContainerRef,
   ReflectiveInjector,
   Injector,
@@ -35,6 +35,7 @@ export interface RenderInstruction {
 export class ComponentRenderer {
   constructor(
     private _loader: ResourceLoader,
+    private _compiler: ComponentResolver,
     @Optional() @Inject(PRE_RENDER_HOOKS)
       private _preRenderHooks: Hook<RenderInstruction>[],
     @Optional() @Inject(POST_RENDER_HOOKS)
@@ -46,7 +47,6 @@ export class ComponentRenderer {
     components: BaseRoute,
     injector: Injector,
     ref: ViewContainerRef,
-    dcl: DynamicComponentLoader,
     providers: Provider[]
   ) {
     return Observable.of(route)
@@ -56,10 +56,11 @@ export class ComponentRenderer {
       })
       .let(composeHooks(this._preRenderHooks))
       .mergeMap(instruction => {
-        const providers = ReflectiveInjector.resolve(instruction.providers);
+        const instructionInjector = ReflectiveInjector.resolveAndCreate(instruction.providers, injector);
         const component = instruction.component;
 
-        return dcl.loadNextToLocation(component, ref, providers);
+        return this._compiler.resolveComponent(component)
+          .then(comp => ref.createComponent(comp, null, instructionInjector));
       })
       .let(composeHooks(this._postRenderHooks));
   }

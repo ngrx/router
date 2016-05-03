@@ -14,11 +14,11 @@ import {
   Component,
   ComponentRef,
   ReflectiveInjector,
+  Inject,
   Injector,
   OnDestroy,
   OnInit,
   ViewContainerRef,
-  DynamicComponentLoader,
   Attribute,
   Provider
 } from '@angular/core';
@@ -52,7 +52,6 @@ export class RouteView implements OnDestroy, OnInit {
     protected _routerInstruction$: RouterInstruction,
     protected _injector: Injector,
     protected _renderer: ComponentRenderer,
-    protected _dcl: DynamicComponentLoader,
     protected _ref: ViewContainerRef
   ) { }
 
@@ -71,7 +70,7 @@ export class RouteView implements OnDestroy, OnInit {
       .do(ins => this._cleanPreviousRef())
       .filter(({ components }) => !!components.component || !!components.loadComponent)
       .switchMap(({ route, components }) => this._renderer.render(
-        route, components, this._injector, this._ref, this._dcl, [ this._routerInstructionProvider ]
+        route, components, this._injector, this._ref, [ this._routerInstructionProvider ]
       ))
       .subscribe((ref: ComponentRef) => this._prev = ref);
   }
