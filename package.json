@@ -38,9 +38,9 @@
   "license": "MIT",
   "peerDependencies": {
     "rxjs": "5.0.0-beta.6",
-    "@angular/core": "0.0.0-3",
-    "@angular/platform-browser": "0.0.0-3",
-    "@angular/common": "0.0.0-3"
+    "@angular/core": "2.0.0-rc.0",
+    "@angular/platform-browser": "2.0.0-rc.0",
+    "@angular/common": "2.0.0-rc.0"
   },
   "devDependencies": {
     "@angular/common": "2.0.0-rc.0",
