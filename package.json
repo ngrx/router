@@ -43,11 +43,12 @@
     "@angular/common": "0.0.0-3"
   },
   "devDependencies": {
-    "@angular/core": "0.0.0-3",
-    "@angular/platform-browser": "0.0.0-3",
-    "@angular/platform-browser-dynamic": "0.0.0-3",
-    "@angular/common": "0.0.0-3",
-    "@angular/compiler": "0.0.0-3",
+    "@angular/common": "2.0.0-rc.0",
+    "@angular/compiler": "2.0.0-rc.0",
+    "@angular/core": "2.0.0-rc.0",
+    "@angular/http": "2.0.0-rc.0",
+    "@angular/platform-browser": "2.0.0-rc.0",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.0",
     "conventional-changelog-cli": "^1.1.1",
     "core-js": "^2.2.2",
     "esdoc": "^0.4.6",

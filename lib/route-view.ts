@@ -34,7 +34,7 @@ import { Match } from './route-traverser';
   template: ``
 })
 export class RouteView implements OnDestroy, OnInit {
-  private _prev: ComponentRef;
+  private _prev: ComponentRef<any>;
   private _sub: any;
   private _routerInstructionProvider = new Provider(RouterInstruction, {
     useValue: this._routerInstruction$.map<Match>(set => {
@@ -72,7 +72,7 @@ export class RouteView implements OnDestroy, OnInit {
       .switchMap(({ route, components }) => this._renderer.render(
         route, components, this._injector, this._ref, [ this._routerInstructionProvider ]
       ))
-      .subscribe((ref: ComponentRef) => this._prev = ref);
+      .subscribe((ref: ComponentRef<any>) => this._prev = ref);
   }
 
   ngOnDestroy() {

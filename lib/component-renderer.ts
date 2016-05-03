@@ -39,7 +39,7 @@ export class ComponentRenderer {
     @Optional() @Inject(PRE_RENDER_HOOKS)
       private _preRenderHooks: Hook<RenderInstruction>[],
     @Optional() @Inject(POST_RENDER_HOOKS)
-      private _postRenderHooks: Hook<ComponentRef>[]
+      private _postRenderHooks: Hook<ComponentRef<any>>[]
   ) { }
 
   render(
