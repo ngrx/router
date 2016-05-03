@@ -8,19 +8,20 @@ import { Provider, Injectable } from '@angular/core';
 
 import { Router } from './router';
 import { Routes, Route } from './route';
-import { INSTRUCTION_HOOKS, NextInstruction } from './router-instruction';
+import { INSTRUCTION_HOOKS } from './router-instruction';
+import { Match } from './route-traverser';
 import { formatPattern } from './match-pattern';
 import { Hook } from './hooks';
 
 
 @Injectable()
-export class RedirectHook implements Hook<NextInstruction> {
+export class RedirectHook implements Hook<Match> {
   constructor(private router: Router) { }
 
-  apply(next$: Observable<NextInstruction>): Observable<NextInstruction> {
+  apply(next$: Observable<Match>): Observable<Match> {
     return next$
       .filter(next => {
-        const last = next.routeConfigs[next.routeConfigs.length - 1];
+        const last = next.routes[next.routes.length - 1];
 
         if (last.redirectTo) {
           this._handleRedirect(last, next);
@@ -31,7 +32,7 @@ export class RedirectHook implements Hook<NextInstruction> {
       });
   }
 
-  private _handleRedirect(route: Route, next: NextInstruction) {
+  private _handleRedirect(route: Route, next: Match) {
     const { routeParams, queryParams } = next;
 
     let pathname;
@@ -40,8 +41,8 @@ export class RedirectHook implements Hook<NextInstruction> {
       pathname = formatPattern(route.redirectTo, routeParams);
     }
     else {
-      const routeIndex = next.routeConfigs.indexOf(route);
-      const parentPattern = this._getRoutePattern(next.routeConfigs, routeIndex - 1);
+      const routeIndex = next.routes.indexOf(route);
+      const parentPattern = this._getRoutePattern(next.routes, routeIndex - 1);
       const pattern = parentPattern.replace(/\/*$/, '/') + route.redirectTo;
       pathname = formatPattern(pattern, routeParams);
     }

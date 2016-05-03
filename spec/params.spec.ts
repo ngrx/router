@@ -1,18 +1,19 @@
 import { Subject } from 'rxjs/Subject';
 import { ReflectiveInjector, provide } from '@angular/core';
 
-import { NextInstruction, RouterInstruction } from '../lib/router-instruction';
+import { RouterInstruction } from '../lib/router-instruction';
+import { Match } from '../lib/route-traverser';
 import { RouteParams, QueryParams, PARAMS_PROVIDERS } from '../lib/params';
 
 
 describe('Params Services', function() {
-  let routerInstruction$: Subject<NextInstruction>;
+  let routerInstruction$: Subject<Match>;
   let routeParams$: RouteParams;
   let queryParams$: QueryParams;
 
   function nextInstruction(routeParams, queryParams) {
     routerInstruction$.next({
-      routeConfigs: [],
+      routes: [],
       routeParams,
       queryParams,
       locationChange: {
@@ -23,7 +24,7 @@ describe('Params Services', function() {
   }
 
   beforeEach(function() {
-    routerInstruction$ = new Subject<NextInstruction>();
+    routerInstruction$ = new Subject<Match>();
     const injector = ReflectiveInjector.resolveAndCreate([
       PARAMS_PROVIDERS,
       provide(RouterInstruction, { useValue: routerInstruction$ })

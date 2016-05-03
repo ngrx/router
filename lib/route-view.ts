@@ -24,8 +24,9 @@ import {
 } from '@angular/core';
 
 import { Route, getNamedComponents } from './route';
-import { RouterInstruction, NextInstruction } from './router-instruction';
+import { RouterInstruction } from './router-instruction';
 import { ComponentRenderer } from './component-renderer';
+import { Match } from './route-traverser';
 
 @Component({
   selector: 'route-view',
@@ -36,10 +37,10 @@ export class RouteView implements OnDestroy, OnInit {
   private _prev: ComponentRef;
   private _sub: any;
   private _routerInstructionProvider = new Provider(RouterInstruction, {
-    useValue: this._routerInstruction$.map<NextInstruction>(set => {
+    useValue: this._routerInstruction$.map<Match>(set => {
       return {
         locationChange: set.locationChange,
-        routeConfigs: [ ...set.routeConfigs ].slice(1),
+        routes: [ ...set.routes ].slice(1),
         routeParams: set.routeParams,
         queryParams: set.queryParams
       };
@@ -58,7 +59,7 @@ export class RouteView implements OnDestroy, OnInit {
   ngOnInit() {
     this._sub = this._routerInstruction$
       .map(set => {
-        const route = set.routeConfigs[0];
+        const route = set.routes[0];
         const components = getNamedComponents(route, this._name);
 
         return { route, components };

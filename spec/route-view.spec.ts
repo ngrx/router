@@ -14,7 +14,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { RouteView } from '../lib/route-view';
 import { ComponentRenderer } from '../lib/component-renderer';
-import { RouterInstruction, NextInstruction } from '../lib/router-instruction';
+import { RouterInstruction } from '../lib/router-instruction';
+import { Match } from '../lib/route-traverser';
 
 class TestRoute {}
 
@@ -26,7 +27,7 @@ class MockRenderer {
   );
 }
 
-class MockRouterInstruction extends BehaviorSubject<NextInstruction> {}
+class MockRouterInstruction extends BehaviorSubject<Match> {}
 
 const compile = (tcb: TestComponentBuilder) => {
   return tcb
@@ -56,7 +57,7 @@ describe('Route View', () => {
 
   it('should not render if missing a route component and component loader', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
-      routeConfigs: [{
+      routes: [{
         component: undefined,
         loadComponent: undefined
       }]
@@ -73,7 +74,7 @@ describe('Route View', () => {
 
   it('should render with a component', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
-      routeConfigs: [{
+      routes: [{
         component: TestRoute
       }]
     });
@@ -89,7 +90,7 @@ describe('Route View', () => {
 
   it('should render with a named component', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
-      routeConfigs: [{
+      routes: [{
         components: {
           main: TestRoute
         }
@@ -108,7 +109,7 @@ describe('Route View', () => {
 
   it('should render with a component loader', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
-      routeConfigs: [{
+      routes: [{
         loadComponent: () => Promise.resolve(TestRoute)
       }]
     });
@@ -124,7 +125,7 @@ describe('Route View', () => {
 
   it('should destroy the previous component on when the route set changes', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
-      routeConfigs: [{
+      routes: [{
         component: TestRoute
       }]
     });
@@ -135,7 +136,7 @@ describe('Route View', () => {
         instance.ngOnInit();
 
         rs.next({
-          routeConfigs: [{
+          routes: [{
             loadComponent: () => TestRoute2
           }]
         });
@@ -148,7 +149,7 @@ describe('Route View', () => {
 
   it('should not destroy if the component doesn\'t change when the route set changes', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
-      routeConfigs: [{
+      routes: [{
         component: TestRoute
       }]
     });
@@ -159,7 +160,7 @@ describe('Route View', () => {
         instance.ngOnInit();
 
         rs.next({
-          routeConfigs: [{
+          routes: [{
             component: TestRoute
           }]
         });
@@ -171,7 +172,7 @@ describe('Route View', () => {
 
   it('should not destroy if the component doesn\'t change when the route set changes with named routes', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
-      routeConfigs: [{
+      routes: [{
         components: {
           test: TestRoute
         }
@@ -185,7 +186,7 @@ describe('Route View', () => {
         instance.ngOnInit();
 
         rs.next({
-          routeConfigs: [{
+          routes: [{
             components: {
               test: TestRoute
             }
@@ -199,7 +200,7 @@ describe('Route View', () => {
 
   it('should destroy if the component does change when the route set changes', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
-      routeConfigs: [{
+      routes: [{
         component: TestRoute
       }]
     });
@@ -210,7 +211,7 @@ describe('Route View', () => {
         instance.ngOnInit();
 
         rs.next({
-          routeConfigs: [{
+          routes: [{
             component: TestRoute2
           }]
         });
@@ -222,7 +223,7 @@ describe('Route View', () => {
 
   it('should destroy if the component does change when the route set changes with named routes', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
-      routeConfigs: [{
+      routes: [{
         components: {
           main: TestRoute
         }
@@ -236,7 +237,7 @@ describe('Route View', () => {
         instance.ngOnInit();
 
         rs.next({
-          routeConfigs: [{
+          routes: [{
             components: {
               main: TestRoute2
             }
@@ -250,7 +251,7 @@ describe('Route View', () => {
 
   it('should destroy the component when destroyed', async(inject([TestComponentBuilder, RouterInstruction], (tcb, rs) => {
     rs.next({
-      routeConfigs: [{
+      routes: [{
         component: TestRoute
       }]
     });

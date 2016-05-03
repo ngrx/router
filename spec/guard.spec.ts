@@ -19,8 +19,14 @@ describe('Guard Middleware', function() {
     protectRoute = () => Observable.of(false);
   }
 
-  function route(route: Route, params = {}, isTerminal = false) {
-    return Observable.of({ route, params, isTerminal });
+  function route(
+    route: Route,
+    routeParams = {},
+    queryParams = {},
+    isTerminal = false,
+    locationChange = { type: 'push', path: '/' }
+  ): Observable<TraversalCandidate> {
+    return Observable.of({ route, routeParams, queryParams, isTerminal, locationChange });
   }
 
   beforeEach(function() {
@@ -56,19 +62,26 @@ describe('Guard Middleware', function() {
     expect(injector.resolveAndInstantiate).toHaveBeenCalledWith(PassGuard);
   });
 
-  // Intentionally commenting this out because a future PR will refactor
-  // traversal candidate and will pass that to the guards instead
-  xit('should provide guards with the TraversalCandidate', function() {
-    // const testGuard = { run: () => Observable.of(true) };
-    // spyOn(testGuard, 'run').and.callThrough();
-    // const guard = provideGuard(() => testGuard.run);
-    // const nextRoute = { guards: [ guard ] };
-    // const params = { abc: 123 };
-    // const isTerminal = true;
-    //
-    // route(nextRoute, params, isTerminal).let(t => guardHook.apply(t)).subscribe();
-    //
-    // expect(testGuard.run).toHaveBeenCalledWith(params, nextRoute, isTerminal);
+
+  it('should provide guards with the TraversalCandidate', function() {
+    const spy = jasmine.createSpy('protectRoute').and.returnValue(Observable.of(true));
+    class MockGuard {
+      protectRoute = spy;
+    }
+
+    const traversalCandidate: TraversalCandidate = {
+      route: { path: '/', guards: [ MockGuard ] },
+      queryParams: {},
+      routeParams: {},
+      locationChange: { type: 'push', path: '/' },
+      isTerminal: true
+    };
+
+    const stream$ = Observable.of(traversalCandidate);
+
+    stream$.let(t => guardHook.apply(t)).subscribe();
+
+    expect(spy).toHaveBeenCalledWith(traversalCandidate);
   });
 
   it('should return true if all of the guards return true', function(done) {

@@ -1,5 +1,6 @@
 import { ReflectiveInjector, provide } from '@angular/core';
 
+import { LocationChange } from '../lib/router';
 import { RESOURCE_LOADER_PROVIDERS } from '../lib/resource-loader';
 import { Routes, Route, ROUTES } from '../lib/route';
 import { RouteTraverser, MATCH_ROUTE_PROVIDERS } from '../lib/route-traverser';
@@ -92,6 +93,13 @@ describe('RouteTraverser', function() {
     }
   ];
 
+  function change(path: string): LocationChange {
+    return {
+      type: 'push',
+      path
+    };
+  }
+
   beforeEach(function() {
     const injector = ReflectiveInjector.resolveAndCreate([
       MATCH_ROUTE_PROVIDERS,
@@ -105,7 +113,7 @@ describe('RouteTraverser', function() {
     describe('when the location matches an index route', function() {
       it('matches the correct routes', function(done) {
         traverser
-          .find('/users')
+          .find(change('/users'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ RootRoute, UsersRoute, UsersIndexRoute ]);
@@ -118,11 +126,11 @@ describe('RouteTraverser', function() {
     describe('when the location matches a nested route with params', function() {
       it('matches the correct routes and params', function(done) {
         traverser
-          .find('/users/5')
+          .find(change('/users/5'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ RootRoute, UsersRoute, UserRoute ]);
-            expect(match.params).toEqual({ userID: '5' });
+            expect(match.routeParams).toEqual({ userID: '5' });
 
             done();
           });
@@ -132,11 +140,11 @@ describe('RouteTraverser', function() {
     describe('when the location matches a deeply nested route with params', function() {
       it('matches the correct routes and params', function(done) {
         traverser
-          .find('/users/5/abc')
+          .find(change('/users/5/abc'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ RootRoute, UsersRoute, UserRoute, PostRoute ]);
-            expect(match.params).toEqual({ userID: '5', postID: 'abc' });
+            expect(match.routeParams).toEqual({ userID: '5', postID: 'abc' });
 
             done();
           });
@@ -146,11 +154,11 @@ describe('RouteTraverser', function() {
     describe('when the location matches a nested route with multiple splat params', function() {
       it('matches the correct routes and params', function(done) {
         traverser
-          .find('/files/a/b/c.jpg')
+          .find(change('/files/a/b/c.jpg'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ FilesRoute ]);
-            expect(match.params).toEqual({ 0: 'a/b', 1: 'c' });
+            expect(match.routeParams).toEqual({ 0: 'a/b', 1: 'c' });
 
             done();
           });
@@ -160,11 +168,11 @@ describe('RouteTraverser', function() {
     describe('when the location matches a nested route with a greedy splat param', function() {
       it('matches the correct routes and params', function(done) {
         traverser
-          .find('/foo/bar/f')
+          .find(change('/foo/bar/f'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ GreedyRoute ]);
-            expect(match.params).toEqual({ 0: 'foo/bar' });
+            expect(match.routeParams).toEqual({ 0: 'foo/bar' });
 
             done();
           });
@@ -174,7 +182,7 @@ describe('RouteTraverser', function() {
     describe('when the location matches an absolute route', function() {
       it('matches the correct routes', function(done) {
         traverser
-          .find('/about')
+          .find(change('/about'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ AboutRoute ]);
@@ -187,7 +195,7 @@ describe('RouteTraverser', function() {
     describe('when the location matches an optional route', function() {
       it('matches the the optional pattern is missing', function(done) {
         traverser
-          .find('/')
+          .find(change('/'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ OptionalRoute ]);
@@ -198,7 +206,7 @@ describe('RouteTraverser', function() {
 
       it('matches the the optional pattern is present', function(done) {
         traverser
-          .find('/optional')
+          .find(change('/optional'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ OptionalRoute ]);
@@ -211,7 +219,7 @@ describe('RouteTraverser', function() {
     describe('when the location matches the child of an optional route', function() {
       it('matches when the optional pattern is missing', function(done) {
         traverser
-          .find('/child')
+          .find(change('/child'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ OptionalRoute, OptionalRouteChild ]);
@@ -222,7 +230,7 @@ describe('RouteTraverser', function() {
 
       it('matches when the optional pattern is present', function(done) {
         traverser
-          .find('/optional/child')
+          .find(change('/optional/child'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ OptionalRoute, OptionalRouteChild ]);
@@ -235,7 +243,7 @@ describe('RouteTraverser', function() {
     describe('when the location does not match any routes', function() {
       it('matches the "catch-all" route', function(done) {
         traverser
-          .find('/not-found')
+          .find(change('/not-found'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ CatchAllRoute ]);
@@ -246,7 +254,7 @@ describe('RouteTraverser', function() {
 
       it('matches the "catch-all" route on a deep miss', function(done) {
         traverser
-          .find('/not-found/foo')
+          .find(change('/not-found/foo'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ CatchAllRoute ]);
@@ -257,7 +265,7 @@ describe('RouteTraverser', function() {
 
       it('matches the "catch-all" route on missing path separators', function(done) {
         traverser
-          .find('/optionalchild')
+          .find(change('/optionalchild'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ CatchAllRoute ]);
@@ -268,7 +276,7 @@ describe('RouteTraverser', function() {
 
       it('matches the "catch-all" route on a regex miss', function(done) {
         traverser
-          .find('/int/foo')
+          .find(change('/int/foo'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ CatchAllRoute ]);
@@ -281,11 +289,11 @@ describe('RouteTraverser', function() {
     describe('when the location matches a route with param regex', function() {
       it('matches the correct routes and param', function(done) {
         traverser
-          .find('/int/42')
+          .find(change('/int/42'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ RegexRoute ]);
-            expect(match.params).toEqual({ int: '42' });
+            expect(match.routeParams).toEqual({ int: '42' });
 
             done();
           });
@@ -295,11 +303,11 @@ describe('RouteTraverser', function() {
     describe('when the location matches a nested route with an unnamed param', function() {
       it('matches the correct routes and params', function(done) {
         traverser
-          .find('/unnamed-params/foo/bar')
+          .find(change('/unnamed-params/foo/bar'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ UnnamedParamsRoute, UnnamedParamsRouteChild ]);
-            expect(match.params).toEqual({ 0: 'foo', 1: 'bar' });
+            expect(match.routeParams).toEqual({ 0: 'foo', 1: 'bar' });
 
             done();
           });
@@ -309,13 +317,26 @@ describe('RouteTraverser', function() {
     describe('when the location matches pathless routes', function() {
       it('matches the correct routes', function(done) {
         traverser
-          .find('/pathless-child')
+          .find(change('/pathless-child'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([
               PathlessRoute,
               PathlessChildRoute
             ]);
+
+            done();
+          });
+      });
+    });
+
+    describe('when the location change includes query params', function() {
+      it('should correctly parse the query params', function(done) {
+        traverser
+          .find(change('/users?a=2'))
+          .subscribe(({ queryParams }) => {
+            expect(queryParams).toBeDefined();
+            expect(queryParams.a).toBe('2');
 
             done();
           });
@@ -329,7 +350,7 @@ describe('RouteTraverser', function() {
     xdescribe('when the location matches a nested absolute route', function() {
       it('matches the correct routes', function(done) {
         traverser
-          .find('/team')
+          .find(change('/team'))
           .subscribe(match => {
             expect(match).toBeDefined();
             expect(match.routes).toEqual([ RootRoute, UsersRoute, TeamRoute ]);
