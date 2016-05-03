@@ -7,8 +7,9 @@ import { MockLocationStrategy } from '@angular/common/testing';
 
 import { RouteTraverser } from '../lib/route-traverser';
 import { Router, ROUTER_PROVIDERS } from '../lib/router';
-import { NextInstruction, RouterInstruction, ROUTER_INSTRUCTION_PROVIDERS } from '../lib/router-instruction';
+import { RouterInstruction, ROUTER_INSTRUCTION_PROVIDERS } from '../lib/router-instruction';
 import { ZONE_OPERATOR_PROVIDERS } from '../lib/zone';
+import { Match } from '../lib/route-traverser';
 
 
 describe('Router Instruction', function() {
@@ -22,8 +23,13 @@ describe('Router Instruction', function() {
 
   beforeEach(function() {
     mockTraverser = {
-      find() {
-        return Observable.of({ routes, params });
+      find(change) {
+        return Observable.of<Match>({
+          routes,
+          routeParams: params,
+          queryParams: {},
+          locationChange: change
+        });
       }
     };
 
@@ -55,7 +61,7 @@ describe('Router Instruction', function() {
     routerInstruction
       .withLatestFrom(router)
       .subscribe(([set, change]) => {
-        expect(set.routeConfigs).toBe(routes);
+        expect(set.routes).toBe(routes);
         expect(set.routeParams).toBe(params);
         expect(set.queryParams).toBeDefined();
         expect(set.locationChange).toBe(change);
@@ -63,17 +69,6 @@ describe('Router Instruction', function() {
         done();
       });
 
-  });
-
-  it('should parse a location change with query params', function(done) {
-    router.go('/test?a=2');
-
-    routerInstruction.subscribe(set => {
-      expect(set.queryParams.a).toBeDefined();
-      expect(set.queryParams.a).toBe('2');
-
-      done();
-    });
   });
 
   it('should share a subscription amonst all subscribers', function(done) {

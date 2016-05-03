@@ -19,15 +19,28 @@ import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Guard, Route, TraversalCandidate } from '@ngrx/router';
+import { Guard, Route, TraversalCandidate, LocationChange } from '@ngrx/router';
 
 @Injectable()
 class AuthGuard implements Guard {
   constructor(private _http: Http) { }
-  // Guards are provided with a traversal candidate object which contains a
-  // snapshot of the route params parsed so far, the parsed query params,
-  // the route being evaluated, and the location change that caused traversal.
-  protectRoute(candidate: TraversalCandidate) {
+
+  protectRoute(candidate: TraversalCandidate) {    
+    // `route` is the current route being evaluated
+    const route: Route = candidate.route;
+
+    // `locationChange` includes the full path and type of change that caused traversal
+    const locationChange: LocationChange = candidate.locationChange;
+
+    // `queryParams` are the parsed query parameters
+    const queryParams: any = candidate.queryParams;
+
+    // `routeParams` is a snapshot of the route parameters discovered so far
+    const routeParams: any = candidate.routeParams;
+
+    // `isTerminal` indicates that the candidate route is going to be the last route traversed
+    const isTerminal: boolean = candidate.isTerminal;
+
     return this._http.get('/auth/check')
       // If request succeeds, return true
       .map(() => true)

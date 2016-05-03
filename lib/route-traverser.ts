@@ -13,11 +13,13 @@ import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/take';
 import { Observable } from 'rxjs/Observable';
 import { OpaqueToken, Provider, Inject, Injectable, Optional } from '@angular/core';
+import * as queryString from 'query-string';
 
 import { ResourceLoader, Async } from './resource-loader';
 import { matchPattern, makeParams } from './match-pattern';
 import { Route, IndexRoute, Routes, ROUTES } from './route';
 import { Hook, composeHooks } from './hooks';
+import { LocationChange } from './router';
 
 export const TRAVERSAL_HOOKS = new OpaqueToken(
   '@ngrx/router Traversal Hooks'
@@ -25,12 +27,16 @@ export const TRAVERSAL_HOOKS = new OpaqueToken(
 
 export interface Match {
   routes: Routes;
-  params: any;
+  routeParams: any;
+  queryParams: any;
+  locationChange: LocationChange;
 };
 
 export interface TraversalCandidate {
   route: Route;
-  params: any;
+  routeParams: any;
+  queryParams: any;
+  locationChange: LocationChange;
   isTerminal: boolean;
 }
 
@@ -51,24 +57,30 @@ export class RouteTraverser {
   * - routes       An array of routes that matched, in hierarchical order
   * - params       An object of URL parameters
   */
-  find(pathname: string) {
-    return this._matchRoutes(this._routes, pathname);
+  find(change: LocationChange) {
+    const [ pathname, query ] = change.path.split('?');
+    const queryParams = queryString.parse(query);
+    return this._matchRoutes(queryParams, change, pathname);
   }
 
   private _matchRoutes(
-    routes: Routes,
+    queryParams: any,
+    locationChange: LocationChange,
     pathname: string,
     remainingPathname = pathname,
-    paramNames = [],
-    paramValues = []
+    routes: Routes = this._routes,
+    routeParamNames = [],
+    routeParamValues = []
   ): Observable<Match> {
     return Observable.from(routes)
       .concatMap(route => this._matchRouteDeep(
         route,
+        queryParams,
+        locationChange,
         pathname,
         remainingPathname,
-        paramNames,
-        paramValues
+        routeParamNames,
+        routeParamValues
       ))
       .catch(error => {
         console.error('Error During Traversal', error);
@@ -80,6 +92,8 @@ export class RouteTraverser {
 
   private _matchRouteDeep(
     route: Route,
+    queryParams: any,
+    locationChange: LocationChange,
     pathname: string,
     remainingPathname: string,
     paramNames: string[],
@@ -105,17 +119,21 @@ export class RouteTraverser {
       .map<TraversalCandidate>(() => {
         return {
           route,
-          params: makeParams(paramNames, paramValues),
+          queryParams,
+          locationChange,
+          routeParams: makeParams(paramNames, paramValues),
           isTerminal: remainingPathname === '' && !!route.path
         };
       })
       .let<TraversalCandidate>(composeHooks(this._hooks))
       .filter(({ route }) => !!route)
-      .mergeMap(({ route, params, isTerminal }) => {
+      .mergeMap(({ route, routeParams, queryParams, isTerminal }) => {
         if ( isTerminal ) {
           const match: Match = {
             routes: [ route ],
-            params
+            routeParams,
+            queryParams,
+            locationChange
           };
 
           return Observable.of(route)
@@ -132,9 +150,11 @@ export class RouteTraverser {
         return Observable.of(route)
           .mergeMap(route => this._loadChildRoutes(route))
           .mergeMap<Match>(childRoutes => this._matchRoutes(
-            childRoutes,
+            queryParams,
+            locationChange,
             pathname,
             remainingPathname,
+            childRoutes,
             paramNames,
             paramValues
           ))

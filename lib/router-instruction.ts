@@ -22,26 +22,19 @@ import { Hook, composeHooks } from './hooks';
 export const ROUTER_HOOKS = new OpaqueToken('@ngrx/router Router Hooks');
 export const INSTRUCTION_HOOKS = new OpaqueToken('@ngrx/router Instruction Hooks');
 
-export interface NextInstruction {
-  routeConfigs: Routes;
-  routeParams: any;
-  queryParams: any;
-  locationChange: LocationChange;
-}
 
-
-export abstract class RouterInstruction extends Observable<NextInstruction> { }
+export abstract class RouterInstruction extends Observable<Match> { }
 
 @Injectable()
 export class RouterInstructionFactory {
   constructor(
     private _router$: Router,
     private _traverser: RouteTraverser,
-    private _zoneOperator: ZoneOperator<NextInstruction>,
+    private _zoneOperator: ZoneOperator<Match>,
     @Optional() @Inject(ROUTER_HOOKS)
       private _routerHooks: Hook<LocationChange>[] = [],
     @Optional() @Inject(INSTRUCTION_HOOKS)
-      private _instructionHooks: Hook<NextInstruction>[] = []
+      private _instructionHooks: Hook<Match>[] = []
   ) { }
 
   create(): RouterInstruction {
@@ -49,19 +42,7 @@ export class RouterInstructionFactory {
       .observeOn(asap)
       .distinctUntilChanged((prev, next) => prev.path === next.path)
       .let(composeHooks(this._routerHooks))
-      .switchMap(change => {
-        const [ pathname, queryString ] = change.path.split('?');
-
-        return this._traverser.find(pathname)
-          .map<NextInstruction>(set => {
-            return {
-              locationChange: change,
-              routeConfigs: set.routes,
-              queryParams: parseQueryString(queryString),
-              routeParams: set.params
-            };
-          });
-      })
+      .switchMap(change => this._traverser.find(change))
       .filter(match => !!match)
       .let(composeHooks(this._instructionHooks))
       .lift(this._zoneOperator)

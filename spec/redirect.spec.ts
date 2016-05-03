@@ -1,19 +1,19 @@
 import { Subject } from 'rxjs/Subject';
 import { ReflectiveInjector, provide } from '@angular/core';
 
-import { NextInstruction } from '../lib/router-instruction';
+import { Match } from '../lib/route-traverser';
 import { RedirectHook } from '../lib/redirect';
 import { Router } from '../lib/router';
 
 describe('Redirect Middleware', function() {
   let redirect: RedirectHook;
-  let routeSet$: Subject<NextInstruction>;
+  let routeSet$: Subject<Match>;
   let router = { replace(next: string) { } };
   let observer = { next() { } };
 
   function nextInstruction(to: string, routeParams: any = {}, queryParams: any = {}) {
     routeSet$.next({
-      routeConfigs: [ { redirectTo: to } ],
+      routes: [ { redirectTo: to } ],
       routeParams,
       queryParams,
       locationChange: {
@@ -24,7 +24,7 @@ describe('Redirect Middleware', function() {
   }
 
   beforeEach(function() {
-    routeSet$ = new Subject<NextInstruction>();
+    routeSet$ = new Subject<Match>();
     spyOn(router, 'replace');
     spyOn(observer, 'next');
     const injector = ReflectiveInjector.resolveAndCreate([
@@ -39,8 +39,8 @@ describe('Redirect Middleware', function() {
   });
 
   it('should skip route sets that are not redirects', function(done) {
-    const NextInstruction: NextInstruction = {
-      routeConfigs: [ { path: '/first' } ],
+    const nextInstruction: Match = {
+      routes: [ { path: '/first' } ],
       routeParams: {},
       queryParams: {},
       locationChange: {
@@ -50,11 +50,11 @@ describe('Redirect Middleware', function() {
     };
 
     redirect.apply(routeSet$).subscribe(value => {
-      expect(value).toBe(NextInstruction);
+      expect(value).toBe(nextInstruction);
       done();
     });
 
-    routeSet$.next(NextInstruction);
+    routeSet$.next(nextInstruction);
   });
 
   it('should correctly redirect basic paths', function() {
@@ -79,7 +79,7 @@ describe('Redirect Middleware', function() {
     redirect.apply(routeSet$).subscribe(observer);
 
     routeSet$.next({
-      routeConfigs: [ { path: '/first' }, { path: 'second', redirectTo: '/home' } ],
+      routes: [ { path: '/first' }, { path: 'second', redirectTo: '/home' } ],
       routeParams: {},
       queryParams: {},
       locationChange: {
@@ -96,7 +96,7 @@ describe('Redirect Middleware', function() {
     redirect.apply(routeSet$).subscribe(observer);
 
     routeSet$.next({
-      routeConfigs: [ { path: '/blog' }, { path: ':id', redirectTo: '/posts/:id' } ],
+      routes: [ { path: '/blog' }, { path: ':id', redirectTo: '/posts/:id' } ],
       routeParams: { id: '543' },
       queryParams: {},
       locationChange: {
