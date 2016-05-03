@@ -18,7 +18,7 @@ import { LinkActive } from '../lib/link-active';
 import { ROUTER_PROVIDERS, Router } from '../lib/router';
 import { SpyLocation } from 'angular2/router/testing';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { LocationStrategy } from 'angular2/platform/common';
 import { MockLocationStrategy } from 'angular2/src/mock/mock_location_strategy';
 

@@ -6,8 +6,8 @@ import { Subscriber } from 'rxjs/Subscriber';
 export class ZoneOperator<T> implements Operator<T, T> {
   constructor(private _zone: NgZone) { }
 
-  call(subscriber: Subscriber<T>): Subscriber<T> {
-    return new ZoneSubscriber(subscriber, this._zone);
+  call(subscriber: Subscriber<T>, source: any): any {
+    return source._subscribe(new ZoneSubscriber(subscriber, this._zone));
   }
 }
 

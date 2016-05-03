@@ -11,7 +11,7 @@ import {
 import {
   provide
 } from 'angular2/core';
-import { BehaviorSubject } from 'rxjs/subject/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { RouteView } from '../lib/route-view';
 import { ComponentRenderer } from '../lib/component-renderer';

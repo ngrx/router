@@ -3,7 +3,7 @@
  * It exposes location updates as a BehaviorSubject, letting the router
  * observe location changes.
  */
-import { ReplaySubject } from 'rxjs/subject/ReplaySubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subscriber } from 'rxjs/Subscriber';
 import { LocationStrategy } from 'angular2/platform/common';
 import { UrlChangeEvent, PlatformLocation } from 'angular2/platform/common';
