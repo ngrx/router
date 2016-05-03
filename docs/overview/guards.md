@@ -7,44 +7,58 @@ Guards are powerful hooks into the Router's route resolution process. When the l
     * Yes: Load the index route
     * No: Load the children routes and repeat process for all children
 
-Guards are run before a route is selected to be evaluated. This gives you the opportunity let the router's traversal process know if a route should be considered a candidate or not for traversal.
+Guards are run after the router determines it is a partial match but before it evaluates it. This gives you the opportunity let the router's traversal process know if a route should continue to be considered a candidate route.
 
 ### Use Cases
-A great use case for guards is auth protecting routes. Guards are functions that return an Observable of true or false. If your guard's observable emits true, then traversal continues. If your guard emits false, traversal is canceled immediately and the router moves on to the next candidate route. Note that guards will not finish running until your observable completes. To write an auth guard we'll need to use the `provideGuard` helper:
+A great use case for guards is auth protecting routes. Guards are services with a `protectRoute` method that return an Observable of true or false. If your guard's observable emits true, then traversal continues. If your guard emits false, traversal is canceled immediately and the router moves on to the next candidate route. Note that guards will not finish running until your observable completes. To write an auth guard we'll need to use the `provideGuard` helper:
 
 ```ts
 import 'rxjs/add/observable/of';
-import { Http } from 'angular2/http';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { provideGuard, Route } from '@ngrx/router';
+import { Guard, Route, TraversalCandidate } from '@ngrx/router';
 
-const authGuard = provideGuard(function(http: Http) {
-  // Guards are provided with a snapshot of the route params that have been
-  // parsed so far, the route that is being evaluated, and whether or not
-  // the matched route is the final match
-  return function(params: any, route: Route, terminal: boolean) {
-    return http.get('/auth/check')
+@Injectable()
+class AuthGuard implements Guard {
+  constructor(private _http: Http) { }
+  // Guards are provided with a traversal candidate object which contains a
+  // snapshot of the route params parsed so far, the parsed query params,
+  // the route being evaluated, and the location change that caused traversal.
+  protectRoute(candidate: TraversalCandidate) {
+    return this._http.get('/auth/check')
       // If request succeeds, return true
       .map(() => true)
       // If request fails, return false
       .catch(() => Observable.of(false));
   }
-}, [ Http ]);
+}
 ```
 
-To use this guard all we have to do is add it to the route's guards:
+To use this guard first we have to add it to the route's guards:
 
 ```ts
 const routes: Routes = [
   {
     path: '/account',
-    guards: [ authGuard ],
-    loadComponent: () => System.import('/pages/account', __moduleName)
+    guards: [ AuthGuard ],
+    loadComponent: () => System.import('app/pages/account')
       .then(module => module.AccountPage),
-    loadChildren: () => System.import('/routes/account', __moduleName))
+    loadChildren: () => System.import('app/routes/account'))
       .then(module => module.accountRoutes),
   }
 ]
+```
+
+Then we include it in the providers array with the router:
+
+```ts
+bootstrap(App, [
+  provideRouter(routes),
+  AuthGuard
+]);
 ```
 
 ### What Makes Guards Powerful?
@@ -53,20 +67,22 @@ Guards are run before the component or children are loaded. This prevents the us
 While a guard must always return an observable, if a guard dispatches a route change (for instance redirecting to a `400 Not Authorized` route) the current traversal will be immediately canceled:
 
 ```ts
-const authGuard = provideGuard(function(http: Http, router: Router) {
-  // Guards are provided with the route that is being evaluated:
-  return function(route: Route) {
-    return http.get('/auth/check')
-      // If request succeeds, return true
+@Injectable()
+class AuthGuard implements Guard {
+  constructor(private _http: Http, private _router: Router) { }
+
+  protectRoute(candidate: TraversalCandidate) {
+    return this._http.get('/auth/check')
       .map(() => true)
-      // If request fails, redirect to "not authorized" route
+      // If request fails, catch the error and redirect
       .catch(() => {
-        router.replace('/not-authorized');
+        this._router.redirect('/400');
+
         return Observable.of(false);
       });
   }
-}, [ Http, Router ]);
+}
 ```
 
-### Injection
-Guards are limited by the services they can inject. They are run in the context of the root injector, meaning if there is a service you want to inject into a guard you must provide that service in the same injector (or a parent of the injector) where you provide the router. Additionally, some router services like `RouteSet`, `RouteParams`, and `QueryParams` do not get updated until after all guards have been run.
+### Router Services
+Some router services like `RouterInstruction`, `RouteParams`, and `QueryParams` do not get updated until after all guards have been run. For this reason your guards should generally not use these services and instead should get route and query params out of the traversal candidate object provided to the `protectRoute` method.
