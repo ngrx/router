@@ -3,7 +3,7 @@
 Route configuration is a set of rules the Router uses when trying to match the URL to a set of components.
 
 
-To demonstrate, lets write a couple of components for a simple bog web app:
+To demonstrate, lets write a couple of components for a simple blog web app:
 
 ```ts
 import { Component } from 'angular2/core';
@@ -52,7 +52,7 @@ class BlogPage { }
 class PostPage { }
 ```
 
-Now we need to write route configuration with the following rules:
+Now we need to write a route configuration with the following rules:
 
 * When `/`, show the `HomePage` component
 * When `/blog`, show the `BlogPage` component
