@@ -21,7 +21,7 @@ export class PostPage {
 ```
 
 Using `QueryParams`:
-```
+```ts
 import { QueryParams } from '@ngrx/router';
 
 @Component({
