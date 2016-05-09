@@ -8,7 +8,6 @@
   "undocumentIdentifier": false,
   "manual": {
     "overview": [
-      "./docs/overview/README.md",
       "./docs/overview/route.md",
       "./docs/overview/links.md",
       "./docs/overview/params.md",
