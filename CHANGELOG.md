@@ -1,3 +1,13 @@
+<a name="0.4.1"></a>
+## [0.4.1](https://github.com/ngrx/router/compare/v0.4.0...v0.4.1) (2016-05-09)
+
+
+### Bug Fixes
+
+* **deps:** Specify semver range for Angular 2 release candidates([7e729a4](https://github.com/ngrx/router/commit/7e729a4))
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/ngrx/router/compare/v0.3.0...v0.4.0) (2016-05-03)
 
