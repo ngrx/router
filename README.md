@@ -49,7 +49,7 @@ npm install @ngrx/router --save
     template: `
       <h2>Blog</h2>
       <nav>
-        <a *ngFor="var post of posts" [linkTo]="'/blog/' + post.id">{{ post.title }}</a>
+        <a *ngFor="let post of posts" [linkTo]="'/blog/' + post.id">{{ post.title }}</a>
       </nav>
 
       <route-view></route-view>
