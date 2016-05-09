@@ -37,18 +37,18 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "rxjs": "5.0.0-beta.6",
-    "@angular/core": "2.0.0-rc.0",
-    "@angular/platform-browser": "2.0.0-rc.0",
-    "@angular/common": "2.0.0-rc.0"
+    "rxjs": "^5.0.0-beta.6",
+    "@angular/core": "^2.0.0-rc.1",
+    "@angular/platform-browser": "^2.0.0-rc.1",
+    "@angular/common": "^2.0.0-rc.1"
   },
   "devDependencies": {
-    "@angular/common": "2.0.0-rc.0",
-    "@angular/compiler": "2.0.0-rc.0",
-    "@angular/core": "2.0.0-rc.0",
-    "@angular/http": "2.0.0-rc.0",
-    "@angular/platform-browser": "2.0.0-rc.0",
-    "@angular/platform-browser-dynamic": "2.0.0-rc.0",
+    "@angular/common": "^2.0.0-rc.1",
+    "@angular/compiler": "^2.0.0-rc.1",
+    "@angular/core": "^2.0.0-rc.1",
+    "@angular/http": "^2.0.0-rc.1",
+    "@angular/platform-browser": "^2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
     "conventional-changelog-cli": "^1.1.1",
     "core-js": "^2.2.2",
     "esdoc": "^0.4.6",

@@ -2,7 +2,7 @@
   "ambientDependencies": {
     "core-js": "registry:dt/core-js#0.0.0+20160317120654",
     "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
-    "node": "registry:dt/node#4.0.0+20160412142033",
+    "node": "registry:dt/node#4.0.0+20160509082809",
     "query-string": "github:DefinitelyTyped/DefinitelyTyped/query-string/query-string.d.ts#076815de3926839258ef23742e5efc7714b8fb89"
   }
 }
