@@ -108,4 +108,28 @@ describe('Redirect Middleware', function() {
     expect(observer.next).not.toHaveBeenCalled();
     expect(router.replace).toHaveBeenCalledWith('/posts/543', {});
   });
+
+  it('should relatively redirect if the redirect path is relative', function() {
+    redirect.apply(routeSet$).subscribe(observer);
+
+    routeSet$.next({
+      routes: [
+        { path: '/blog' },
+        { path: ':id' },
+        {
+          path: 'edit',
+          redirectTo: 'change'
+        }
+      ],
+      routeParams: { id: '543' },
+      queryParams: {},
+      locationChange: {
+        type: 'push',
+        path: ''
+      }
+    });
+
+    expect(observer.next).not.toHaveBeenCalled();
+    expect(router.replace).toHaveBeenCalledWith('/blog/543/change', {});
+  });
 });

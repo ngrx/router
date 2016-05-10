@@ -26,3 +26,58 @@ const routes: Routes = [
 ```
 
 Now when a user navigates to `/blog/:id` they are automatically redirected to `/post/:id`. No more broken links!
+
+
+### Index Redirects
+If you want to redirect only if the path matches a specific route, you can use an index redirect:
+
+```ts
+const routes: Routes = [
+  {
+    path: '/users',
+    component: UsersComponent,
+    index: {
+      redirectTo: '/'
+    },
+    children: [
+      {
+        path: ':id',
+        component: UserByIdComponent
+      }
+    ]
+  }
+];
+```
+
+Now if a user goes to `/users` they will be redirected home but they can still navigate to `/users/:id` safely.
+
+
+### Relative Redirects
+You can also redirect relatively. This is handy for deeply nested links:
+
+```ts
+const routes: Routes = [
+  {
+    path: '/blog',
+    component: BlogComponent,
+    children: [
+      {
+        path: ':id',
+        component: PostComponent,
+        children: [
+          {
+            path: 'change',
+            redirectTo: 'edit'
+          },
+          {
+            path: 'edit',
+            component: EditPostComponent
+          }
+        ]
+      }
+    ]
+  }
+];
+```
+
+If a user navigates to `/blog/123/change` they will be redirected to `/blog/123/edit`.
