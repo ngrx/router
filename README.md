@@ -8,16 +8,7 @@ This is an alternative router for Angular 2 focused on providing a simple, react
 
 Please note that we are currently pre-v1.0. While we believe the core of the router is solid, you can expect a few breaking changes as we work towards a beta release. These early releases are meant to gather feedback from the community and to help with the direction of the router.
 
-### Benefits / difference between component and ngrx router
-
-The main differences between the component router and ngrx/router are the decisions behind the design. 
-
-- The component router takes a more internal approach when it comes to components if you look at the lifecycle hooks. Ngrx router doesn’t require that the router hook into your components so **any component is routable**. 
-- Another difference is the **use of observables**. The component router uses promises to handle its lifecycle, whereas ngrx uses observables because they lend themselves to **more of a reactive approach**. 
-- Ngrx's route/query parameters are observable which makes reusing components when parameters change easier. 
-- Ngrx router has more streams available for you to subscribe to and react upon. 
-
-The overall idea is that the browser URL itself is a stream and we are turning that stream into a view of rendered routes. Both routers have a concept of lazy loading, protecting routes, resolving data and lifecycle events. If you prefer a more observable approach, ngrx router works very nicely with that.
+If you want to know **benefits / difference** between **component router** and **ngrx/router**, read @brandonrobert's explanation on [Gitter](https://gitter.im/ngrx/store?at=5710e4fc5cd40114649b9399). More comprehensive coming after 1.0 release.
 
 ### Installation
 Install @ngrx/router into your Angular 2 project via npm:
