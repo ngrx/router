@@ -33,7 +33,7 @@ describe('RouteTraverser', function() {
       children: [
         UsersRoute = {
           path: 'users',
-          indexRoute: (UsersIndexRoute = {}),
+          index: (UsersIndexRoute = {}),
           children: [
             UserRoute = {
               path: ':userID',
@@ -364,7 +364,7 @@ describe('RouteTraverser', function() {
   describe('asynchronous route config', function() {
     function makeAsyncRouteConfig(routes: Routes) {
       routes.forEach(route => {
-        const { children, indexRoute } = route;
+        const { children, index } = route;
 
         if ( children ) {
           delete route.children;
@@ -374,10 +374,10 @@ describe('RouteTraverser', function() {
           makeAsyncRouteConfig(children);
         }
 
-        if ( indexRoute ) {
-          delete route.indexRoute;
+        if ( index ) {
+          delete route.index;
 
-          route.loadIndexRoute = () => Promise.resolve(indexRoute);
+          route.loadIndex = () => Promise.resolve(index);
         }
       });
     }

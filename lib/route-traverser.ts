@@ -175,7 +175,7 @@ export class RouteTraverser {
   }
 
   private _loadIndexRoute(route: Route): Promise<Route> {
-    return this._loader.load(route.indexRoute, route.loadIndexRoute, null);
+    return this._loader.load(route.index, route.loadIndex, null);
   }
 }
 
