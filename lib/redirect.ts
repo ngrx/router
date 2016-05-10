@@ -58,12 +58,9 @@ export class RedirectHook implements Hook<Match> {
       const pattern = route.path || '';
 
       parentPattern = pattern.replace(/\/*$/, '/') + parentPattern;
-
-      if ( pattern.indexOf('/') === 0 )
-        break;
     }
 
-    return '/' + parentPattern;
+    return parentPattern;
   }
 }
 
