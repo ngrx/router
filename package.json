@@ -18,7 +18,7 @@
     "prebuild": "npm-run-all clean typings karma",
     "build": "npm-run-all build:cjs build:es6 build:docs",
     "build:cjs": "tsc --p tsconfig.es5.json --diagnostics --pretty",
-    "build:es6": "tsc -m es2015   --outDir ./release/es6 --target ES6 -d --diagnostics --pretty",
+    "build:es6": "tsc -m es2015 --sourceRoot ./  --outDir ./release/es6 --target ES6 -d --diagnostics --pretty",
     "build:docs": "esdoc -c esdoc.json",
     "prepare": "npm-run-all prepare:*",
     "prepare:es6": "cp -R ./release/es6 ./release/npm",
