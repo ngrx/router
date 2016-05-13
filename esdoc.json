@@ -2,7 +2,7 @@
   "source": "./release/es6",
   "destination": "./release/docs",
   "title": "@ngrx/router",
-  "index": "./docs/index.md",
+  "index": "./README.md",
   "autoPrivate": true,
   "includeSource": false,
   "undocumentIdentifier": false,
