@@ -146,7 +146,7 @@ const routes: Routes = [
   {
     path: '/blog',
     component: BlogPage
-    indexRoute: {
+    index: {
       component: BlogPostsPage
     },
     children: [

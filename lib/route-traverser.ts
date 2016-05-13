@@ -137,10 +137,10 @@ export class RouteTraverser {
           };
 
           return Observable.of(route)
-            .mergeMap(route => this._loadIndexRoute(route))
-            .map(indexRoute => {
-              if ( !!indexRoute ) {
-                match.routes.push(indexRoute);
+            .mergeMap(route => this._loadIndex(route))
+            .map(index => {
+              if ( !!index ) {
+                match.routes.push(index);
               }
 
               return match;
@@ -174,7 +174,7 @@ export class RouteTraverser {
     return this._loader.load(route.children, route.loadChildren, []);
   }
 
-  private _loadIndexRoute(route: Route): Promise<Route> {
+  private _loadIndex(route: Route): Promise<Route> {
     return this._loader.load(route.index, route.loadIndex, null);
   }
 }
