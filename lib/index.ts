@@ -56,7 +56,7 @@ export function provideRouter(routes: Routes, locationStrategy: Type = PathLocat
 export { Guard } from './guard';
 export { LocationChange, Router } from './router';
 export { RouteParams, QueryParams } from './params';
-export { ROUTER_HOOKS, INSTRUCTION_HOOKS, RouterInstruction } from './router-instruction';
+export { ROUTER_HOOKS, INSTRUCTION_HOOKS, LOCATION_CHANGES, RouterInstruction } from './router-instruction';
 export { PRE_RENDER_HOOKS, POST_RENDER_HOOKS, RenderInstruction } from './component-renderer';
 export { Routes, Route, IndexRoute } from './route';
 export { TRAVERSAL_HOOKS, TraversalCandidate, Match } from './route-traverser';
