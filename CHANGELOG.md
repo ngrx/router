@@ -1,10 +1,67 @@
-<a name="0.4.1"></a>
-## [0.4.1](https://github.com/ngrx/router/compare/v0.4.0...v0.4.1) (2016-05-09)
+<a name="1.0.0-beta.0"></a>
+# [1.0.0-beta.0](https://github.com/ngrx/router/compare/v0.4.0...v1.0.0-beta.0) (2016-05-13)
 
 
 ### Bug Fixes
 
-* **deps:** Specify semver range for Angular 2 release candidates([7e729a4](https://github.com/ngrx/router/commit/7e729a4))
+* **deps:** Specify semver range for Angular 2 release candidates([6b640c9](https://github.com/ngrx/router/commit/6b640c9))
+* **Sourcemaps:** Fix warnings from sourcemaps([e7dbc46](https://github.com/ngrx/router/commit/e7dbc46)), closes [#97](https://github.com/ngrx/router/issues/97)
+
+
+### Code Refactoring
+
+* **routes:** Rename `indexRoute` and `loadIndexRoute` ([#93](https://github.com/ngrx/router/issues/93))([48dc195](https://github.com/ngrx/router/commit/48dc195))
+* Use [@ngrx](https://github.com/ngrx)/core package for common utilities ([#100](https://github.com/ngrx/router/issues/100))([10cc353](https://github.com/ngrx/router/commit/10cc353))
+
+
+### Features
+
+* **redirects:** Support relative redirects for deeply nested config([3521b56](https://github.com/ngrx/router/commit/3521b56))
+* **RouteInstruction:** Decouple Router from RouteInstruction ([#99](https://github.com/ngrx/router/issues/99))([ede340d](https://github.com/ngrx/router/commit/ede340d))
+
+
+### BREAKING CHANGES
+
+*   You will now have to install @ngrx/core in addition to @ngrx/router
+* routes:   `indexRoute` is now `index` and `loadIndexRoute` is now `loadIndex`
+
+  BEFORE:
+
+  ```ts
+  const routes: Routes = [
+    {
+      path: '/',
+      component: MarketingTemplateComponent,
+      indexRoute: {
+        component: HomePageComponent,
+      }
+    },
+    {
+      path: '/blog',
+      component: BlogComponent,
+      loadIndexRoute: () => System.import('app/routes/blog')
+    }
+  ];
+  ```
+
+  AFTER:
+
+  ```ts
+  const routes: Routes = [
+    {
+      path: '/',
+      component: MarketingTemplateComponent,
+      index: {
+        component: HomePageComponent
+      }
+    },
+    {
+      path: '/blog',
+      component: BlogComponent,
+      loadIndex: () => System.import('app/routes/blog')
+    }
+  ];
+  ```
 
 
 
@@ -237,7 +294,7 @@ class App {
 
 ### BREAKING CHANGES
 
-* AsyncConfig: Before loadComponent, loadChildren, and loadIndex used a callback to handle async loading
+* AsyncConfig: Before loadComponent, loadChildren, and loadIndexRoute used a callback to handle async loading
 
   of code. These must be replaced with promise-returning functions.
 
@@ -255,7 +312,7 @@ class App {
 
       System.import('./my-index-route', __moduleName)
 
-        .then(module => done(module.index));
+        .then(module => done(module.indexRoute));
 
     },
 
@@ -291,7 +348,7 @@ class App {
 
     loadIndex: () => System.import('./my-index-route', __moduleName)
 
-      .then(module => module.index),
+      .then(module => module.indexRoute),
 
 
 
