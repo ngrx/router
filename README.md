@@ -20,7 +20,7 @@ npm install @ngrx/router @ngrx/core --save
 1. Create your application components:
 
   ```ts
-  import { Component } from 'angular2/core';
+  import { Component } from '@angular/core';
 
   @Component({
     selector: 'app',

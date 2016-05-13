@@ -6,7 +6,7 @@ Lets take the route configuration from the previous example and using Webpack's 
 
 In `routes.ts`:
 ```ts
-import { Routes } from 'ngrx/router';
+import { Routes } from '@ngrx/router';
 
 export const routes: Routes = [
   {
@@ -35,7 +35,7 @@ export const routes: Routes = [
 
 In `blog-routes.ts`:
 ```ts
-import { Routes } from 'ngrx/router';
+import { Routes } from '@ngrx/router';
 
 export const blogRoutes: Routes = [
   {
