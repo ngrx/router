@@ -21,6 +21,7 @@ import { Hook, composeHooks } from './hooks';
 
 export const ROUTER_HOOKS = new OpaqueToken('@ngrx/router Router Hooks');
 export const INSTRUCTION_HOOKS = new OpaqueToken('@ngrx/router Instruction Hooks');
+export const LOCATION_CHANGES = new OpaqueToken('@ngrx/router Location Changes');
 
 
 export abstract class RouterInstruction extends Observable<Match> { }
@@ -28,7 +29,7 @@ export abstract class RouterInstruction extends Observable<Match> { }
 @Injectable()
 export class RouterInstructionFactory {
   constructor(
-    private _router$: Router,
+    @Inject(LOCATION_CHANGES) private _locationChanges$: Observable<LocationChange>,
     private _traverser: RouteTraverser,
     private _zoneOperator: ZoneOperator<Match>,
     @Optional() @Inject(ROUTER_HOOKS)
@@ -38,7 +39,7 @@ export class RouterInstructionFactory {
   ) { }
 
   create(): RouterInstruction {
-    return this._router$
+    return this._locationChanges$
       .observeOn(asap)
       .distinctUntilChanged((prev, next) => prev.path === next.path)
       .let(composeHooks(this._routerHooks))
@@ -59,5 +60,6 @@ export const ROUTER_INSTRUCTION_PROVIDERS = [
       return rif.create();
     }
   }),
-  new Provider(RouterInstructionFactory, { useClass: RouterInstructionFactory })
+  new Provider(RouterInstructionFactory, { useClass: RouterInstructionFactory }),
+  new Provider(LOCATION_CHANGES, { useExisting: Router })
 ];
