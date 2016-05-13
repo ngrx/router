@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../">
+  <title data-ice="title">Changelog</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container manual-root" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/ngrx/router.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div class="manual-toc-root">
+  
+<div data-ice="manual" data-toc-name="overview">
+    <h1 class="manual-toc-title"><a href="manual/overview.html" data-ice="title">Overview</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-configuration" data-ice="link">Route Configuration</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#named-components" data-ice="link">Named Components</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#index-routes" data-ice="link">Index Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#pathless-routes" data-ice="link">Pathless Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#pattern-matching" data-ice="link">Pattern Matching</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-links" data-ice="link">Route Links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#links" data-ice="link">Links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#active-links" data-ice="link">Active links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#active-parent-links" data-ice="link">Active parent links</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-and-query-params" data-ice="link">Route and Query Params</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#usage" data-ice="link">Usage</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#redirect-routes" data-ice="link">Redirect Routes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#index-redirects" data-ice="link">Index Redirects</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#relative-redirects" data-ice="link">Relative Redirects</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#guards" data-ice="link">Guards</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#use-cases" data-ice="link">Use Cases</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#what-makes-guards-powerful-" data-ice="link">What Makes Guards Powerful?</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#router-services" data-ice="link">Router Services</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#code-splitting-with-asynchronous-routes" data-ice="link">Code Splitting with Asynchronous Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#named-routes" data-ice="link">Named Routes</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="reference">
+    <h1 class="manual-toc-title"><a href="identifiers.html" data-ice="title">Reference</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="identifiers.html#class" data-ice="link">Class</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="changelog">
+    <h1 class="manual-toc-title"><a href="manual/changelog.html" data-ice="title">Changelog</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-1-0-0-beta-0-https-github-com-ngrx-router-compare-v0-4-0-v1-0-0-beta-0-2016-05-13-" data-ice="link">1.0.0-beta.0 (2016-05-13)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-4-0-https-github-com-ngrx-router-compare-v0-3-0-v0-4-0-2016-05-03-" data-ice="link">0.4.0 (2016-05-03)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-3-0-https-github-com-ngrx-router-compare-v0-2-4-v0-3-0-2016-04-26-" data-ice="link">0.3.0 (2016-04-26)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-4-https-github-com-ngrx-router-compare-v0-2-2-v0-2-4-2016-04-22-" data-ice="link">0.2.4 (2016-04-22)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-2-https-github-com-ngrx-router-compare-v0-2-1-v0-2-2-2016-04-14-" data-ice="link">0.2.2 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-1-https-github-com-ngrx-router-compare-v0-2-0-v0-2-1-2016-04-14-" data-ice="link">0.2.1 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-0-https-github-com-ngrx-router-compare-v0-1-1-v0-2-0-2016-04-14-" data-ice="link">0.2.0 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-1-1-https-github-com-ngrx-router-compare-v0-0-7-v0-1-1-2016-04-06-" data-ice="link">0.1.1 (2016-04-06)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-7-https-github-com-ngrx-router-compare-v0-0-6-v0-0-7-2016-04-04-" data-ice="link">0.0.7 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-6-https-github-com-ngrx-router-compare-v0-0-5-v0-0-6-2016-04-04-" data-ice="link">0.0.6 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-5-https-github-com-ngrx-router-compare-v0-0-4-v0-0-5-2016-04-04-" data-ice="link">0.0.5 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-4-https-github-com-ngrx-router-compare-v0-0-3-v0-0-4-2016-04-04-" data-ice="link">0.0.4 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-3-https-github-com-ngrx-router-compare-v0-0-2-v0-0-3-2016-04-04-" data-ice="link">0.0.3 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-2-https-github-com-ngrx-router-compare-v0-0-1-v0-0-2-2016-04-01-" data-ice="link">0.0.2 (2016-04-01)</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-1-https-github-com-ngrx-router-compare-c899754-v0-0-1-2016-04-01-" data-ice="link">0.0.1 (2016-04-01)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+</ul>
+  </div>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="github-markdown">
+  <div class="manual-breadcrumb-list">
+    <a href="./manual/./index.html">Manual</a>
+    <span>&#xBB;</span>
+    <span data-ice="title">Changelog</span>
+  </div>
+  <div data-ice="content"><p><a name="1.0.0-beta.0"></a></p>
+<h1 id="-1-0-0-beta-0-https-github-com-ngrx-router-compare-v0-4-0-v1-0-0-beta-0-2016-05-13-"><a href="https://github.com/ngrx/router/compare/v0.4.0...v1.0.0-beta.0">1.0.0-beta.0</a> (2016-05-13)</h1>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>deps:</strong> Specify semver range for Angular 2 release candidates(<a href="https://github.com/ngrx/router/commit/6b640c9">6b640c9</a>)</li>
+<li><strong>Sourcemaps:</strong> Fix warnings from sourcemaps(<a href="https://github.com/ngrx/router/commit/e7dbc46">e7dbc46</a>), closes <a href="https://github.com/ngrx/router/issues/97">#97</a></li>
+</ul>
+<h3 id="code-refactoring">Code Refactoring</h3>
+<ul>
+<li><strong>routes:</strong> Rename <code>indexRoute</code> and <code>loadIndexRoute</code> (<a href="https://github.com/ngrx/router/issues/93">#93</a>)(<a href="https://github.com/ngrx/router/commit/48dc195">48dc195</a>)</li>
+<li>Use <a href="https://github.com/ngrx">@ngrx</a>/core package for common utilities (<a href="https://github.com/ngrx/router/issues/100">#100</a>)(<a href="https://github.com/ngrx/router/commit/10cc353">10cc353</a>)</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>redirects:</strong> Support relative redirects for deeply nested config(<a href="https://github.com/ngrx/router/commit/3521b56">3521b56</a>)</li>
+<li><strong>RouteInstruction:</strong> Decouple Router from RouteInstruction (<a href="https://github.com/ngrx/router/issues/99">#99</a>)(<a href="https://github.com/ngrx/router/commit/ede340d">ede340d</a>)</li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li>You will now have to install @ngrx/core in addition to @ngrx/router</li>
+<li><p>routes:   <code>indexRoute</code> is now <code>index</code> and <code>loadIndexRoute</code> is now <code>loadIndex</code></p>
+<p>BEFORE:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const routes: Routes = [
+  {
+    path: &apos;/&apos;,
+    component: MarketingTemplateComponent,
+    indexRoute: {
+      component: HomePageComponent,
+    }
+  },
+  {
+    path: &apos;/blog&apos;,
+    component: BlogComponent,
+    loadIndexRoute: () =&gt; System.import(&apos;app/routes/blog&apos;)
+  }
+];</code>
+</code></pre>
+<p>AFTER:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const routes: Routes = [
+  {
+    path: &apos;/&apos;,
+    component: MarketingTemplateComponent,
+    index: {
+      component: HomePageComponent
+    }
+  },
+  {
+    path: &apos;/blog&apos;,
+    component: BlogComponent,
+    loadIndex: () =&gt; System.import(&apos;app/routes/blog&apos;)
+  }
+];</code>
+</code></pre>
+</li>
+</ul>
+<p><a name="0.4.0"></a></p>
+<h1 id="-0-4-0-https-github-com-ngrx-router-compare-v0-3-0-v0-4-0-2016-05-03-"><a href="https://github.com/ngrx/router/compare/v0.3.0...v0.4.0">0.4.0</a> (2016-05-03)</h1>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>imports:</strong> Adjust imports for the new world(<a href="https://github.com/ngrx/router/commit/2d51638">2d51638</a>)</li>
+</ul>
+<h3 id="code-refactoring">Code Refactoring</h3>
+<ul>
+<li><strong>Guards:</strong> Re-implement guards feature to use services (<a href="https://github.com/ngrx/router/issues/81">#81</a>)(<a href="https://github.com/ngrx/router/commit/145b671">145b671</a>)</li>
+<li><strong>RouteTraverser:</strong> Expand traverser to also track query params and location changes (<a href="https://github.com/ngrx/router/issues/85">#85</a>)(<a href="https://github.com/ngrx/router/commit/a373b92">a373b92</a>)</li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li><p>RouteTraverser:   TraversalCandidate interface has renamed <code>params</code> to <code>routeParams</code> and now includes queryParams and locationChange.</p>
+<p>Before:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const { params, isTerminal, route } = traversalCandidate;</code>
+</code></pre>
+<p>After:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const { routeParams, queryParams, isTerminal, route, locationChange } = traversalCandidate;</code>
+</code></pre>
+</li>
+<li><p>Guards:   Before:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const auth = provideGuard(function(http: Http) {
+
+  return function(route: Route, params: any, isTerminal: boolean): Observable&lt;boolean&gt; {
+    return http.get(&apos;/auth&apos;)
+      .map(() =&gt; true)
+      .catch(() =&gt; Observable.of(false));
+  };
+
+}, [ Http ]);</code>
+</code></pre>
+<p>After:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">@Injectable()
+export class AuthGuard implements Guard {
+  constructor(private http: Http) { }
+
+  protectRoute({ route, params, isTerminal }: TraversalCandidate): Observable&lt;boolean&gt; {
+    return this.http.get(&apos;/auth&apos;)
+      .map(() =&gt; true)
+      .catch(() =&gt; Observable.of(false));
+  }
+}</code>
+</code></pre>
+</li>
+</ul>
+<p><a name="0.3.0"></a></p>
+<h1 id="-0-3-0-https-github-com-ngrx-router-compare-v0-2-4-v0-3-0-2016-04-26-"><a href="https://github.com/ngrx/router/compare/v0.2.4...v0.3.0">0.3.0</a> (2016-04-26)</h1>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>LinkActive:</strong> Fix active link for base url when using hash (<a href="https://github.com/ngrx/router/issues/74">#74</a>)(<a href="https://github.com/ngrx/router/commit/12961d4">12961d4</a>), closes <a href="https://github.com/(/issues/74">(#74</a></li>
+<li><strong>RouterInstruction:</strong> Pass the subscriber back through NgZone (<a href="https://github.com/ngrx/router/issues/70">#70</a>)(<a href="https://github.com/ngrx/router/commit/894b088">894b088</a>)</li>
+<li><strong>RouteView:</strong> Add route view directive export (<a href="https://github.com/ngrx/router/issues/75">#75</a>)(<a href="https://github.com/ngrx/router/commit/dc38682">dc38682</a>)</li>
+</ul>
+<h3 id="code-refactoring">Code Refactoring</h3>
+<ul>
+<li><strong>Guards:</strong> Improve guards API based on common usage (<a href="https://github.com/ngrx/router/issues/62">#62</a>)(<a href="https://github.com/ngrx/router/commit/1ea2806">1ea2806</a>)</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>LinkActive:</strong> Added default class when link is active (<a href="https://github.com/ngrx/router/issues/72">#72</a>)(<a href="https://github.com/ngrx/router/commit/e6a2920">e6a2920</a>), closes <a href="https://github.com/ngrx/router/issues/71">#71</a></li>
+<li><strong>RouteInterface:</strong> Add options key to route interface used to store arbitrary metadata (<a href="https://github.com/ngrx/router/issues/69">#69</a>)(<a href="https://github.com/ngrx/router/commit/900822e">900822e</a>), closes <a href="https://github.com/ngrx/router/issues/68">#68</a></li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li><p>Guards:   Before:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const auth = createGuard(function(http: Http) {
+
+  return function(route: Route, params: any, isTerminal: boolean) {
+    return http.get(...);
+  };
+
+}, [ Http ]);</code>
+</code></pre>
+<p>After:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const auth = provideGuard(function(http: Http) {
+
+  return function(params: any, route: Route, isTerminal: boolean) {
+    return http.get(...);
+  };
+
+}, [ Http ]);</code>
+</code></pre>
+</li>
+</ul>
+<p><a name="0.2.4"></a></p>
+<h2 id="-0-2-4-https-github-com-ngrx-router-compare-v0-2-2-v0-2-4-2016-04-22-"><a href="https://github.com/ngrx/router/compare/v0.2.2...v0.2.4">0.2.4</a> (2016-04-22)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>linkTo:</strong> Remove trailing slashes from the linkTo path (<a href="https://github.com/ngrx/router/issues/59">#59</a>)(<a href="https://github.com/ngrx/router/commit/c048a51">c048a51</a>)</li>
+<li><strong>RouterInstruction:</strong> Switched to async scheduler because zone.js (<a href="https://github.com/ngrx/router/issues/61">#61</a>)(<a href="https://github.com/ngrx/router/commit/da6f725">da6f725</a>)</li>
+<li><strong>UndefinedRoutes:</strong> Route view correctly ignores undefined routes (<a href="https://github.com/ngrx/router/issues/60">#60</a>)(<a href="https://github.com/ngrx/router/commit/1cdb67a">1cdb67a</a>)</li>
+</ul>
+<p><a name="0.2.2"></a></p>
+<h2 id="-0-2-2-https-github-com-ngrx-router-compare-v0-2-1-v0-2-2-2016-04-14-"><a href="https://github.com/ngrx/router/compare/v0.2.1...v0.2.2">0.2.2</a> (2016-04-14)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>guards:</strong> Redirect in a guard on page load correctly causes location update(<a href="https://github.com/ngrx/router/commit/b99e6fa">b99e6fa</a>)</li>
+</ul>
+<p><a name="0.2.1"></a></p>
+<h2 id="-0-2-1-https-github-com-ngrx-router-compare-v0-2-0-v0-2-1-2016-04-14-"><a href="https://github.com/ngrx/router/compare/v0.2.0...v0.2.1">0.2.1</a> (2016-04-14)</h2>
+<p><a name="0.2.0"></a></p>
+<h1 id="-0-2-0-https-github-com-ngrx-router-compare-v0-1-1-v0-2-0-2016-04-14-"><a href="https://github.com/ngrx/router/compare/v0.1.1...v0.2.0">0.2.0</a> (2016-04-14)</h1>
+<h3 id="code-refactoring">Code Refactoring</h3>
+<ul>
+<li><strong>core:</strong> Updated core API for naming consistency (<a href="https://github.com/ngrx/router/issues/53">#53</a>)(<a href="https://github.com/ngrx/router/commit/d879a90">d879a90</a>)</li>
+<li><strong>location:</strong> Renamed Location service to Router (<a href="https://github.com/ngrx/router/issues/56">#56</a>)(<a href="https://github.com/ngrx/router/commit/5b14ef9">5b14ef9</a>)</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>NamedComponents:</strong> Add ability to configure named components(<a href="https://github.com/ngrx/router/commit/df895cf">df895cf</a>), closes <a href="https://github.com/ngrx/router/issues/6">#6</a></li>
+<li><strong>patternMatching:</strong> Switch to path-to-regexp for pattern matching (<a href="https://github.com/ngrx/router/issues/57">#57</a>)(<a href="https://github.com/ngrx/router/commit/4176112">4176112</a>)</li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li>location: Renamed <code>Location</code> service to <code>Router</code> and renamed <code>replaceState</code> method to <code>replace</code></li>
+</ul>
+<p>Before:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { Location } from &apos;@ngrx/router&apos;;
+
+class App {
+    constructor(location: Location) {
+        location.replaceState(&apos;/path&apos;, { query: 1 });
+    }
+}</code>
+</code></pre>
+<p>After:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { Router } from &apos;@ngrx/router&apos;;
+
+class App {
+    constructor(router: Router) {
+        router.replace(&apos;/path&apos;, { query: 1 });
+    }
+}</code>
+</code></pre>
+<ul>
+<li><p>core: Renamed <code>NextRoute</code> interface and <code>RouteSet</code> service to <code>NextInstruction</code> and <code>RouterInstruction</code> respectively.</p>
+<p>Before:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { NextRoute, RouteSet } from &apos;@ngrx/router&apos;;</code>
+</code></pre>
+<p>After:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { NextInstruction, RouterInstruction } from &apos;@ngrx/router&apos;;</code>
+</code></pre>
+</li>
+<li><p>core: Changed <code>NextInstruction</code> interface to include full <code>LocationChange</code> instead of just the path. Renamed <code>routes</code> to <code>routeConfigs</code>, <code>params</code> to <code>routeParams</code>, and <code>query</code> to <code>queryParams</code></p>
+<p>Before:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">interface NextRoute {
+  routes: Routes;
+  query: any;
+  params: any;
+  url: string
+}</code>
+</code></pre>
+<p>After:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">interface NextInstruction {
+  routeConfigs: Routes;
+  queryParams: any;
+  routeParams: any;
+  locationChange: LocationChange;
+}</code>
+</code></pre>
+</li>
+</ul>
+<p><a name="0.1.1"></a></p>
+<h2 id="-0-1-1-https-github-com-ngrx-router-compare-v0-0-7-v0-1-1-2016-04-06-"><a href="https://github.com/ngrx/router/compare/v0.0.7...v0.1.1">0.1.1</a> (2016-04-06)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>Providers:</strong> Include ResourceLoader providers(<a href="https://github.com/ngrx/router/commit/a12fa6b">a12fa6b</a>)</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>AsyncConfig:</strong> Refactor route config to use promises instead of callbacks(<a href="https://github.com/ngrx/router/commit/f057d55">f057d55</a>)</li>
+<li><strong>Params:</strong> Simplify params services by removing select method(<a href="https://github.com/ngrx/router/commit/af160d7">af160d7</a>)</li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li><p>AsyncConfig: Before loadComponent, loadChildren, and loadIndexRoute used a callback to handle async loading</p>
+<p>of code. These must be replaced with promise-returning functions.</p>
+</li>
+</ul>
+<p>  Before:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">
+  {
+
+    loadIndex(done) {
+
+      System.import(&apos;./my-index-route&apos;, __moduleName)
+
+        .then(module =&gt; done(module.indexRoute));
+
+    },
+
+    loadComponent(done) {
+
+      System.import(&apos;./my-component&apos;, __moduleName)
+
+        .then(module =&gt; done(module.MyComponent));
+
+    },
+
+    loadChildren(done) {
+
+      System.import(&apos;./child-routes&apos;, __moduleName)
+
+        .then(module =&gt; done(module.routes));
+
+    }
+
+  }</code>
+</code></pre>
+<p>  After:</p>
+<pre><code><code class="source-code prettyprint">
+  {
+
+    loadIndex: () =&gt; System.import(&apos;./my-index-route&apos;, __moduleName)
+
+      .then(module =&gt; module.indexRoute),
+
+
+
+    loadComponent: () =&gt; System.import(&apos;./my-component&apos;, __moduleName)
+
+      .then(module =&gt; module.MyComponent),
+
+
+
+    loadChildren: () =&gt; System.import(&apos;./child-routes&apos;, __moduleName)
+
+      .then(module =&gt; module.routes)
+
+  }</code>
+</code></pre><ul>
+<li><p>Params: select method removed from QueryParams and RouteParams. Use pluck instead:</p>
+<p>BEFORE:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">
+routeParams.select(&apos;id&apos;).subscribe(id =&gt; {});</code>
+</code></pre>
+<p>AFTER:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">
+routeParams.pluck(&apos;id&apos;).subscribe(id =&gt; {});</code>
+</code></pre>
+</li>
+</ul>
+<p><a name="0.0.7"></a></p>
+<h2 id="-0-0-7-https-github-com-ngrx-router-compare-v0-0-6-v0-0-7-2016-04-04-"><a href="https://github.com/ngrx/router/compare/v0.0.6...v0.0.7">0.0.7</a> (2016-04-04)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>Loader:</strong> Use promises to wrap callbacks because zones :((<a href="https://github.com/ngrx/router/commit/ccb44b5">ccb44b5</a>)</li>
+</ul>
+<p><a name="0.0.6"></a></p>
+<h2 id="-0-0-6-https-github-com-ngrx-router-compare-v0-0-5-v0-0-6-2016-04-04-"><a href="https://github.com/ngrx/router/compare/v0.0.5...v0.0.6">0.0.6</a> (2016-04-04)</h2>
+<p><a name="0.0.5"></a></p>
+<h2 id="-0-0-5-https-github-com-ngrx-router-compare-v0-0-4-v0-0-5-2016-04-04-"><a href="https://github.com/ngrx/router/compare/v0.0.4...v0.0.5">0.0.5</a> (2016-04-04)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>Guards:</strong> Passing guards no longer remove terminal status(<a href="https://github.com/ngrx/router/commit/14d0d46">14d0d46</a>)</li>
+</ul>
+<p><a name="0.0.4"></a></p>
+<h2 id="-0-0-4-https-github-com-ngrx-router-compare-v0-0-3-v0-0-4-2016-04-04-"><a href="https://github.com/ngrx/router/compare/v0.0.3...v0.0.4">0.0.4</a> (2016-04-04)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>MatchRoute:</strong> Give favor to the order in which routes are defined(<a href="https://github.com/ngrx/router/commit/f37a394">f37a394</a>)</li>
+</ul>
+<p><a name="0.0.3"></a></p>
+<h2 id="-0-0-3-https-github-com-ngrx-router-compare-v0-0-2-v0-0-3-2016-04-04-"><a href="https://github.com/ngrx/router/compare/v0.0.2...v0.0.3">0.0.3</a> (2016-04-04)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>Guard:</strong> Updated guard to use new traversal middleware API(<a href="https://github.com/ngrx/router/commit/a5bc802">a5bc802</a>)</li>
+<li><strong>Guards:</strong> Schedule guard results to allow for guards to cancel traversal(<a href="https://github.com/ngrx/router/commit/4792acc">4792acc</a>)</li>
+<li><strong>LinkActive:</strong> Added linkActive directive to platform directives(<a href="https://github.com/ngrx/router/commit/63f3831">63f3831</a>)</li>
+<li><strong>LinkTo:</strong> Updated spec to use MockLocationStrategy(<a href="https://github.com/ngrx/router/commit/e6017cc">e6017cc</a>)</li>
+<li><strong>MatchRoute:</strong> Correct spelling mistake on route traversal error(<a href="https://github.com/ngrx/router/commit/984fbf2">984fbf2</a>)</li>
+<li><strong>MatchRoute:</strong> Don&apos;t import unnecessary every operator(<a href="https://github.com/ngrx/router/commit/3222169">3222169</a>)</li>
+<li><strong>MatchRoute:</strong> Export TraversalCandidate as part of public API(<a href="https://github.com/ngrx/router/commit/0ecf695">0ecf695</a>)</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>directives:</strong> Added linkActive directive(<a href="https://github.com/ngrx/router/commit/7750329">7750329</a>)</li>
+<li><strong>MatchRoute:</strong> Moved traversal middleware opportunity to after a route is matched(<a href="https://github.com/ngrx/router/commit/5144caa">5144caa</a>)</li>
+</ul>
+<p><a name="0.0.2"></a></p>
+<h2 id="-0-0-2-https-github-com-ngrx-router-compare-v0-0-1-v0-0-2-2016-04-01-"><a href="https://github.com/ngrx/router/compare/v0.0.1...v0.0.2">0.0.2</a> (2016-04-01)</h2>
+<p><a name="0.0.1"></a></p>
+<h2 id="-0-0-1-https-github-com-ngrx-router-compare-c899754-v0-0-1-2016-04-01-"><a href="https://github.com/ngrx/router/compare/c899754...v0.0.1">0.0.1</a> (2016-04-01)</h2>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>build:</strong> Copy LICENSE to release(<a href="https://github.com/ngrx/router/commit/582c43f">582c43f</a>)</li>
+<li><strong>Gaurds:</strong> Handle empty guard arrays(<a href="https://github.com/ngrx/router/commit/68100a2">68100a2</a>)</li>
+<li><strong>Guards:</strong> Use merge/every instead of forkJoin(<a href="https://github.com/ngrx/router/commit/c899754">c899754</a>)</li>
+<li><strong>Guide:</strong> Fix formatting on guide index(<a href="https://github.com/ngrx/router/commit/0ad086b">0ad086b</a>)</li>
+<li><strong>Location:</strong> Cleaned up Location service(<a href="https://github.com/ngrx/router/commit/1d0ab8a">1d0ab8a</a>)</li>
+<li><strong>MatchRoute:</strong> updated RouteTraverser to inject routes(<a href="https://github.com/ngrx/router/commit/09feccc">09feccc</a>)</li>
+<li><strong>MatchRoute:</strong> Updated unit tests to match new API(<a href="https://github.com/ngrx/router/commit/687eda8">687eda8</a>)</li>
+<li><strong>sourcemaps:</strong> Render the sourcemaps inline so they can be published easily(<a href="https://github.com/ngrx/router/commit/6ff5a95">6ff5a95</a>)</li>
+<li><strong>test:</strong> Added sourcemaps to karma(<a href="https://github.com/ngrx/router/commit/9f11ea5">9f11ea5</a>)</li>
+<li><strong>testing:</strong> Updated webpack config for tests(<a href="https://github.com/ngrx/router/commit/00efe4c">00efe4c</a>)</li>
+<li><strong>tests:</strong> Include tests in tsconfig.json(<a href="https://github.com/ngrx/router/commit/29aaf26">29aaf26</a>)</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>build:</strong> Added initial build setup(<a href="https://github.com/ngrx/router/commit/1ef9199">1ef9199</a>), closes <a href="https://github.com/ngrx/router/issues/1">#1</a></li>
+<li><strong>ComponentRenderer:</strong> Added unit tests for component renderer service(<a href="https://github.com/ngrx/router/commit/10c31cc">10c31cc</a>)</li>
+<li><strong>ComponentRenderer:</strong> Split render middleware into pre/post render middleware(<a href="https://github.com/ngrx/router/commit/59b7ad9">59b7ad9</a>)</li>
+<li><strong>directives:</strong> Added linkTo directive(<a href="https://github.com/ngrx/router/commit/7703ba2">7703ba2</a>)</li>
+<li><strong>Guards:</strong> Added unit tests for guard middleware(<a href="https://github.com/ngrx/router/commit/0364168">0364168</a>)</li>
+<li><strong>LinkTo:</strong> Added unit tests for LinkTo directive(<a href="https://github.com/ngrx/router/commit/529879f">529879f</a>)</li>
+<li><strong>Location:</strong> Added unit tests for location service(<a href="https://github.com/ngrx/router/commit/09ba1e6">09ba1e6</a>)</li>
+<li><strong>Location:</strong> Updated location to be a ReplaySubject instead of BehaviorSubject(<a href="https://github.com/ngrx/router/commit/41dc49b">41dc49b</a>)</li>
+<li><strong>Middleware:</strong> Added small test for middleware helpers(<a href="https://github.com/ngrx/router/commit/0689555">0689555</a>)</li>
+<li><strong>QueryParams:</strong> Added new QueryParams service(<a href="https://github.com/ngrx/router/commit/075845b">075845b</a>)</li>
+<li><strong>Redirect:</strong> Added tests for redirection middleware(<a href="https://github.com/ngrx/router/commit/0c526ee">0c526ee</a>)</li>
+<li><strong>RouteParams:</strong> Added unit tests for RouteParams service(<a href="https://github.com/ngrx/router/commit/4074a40">4074a40</a>)</li>
+<li><strong>RouteSet:</strong> Added unit tests for route set(<a href="https://github.com/ngrx/router/commit/f7421bc">f7421bc</a>)</li>
+<li><strong>RouteSet:</strong> Refactored route set to expose query params(<a href="https://github.com/ngrx/router/commit/0f9c40d">0f9c40d</a>)</li>
+<li><strong>RouteView:</strong> Added unit tests for route view(<a href="https://github.com/ngrx/router/commit/09700ee">09700ee</a>)</li>
+<li><strong>test:</strong> Added initial setup for testing(<a href="https://github.com/ngrx/router/commit/aba3689">aba3689</a>), closes <a href="https://github.com/ngrx/router/issues/2">#2</a></li>
+<li><strong>Util:</strong> Added unit tests for utilities(<a href="https://github.com/ngrx/router/commit/58b627c">58b627c</a>)</li>
+</ul>
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

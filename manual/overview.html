@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../">
+  <title data-ice="title">Overview</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container manual-root" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/ngrx/router.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div class="manual-toc-root">
+  
+<div data-ice="manual" data-toc-name="overview">
+    <h1 class="manual-toc-title"><a href="manual/overview.html" data-ice="title">Overview</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-configuration" data-ice="link">Route Configuration</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#named-components" data-ice="link">Named Components</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#index-routes" data-ice="link">Index Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#pathless-routes" data-ice="link">Pathless Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#pattern-matching" data-ice="link">Pattern Matching</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-links" data-ice="link">Route Links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#links" data-ice="link">Links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#active-links" data-ice="link">Active links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#active-parent-links" data-ice="link">Active parent links</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-and-query-params" data-ice="link">Route and Query Params</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#usage" data-ice="link">Usage</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#redirect-routes" data-ice="link">Redirect Routes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#index-redirects" data-ice="link">Index Redirects</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#relative-redirects" data-ice="link">Relative Redirects</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#guards" data-ice="link">Guards</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#use-cases" data-ice="link">Use Cases</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#what-makes-guards-powerful-" data-ice="link">What Makes Guards Powerful?</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#router-services" data-ice="link">Router Services</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#code-splitting-with-asynchronous-routes" data-ice="link">Code Splitting with Asynchronous Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#named-routes" data-ice="link">Named Routes</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="reference">
+    <h1 class="manual-toc-title"><a href="identifiers.html" data-ice="title">Reference</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="identifiers.html#class" data-ice="link">Class</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="changelog">
+    <h1 class="manual-toc-title"><a href="manual/changelog.html" data-ice="title">Changelog</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-1-0-0-beta-0-https-github-com-ngrx-router-compare-v0-4-0-v1-0-0-beta-0-2016-05-13-" data-ice="link">1.0.0-beta.0 (2016-05-13)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-4-0-https-github-com-ngrx-router-compare-v0-3-0-v0-4-0-2016-05-03-" data-ice="link">0.4.0 (2016-05-03)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-3-0-https-github-com-ngrx-router-compare-v0-2-4-v0-3-0-2016-04-26-" data-ice="link">0.3.0 (2016-04-26)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-4-https-github-com-ngrx-router-compare-v0-2-2-v0-2-4-2016-04-22-" data-ice="link">0.2.4 (2016-04-22)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-2-https-github-com-ngrx-router-compare-v0-2-1-v0-2-2-2016-04-14-" data-ice="link">0.2.2 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-1-https-github-com-ngrx-router-compare-v0-2-0-v0-2-1-2016-04-14-" data-ice="link">0.2.1 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-0-https-github-com-ngrx-router-compare-v0-1-1-v0-2-0-2016-04-14-" data-ice="link">0.2.0 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-1-1-https-github-com-ngrx-router-compare-v0-0-7-v0-1-1-2016-04-06-" data-ice="link">0.1.1 (2016-04-06)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-7-https-github-com-ngrx-router-compare-v0-0-6-v0-0-7-2016-04-04-" data-ice="link">0.0.7 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-6-https-github-com-ngrx-router-compare-v0-0-5-v0-0-6-2016-04-04-" data-ice="link">0.0.6 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-5-https-github-com-ngrx-router-compare-v0-0-4-v0-0-5-2016-04-04-" data-ice="link">0.0.5 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-4-https-github-com-ngrx-router-compare-v0-0-3-v0-0-4-2016-04-04-" data-ice="link">0.0.4 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-3-https-github-com-ngrx-router-compare-v0-0-2-v0-0-3-2016-04-04-" data-ice="link">0.0.3 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-2-https-github-com-ngrx-router-compare-v0-0-1-v0-0-2-2016-04-01-" data-ice="link">0.0.2 (2016-04-01)</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-1-https-github-com-ngrx-router-compare-c899754-v0-0-1-2016-04-01-" data-ice="link">0.0.1 (2016-04-01)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+</ul>
+  </div>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="github-markdown">
+  <div class="manual-breadcrumb-list">
+    <a href="./manual/./index.html">Manual</a>
+    <span>&#xBB;</span>
+    <span data-ice="title">Overview</span>
+  </div>
+  <div data-ice="content"><h1 id="route-configuration">Route Configuration</h1>
+<p>Route configuration is a set of rules the Router uses when trying to match the URL to a set of components.</p>
+<p>To demonstrate, lets write a couple of components for a simple blog web app:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { Component } from &apos;@angular/core&apos;;
+
+@Component({
+  selector: &apos;app&apos;,
+  template: `
+    &lt;h1&gt;My Blog&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;a linkTo=&quot;/&quot;&gt;Home&lt;/a&gt;
+      &lt;a linkTo=&quot;/blog&quot;&gt;Blog&lt;/a&gt;
+    &lt;/nav&gt;
+
+    &lt;route-view&gt;&lt;/route-view&gt;
+  `
+})
+class App { }
+
+@Component({
+  selector: &apos;home-page&apos;,
+  template: `
+    &lt;h2&gt;Home Page&lt;/h2&gt;
+  `
+})
+class HomePage { }
+
+@Component({
+  selector: &apos;blog-page&apos;,
+  template: `
+    &lt;h2&gt;Blog&lt;/h2&gt;
+    &lt;nav&gt;
+      &lt;a *ngFor=&quot;let post of posts&quot; [linkTo]=&quot;&apos;/blog/&apos; + post.id&quot;&gt;{{ post.title }}&lt;/a&gt;
+    &lt;/nav&gt;
+
+    &lt;route-view&gt;&lt;/route-view&gt;
+  `
+})
+class BlogPage { }
+
+@Component({
+  selector: &apos;post-page&apos;,
+  template: `
+    &lt;h3&gt;Post&lt;/h3&gt;
+  `
+})
+class PostPage { }</code>
+</code></pre>
+<p>Now we need to write a route configuration with the following rules:</p>
+<ul>
+<li>When <code>/</code>, show the <code>HomePage</code> component</li>
+<li>When <code>/blog</code>, show the <code>BlogPage</code> component</li>
+<li>when <code>/blog/:id</code>, show the <code>BlogPage</code> and <code>PostPage</code> components</li>
+</ul>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { Routes } from &apos;@ngrx/router&apos;;
+
+const routes: Routes = [
+  {
+    path: &apos;/&apos;,
+    component: HomePage
+  },
+  {
+    path: &apos;/blog&apos;,
+    component: BlogPage,
+    children: [
+      {
+        path: &apos;:id&apos;,
+        component: PostPage
+      }
+    ]
+  }
+];</code>
+</code></pre>
+<p>To get this working, all we have to do is provide the router with the route configuration when we bootstrap the application:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { provideRouter } from &apos;@ngrx/router&apos;;
+
+bootstrap(App, [
+  provideRouter(routes)
+]);</code>
+</code></pre>
+<h2 id="named-components">Named Components</h2>
+<p>For composing more complex views, the <code>&lt;route-view&gt;</code> component can be instructed to use named components. In our route config, instead of supplying <code>component</code> we can supply <code>components</code>:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const routes: Routes = [
+  {
+    path: &apos;/blog&apos;,
+    components: {
+      main: Blog,
+      sideMenu: RecentPosts
+    }
+  }
+]</code>
+</code></pre>
+<p>Then in our <code>App</code> template we give each <code>&lt;route-view /&gt;</code> a name:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">@Component({
+  selector: &apos;app&apos;,
+  template: `
+    &lt;section&gt;
+      &lt;route-view name=&quot;main&quot;&gt;&lt;/route-view&gt;
+    &lt;/section&gt;
+
+    &lt;aside&gt;
+      &lt;route-view name=&quot;sideMenu&quot;&gt;&lt;/route-view&gt;
+    &lt;/aside&gt;
+  `
+})
+export class App { }</code>
+</code></pre>
+<h1 id="index-routes">Index Routes</h1>
+<p>Imagine if you wanted to show a list of posts when the user is just on <code>/blog</code>. When the user is on <code>/blog/:id</code>, don&apos;t show the list of posts and instead just show a single post. This can be accomplished using <em>Index Routes</em>.</p>
+<p>First we need to write a new <code>BlogPostsPage</code> component:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { Component } from &apos;@angular/core&apos;;
+
+@Component({
+  selector: &apos;blog-posts-page&apos;,
+  template: `
+    &lt;h3&gt;All Posts&lt;/h3&gt;
+  `
+})
+class BlogPostsPage { }</code>
+</code></pre>
+<p>Now we just need to rewrite the <code>/blog</code> route configuration to specify an index route:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const routes: Routes = [
+  {
+    path: &apos;/blog&apos;,
+    component: BlogPage
+    index: {
+      component: BlogPostsPage
+    },
+    children: [
+      {
+        path: &apos;:id&apos;,
+        component: PostPage
+      }
+    ]
+  }
+]</code>
+</code></pre>
+<h2 id="pathless-routes">Pathless Routes</h2>
+<p>Sometimes you want to share a common component and/or guards with a group of routes. To achieve this with @ngrx/router, you can write a <em>pathless</em> route. Pathless routes have all of the features of a regular route except they do not define a path, preventing them from being routed to directly.</p>
+<p>Expanding on our blog example, lets change <code>/blog/:id</code> to <code>/posts/:id</code> but still preserve the same component tree:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { Routes } from &apos;@ngrx/router&apos;;
+
+const routes: Routes = [
+  {
+    component: BlogPage,
+    children: [
+      {
+        path: &apos;/blog&apos;,
+        component: BlogPostsPage
+      },
+      {
+        path: &apos;/posts/:id&apos;,
+        component: PostPage
+      }
+    ]
+  }
+];</code>
+</code></pre>
+<h2 id="pattern-matching">Pattern Matching</h2>
+<p>Pattern matching in @ngrx/router is built on top of <a href="https://github.com/pillarjs/path-to-regexp">path-to-regexp</a>, a popular pattern matching library used by a large number of popular router projects like Express and Koa. For more information on what patterns @ngrx/router supports, checkout the <a href="https://github.com/pillarjs/path-to-regexp/blob/master/Readme.md#parameters">path-to-regexp documentation</a>. To play with pattern matching, use the <a href="http://forbeslindesay.github.io/express-route-tester/?_ga=1.61903652.927460731.1460569779">Express Route Tester</a></p>
+<h1 id="route-links">Route Links</h1>
+<h2 id="links">Links</h2>
+<p>In order to link between routes, use the <code>linkTo</code> directive along with the full path of the route.</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { Component } from &apos;@angular/core&apos;;
+
+@Component({
+  selector: &apos;app&apos;,
+  template: `
+    &lt;h1&gt;My Blog&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;a linkTo=&quot;/&quot;&gt;Home&lt;/a&gt;
+      &lt;a [linkTo]=&quot;blogPagesPath&quot;&gt;Blog Pages&lt;/a&gt;
+      &lt;a linkTo=&quot;/blog/search&quot; [queryParams]=&quot;{ query: &apos;Angular&apos;}&quot;&gt;Angular Blog Posts&lt;/a&gt;
+    &lt;/nav&gt;
+  `
+})
+class App {
+  public blogPagesPath: string = &apos;/blog/pages&apos;;
+}</code>
+</code></pre>
+<h2 id="active-links">Active links</h2>
+<p>To toggle classes on elements, use the <code>linkActive</code> directive and a space-delimited list of classes. The provided classes will be toggled when the route is active/inactive.</p>
+<p><strong>NOTE: Only the path is used for checking whether the link is active. Query parameters are ignored.</strong></p>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;a linkActive=&quot;active red&quot; linkTo=&quot;/&quot;&gt;Home&lt;/a&gt;
+&lt;a [linkActive]=&quot;&apos;active blue&apos;&quot; linkTo=&quot;/blog&quot;&gt;Blog&lt;/a&gt;</code>
+</code></pre>
+<p>You can also toggle classes on parent elements with the <code>linkActive</code> directive.</p>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;ul&gt;
+ &lt;li linkActive=&quot;active&quot; *ngFor=&quot;var link of links&quot;&gt;
+   &lt;a [linkTo]=&quot;&apos;/link/&apos; + link.id&quot;&gt;{{ link.title }}&lt;/a&gt;
+ &lt;/li&gt;
+&lt;/ul&gt;</code>
+</code></pre>
+<h2 id="active-parent-links">Active parent links</h2>
+<p>In order to keep a parent link active when the child path is active, use the <code>activeOptions</code> input and the <code>exact</code> property along with the <code>linkActive</code> directive. The <code>exact</code> property will mark the parent link as active if the current path starts with the parent link path.</p>
+<pre><code class="lang-html"><code class="source-code prettyprint">&lt;nav&gt;
+  &lt;a linkActive=&quot;active red&quot; [activeOptions]=&quot;{ exact: false }&quot; linkTo=&quot;/blogs&quot;&gt;Blog&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;subnav&gt;
+  &lt;a linkActive=&quot;active red&quot; linkTo=&quot;/blogs/pages/1&quot;&gt;Page 1&lt;/a&gt;
+&lt;/subnav&gt;</code>
+</code></pre>
+<h1 id="route-and-query-params">Route and Query Params</h1>
+<p>The Router exposes route and query parameters using observable services.</p>
+<p>Using <code>RouteParams</code>:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { RouteParams } from &apos;@ngrx/router&apos;;
+
+@Component({
+  selector: &apos;post-page&apos;,
+  template: `
+    Current ID: {{ id$ | async }}
+  `
+})
+export class PostPage {
+  id$: Observable&lt;string&gt;;
+
+  constructor(routeParams$: RouteParams) {
+    this.id$ = routeParams$.pluck(&apos;id&apos;);
+  }
+}</code>
+</code></pre>
+<p>Using <code>QueryParams</code>:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { QueryParams } from &apos;@ngrx/router&apos;;
+
+@Component({
+  selector: &apos;search-posts-page&apos;,
+  template: `
+    Current search: {{ search$ | async }}
+  `
+})
+export class SearchPostsPage {
+  search$: Observable&lt;string&gt;;
+
+  constructor(queryParams$: QueryParams) {
+    this.search$ = queryParams$.pluck(&apos;search&apos;);
+  }
+}</code>
+</code></pre>
+<p>Because parameters are exposed as an observable, the router <strong>does not re-render components when parameters change</strong>. There is also no synchronous way to get the current route or query parameters. This is a big difference between ngrx/router and other routers.</p>
+<h3 id="usage">Usage</h3>
+<p>To demonstrate how to work around this, lets take the above <code>PostPage</code> component and rewrite it to fetch the post from the server. If the post doesn&apos;t exist, we should redirect the user to the 404 page:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { Observable } from &apos;rxjs/Observable&apos;;
+import { Http } from &apos;@angular/http&apos;;
+import { RouteParams, Router } from &apos;@ngrx/router&apos;;
+
+@Component({
+  selector: &apos;post-page&apos;,
+  template: `
+    &lt;h3&gt;{{ (post$ | async).title }}&lt;/h3&gt;
+    &lt;span *ngIf=&quot;loading&quot;&gt;LOADING POST&lt;/span&gt;
+  `
+})
+export class PostPage {
+  post$: Observable&lt;Post&gt;;
+  loading: boolean;
+
+  constructor(params$: RouteParams, http: Http, router: Router) {
+    // Listen for the ID to change
+    this.post$ = params$.pluck(&apos;id&apos;)
+      // only update if `id` changes
+      .distinctUntilChanged()
+      // Request the post from the server when the ID updates
+      .mergeMap(id =&gt; {
+        // Mark that we are loading a new post:
+        this.loading = true;
+
+        return http.get(`/api/posts/${id}`)
+          .map(res =&gt; {
+            // Mark that we have finished loading a new post:
+            this.loading = false;
+            // If the request succeeds, parse the JSON response
+            return res.json();
+          })
+          // If the request fails, go to the 404 route
+          .catch(err =&gt; {
+            router.replace(&apos;/404&apos;);
+            return Observable.of(false);
+          })
+      });
+  }
+}</code>
+</code></pre>
+<h1 id="redirect-routes">Redirect Routes</h1>
+<p>Continuing from the example in the <a href="./manual/route.md">Route</a> guide, imagine if we wanted to change <code>/blog/:id</code> to <code>/post</code>. Unlike other routers, ngrx/router does not have named routes. Instead, we would change the the path in our route configuration and setup a <em>Redirect Route</em>:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const routes: Routes = [
+  {
+    path: &apos;/&apos;,
+    component: HomePage
+  },
+  {
+    path: &apos;/blog&apos;,
+    component: BlogPage,
+    children: [
+      {
+        path: &apos;:id&apos;,
+        redirectTo: &apos;/post/:id&apos;
+      }
+    ]
+  },
+  {
+    path: &apos;/post/:id&apos;,
+    component: PostPage
+  }
+]</code>
+</code></pre>
+<p>Now when a user navigates to <code>/blog/:id</code> they are automatically redirected to <code>/post/:id</code>. No more broken links!</p>
+<h3 id="index-redirects">Index Redirects</h3>
+<p>If you want to redirect only if the path matches a specific route, you can use an index redirect:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const routes: Routes = [
+  {
+    path: &apos;/users&apos;,
+    component: UsersComponent,
+    index: {
+      redirectTo: &apos;/&apos;
+    },
+    children: [
+      {
+        path: &apos;:id&apos;,
+        component: UserByIdComponent
+      }
+    ]
+  }
+];</code>
+</code></pre>
+<p>Now if a user goes to <code>/users</code> they will be redirected home but they can still navigate to <code>/users/:id</code> safely.</p>
+<h3 id="relative-redirects">Relative Redirects</h3>
+<p>You can also redirect relatively. This is handy for deeply nested links:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const routes: Routes = [
+  {
+    path: &apos;/blog&apos;,
+    component: BlogComponent,
+    children: [
+      {
+        path: &apos;:id&apos;,
+        component: PostComponent,
+        children: [
+          {
+            path: &apos;change&apos;,
+            redirectTo: &apos;edit&apos;
+          },
+          {
+            path: &apos;edit&apos;,
+            component: EditPostComponent
+          }
+        ]
+      }
+    ]
+  }
+];</code>
+</code></pre>
+<p>If a user navigates to <code>/blog/123/change</code> they will be redirected to <code>/blog/123/edit</code>.</p>
+<h1 id="guards">Guards</h1>
+<p>Guards are powerful hooks into the Router&apos;s route resolution process. When the location in the browser changes, a route traversal process begins. This process evaluates each route in your route configuration performing the following tasks:</p>
+<ul>
+<li>Is the path a partial match?<ul>
+<li>No: Stop evaluating the route</li>
+<li>Yes: Is the path a full match?<ul>
+<li>Yes: Load the index route</li>
+<li>No: Load the children routes and repeat process for all children</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Guards are run after the router determines it is a partial match but before it evaluates it. This gives you the opportunity let the router&apos;s traversal process know if a route should continue to be considered a candidate route.</p>
+<h3 id="use-cases">Use Cases</h3>
+<p>A great use case for guards is auth protecting routes. Guards are services with a <code>protectRoute</code> method that return an Observable of true or false. If your guard&apos;s observable emits true, then traversal continues. If your guard emits false, traversal is canceled immediately and the router moves on to the next candidate route. Note that guards will not finish running until your observable completes. To write an auth guard we&apos;ll need to use the <code>provideGuard</code> helper:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import &apos;rxjs/add/observable/of&apos;;
+import &apos;rxjs/add/operator/catch&apos;;
+import &apos;rxjs/add/operator/map&apos;;
+import { Injectable } from &apos;@angular/core&apos;;
+import { Http } from &apos;@angular/http&apos;;
+import { Observable } from &apos;rxjs/Observable&apos;;
+import { Guard, Route, TraversalCandidate, LocationChange } from &apos;@ngrx/router&apos;;
+
+@Injectable()
+class AuthGuard implements Guard {
+  constructor(private _http: Http) { }
+
+  protectRoute(candidate: TraversalCandidate) {    
+    // `route` is the current route being evaluated
+    const route: Route = candidate.route;
+
+    // `locationChange` includes the full path and type of change that caused traversal
+    const locationChange: LocationChange = candidate.locationChange;
+
+    // `queryParams` are the parsed query parameters
+    const queryParams: any = candidate.queryParams;
+
+    // `routeParams` is a snapshot of the route parameters discovered so far
+    const routeParams: any = candidate.routeParams;
+
+    // `isTerminal` indicates that the candidate route is going to be the last route traversed
+    const isTerminal: boolean = candidate.isTerminal;
+
+    return this._http.get(&apos;/auth/check&apos;)
+      // If request succeeds, return true
+      .map(() =&gt; true)
+      // If request fails, return false
+      .catch(() =&gt; Observable.of(false));
+  }
+}</code>
+</code></pre>
+<p>To use this guard first we have to add it to the route&apos;s guards:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">const routes: Routes = [
+  {
+    path: &apos;/account&apos;,
+    guards: [ AuthGuard ],
+    loadComponent: () =&gt; System.import(&apos;app/pages/account&apos;)
+      .then(module =&gt; module.AccountPage),
+    loadChildren: () =&gt; System.import(&apos;app/routes/account&apos;))
+      .then(module =&gt; module.accountRoutes),
+  }
+]</code>
+</code></pre>
+<p>Then we include it in the providers array with the router:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">bootstrap(App, [
+  provideRouter(routes),
+  AuthGuard
+]);</code>
+</code></pre>
+<h3 id="what-makes-guards-powerful-">What Makes Guards Powerful?</h3>
+<p>Guards are run before the component or children are loaded. This prevents the user from having to load unnecessary code giving you a big win in performance.</p>
+<p>While a guard must always return an observable, if a guard dispatches a route change (for instance redirecting to a <code>400 Not Authorized</code> route) the current traversal will be immediately canceled:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">@Injectable()
+class AuthGuard implements Guard {
+  constructor(private _http: Http, private _router: Router) { }
+
+  protectRoute(candidate: TraversalCandidate) {
+    return this._http.get(&apos;/auth/check&apos;)
+      .map(() =&gt; true)
+      // If request fails, catch the error and redirect
+      .catch(() =&gt; {
+        this._router.redirect(&apos;/400&apos;);
+
+        return Observable.of(false);
+      });
+  }
+}</code>
+</code></pre>
+<h3 id="router-services">Router Services</h3>
+<p>Some router services like <code>RouterInstruction</code>, <code>RouteParams</code>, and <code>QueryParams</code> do not get updated until after all guards have been run. For this reason your guards should generally not use these services and instead should get route and query params out of the traversal candidate object provided to the <code>protectRoute</code> method.</p>
+<h1 id="code-splitting-with-asynchronous-routes">Code Splitting with Asynchronous Routes</h1>
+<p>ngrx/router was designed from the ground up to make it easy to load route configuration asynchronously.</p>
+<p>Lets take the route configuration from the previous example and using Webpack&apos;s <code>require.ensure</code> asynchronously load our routes and components:</p>
+<p>In <code>routes.ts</code>:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { Routes } from &apos;@ngrx/router&apos;;
+
+export const routes: Routes = [
+  {
+    path: &apos;/&apos;,
+    loadComponent: () =&gt; new Promise(resolve =&gt; {
+      require.ensure([], require =&gt; {
+        resolve(require(&apos;./pages/home&apos;).HomePage);
+      })
+    })
+  },
+  {
+    path: &apos;/blog&apos;,
+    loadComponent: () =&gt; new Promise(resolve =&gt; {
+      require.ensure([], require =&gt; {
+        resolve(require(&apos;./pages/blog&apos;).BlogPage);
+      })
+    }),
+    loadChildren: () =&gt; new Promise(resolve =&gt; {
+      require.ensure([], require =&gt; {
+        resolve(require(&apos;./blog-routes&apos;).blogRoutes);
+      })
+    })
+  }
+];</code>
+</code></pre>
+<p>In <code>blog-routes.ts</code>:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">import { Routes } from &apos;@ngrx/router&apos;;
+
+export const blogRoutes: Routes = [
+  {
+    path: &apos;:id&apos;,
+    loadComponent: () =&gt; new Promise(resolve =&gt; {
+      require.ensure([], require =&gt; {
+        resolve(require(&apos;./pages/post&apos;).PostPage);
+      });
+    })
+  }
+];</code>
+</code></pre>
+<p>Now our router will load route configuration and components as needed. This can have a dramatic impact on the amount of code your users will need to download up front in order to run your application.</p>
+<h2 id="named-routes">Named Routes</h2>
+<p>Just like you can use <code>components</code> instead of <code>component</code> to specify a map of named components, you can do the same with <code>loadComponents</code>:</p>
+<pre><code class="lang-ts"><code class="source-code prettyprint">export const routes: Routes = [
+  {
+    path: &apos;/blog&apos;,
+    loadComponents: {
+      main: () =&gt; System.import(&apos;/app/blog.ts&apos;)
+        .then(module =&gt; module.BlogPage),
+      sideMenu: () =&gt; System.import(&apos;/app/recent-posts.ts&apos;)
+        .then(module =&gt; module.RecentPosts)
+    }
+  }
+];</code>
+</code></pre>
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

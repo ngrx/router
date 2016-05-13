@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../">
+  <title data-ice="title">Manual</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container manual-root" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/ngrx/router.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div class="manual-toc-root">
+  
+<div data-ice="manual" data-toc-name="overview">
+    <h1 class="manual-toc-title"><a href="manual/overview.html" data-ice="title">Overview</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-configuration" data-ice="link">Route Configuration</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#named-components" data-ice="link">Named Components</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#index-routes" data-ice="link">Index Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#pathless-routes" data-ice="link">Pathless Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#pattern-matching" data-ice="link">Pattern Matching</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-links" data-ice="link">Route Links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#links" data-ice="link">Links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#active-links" data-ice="link">Active links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#active-parent-links" data-ice="link">Active parent links</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-and-query-params" data-ice="link">Route and Query Params</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#usage" data-ice="link">Usage</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#redirect-routes" data-ice="link">Redirect Routes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#index-redirects" data-ice="link">Index Redirects</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#relative-redirects" data-ice="link">Relative Redirects</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#guards" data-ice="link">Guards</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#use-cases" data-ice="link">Use Cases</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#what-makes-guards-powerful-" data-ice="link">What Makes Guards Powerful?</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#router-services" data-ice="link">Router Services</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#code-splitting-with-asynchronous-routes" data-ice="link">Code Splitting with Asynchronous Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#named-routes" data-ice="link">Named Routes</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="reference">
+    <h1 class="manual-toc-title"><a href="identifiers.html" data-ice="title">Reference</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="identifiers.html#class" data-ice="link">Class</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="changelog">
+    <h1 class="manual-toc-title"><a href="manual/changelog.html" data-ice="title">Changelog</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-1-0-0-beta-0-https-github-com-ngrx-router-compare-v0-4-0-v1-0-0-beta-0-2016-05-13-" data-ice="link">1.0.0-beta.0 (2016-05-13)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-4-0-https-github-com-ngrx-router-compare-v0-3-0-v0-4-0-2016-05-03-" data-ice="link">0.4.0 (2016-05-03)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-3-0-https-github-com-ngrx-router-compare-v0-2-4-v0-3-0-2016-04-26-" data-ice="link">0.3.0 (2016-04-26)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-4-https-github-com-ngrx-router-compare-v0-2-2-v0-2-4-2016-04-22-" data-ice="link">0.2.4 (2016-04-22)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-2-https-github-com-ngrx-router-compare-v0-2-1-v0-2-2-2016-04-14-" data-ice="link">0.2.2 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-1-https-github-com-ngrx-router-compare-v0-2-0-v0-2-1-2016-04-14-" data-ice="link">0.2.1 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-0-https-github-com-ngrx-router-compare-v0-1-1-v0-2-0-2016-04-14-" data-ice="link">0.2.0 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-1-1-https-github-com-ngrx-router-compare-v0-0-7-v0-1-1-2016-04-06-" data-ice="link">0.1.1 (2016-04-06)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-7-https-github-com-ngrx-router-compare-v0-0-6-v0-0-7-2016-04-04-" data-ice="link">0.0.7 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-6-https-github-com-ngrx-router-compare-v0-0-5-v0-0-6-2016-04-04-" data-ice="link">0.0.6 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-5-https-github-com-ngrx-router-compare-v0-0-4-v0-0-5-2016-04-04-" data-ice="link">0.0.5 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-4-https-github-com-ngrx-router-compare-v0-0-3-v0-0-4-2016-04-04-" data-ice="link">0.0.4 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-3-https-github-com-ngrx-router-compare-v0-0-2-v0-0-3-2016-04-04-" data-ice="link">0.0.3 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-2-https-github-com-ngrx-router-compare-v0-0-1-v0-0-2-2016-04-01-" data-ice="link">0.0.2 (2016-04-01)</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-1-https-github-com-ngrx-router-compare-c899754-v0-0-1-2016-04-01-" data-ice="link">0.0.1 (2016-04-01)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+</ul>
+  </div>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="github-markdown manual-toc-root">
+  
+<div data-ice="manual" data-toc-name="overview">
+    <h1 class="manual-toc-title"><a href="manual/overview.html" data-ice="title">Overview</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-configuration" data-ice="link">Route Configuration</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#named-components" data-ice="link">Named Components</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#index-routes" data-ice="link">Index Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#pathless-routes" data-ice="link">Pathless Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#pattern-matching" data-ice="link">Pattern Matching</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-links" data-ice="link">Route Links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#links" data-ice="link">Links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#active-links" data-ice="link">Active links</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#active-parent-links" data-ice="link">Active parent links</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#route-and-query-params" data-ice="link">Route and Query Params</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#usage" data-ice="link">Usage</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#redirect-routes" data-ice="link">Redirect Routes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#index-redirects" data-ice="link">Index Redirects</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#relative-redirects" data-ice="link">Relative Redirects</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#guards" data-ice="link">Guards</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#use-cases" data-ice="link">Use Cases</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#what-makes-guards-powerful-" data-ice="link">What Makes Guards Powerful?</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/overview.html#router-services" data-ice="link">Router Services</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/overview.html#code-splitting-with-asynchronous-routes" data-ice="link">Code Splitting with Asynchronous Routes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/overview.html#named-routes" data-ice="link">Named Routes</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="reference">
+    <h1 class="manual-toc-title"><a href="identifiers.html" data-ice="title">Reference</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="identifiers.html#class" data-ice="link">Class</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="changelog">
+    <h1 class="manual-toc-title"><a href="manual/changelog.html" data-ice="title">Changelog</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-1-0-0-beta-0-https-github-com-ngrx-router-compare-v0-4-0-v1-0-0-beta-0-2016-05-13-" data-ice="link">1.0.0-beta.0 (2016-05-13)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-4-0-https-github-com-ngrx-router-compare-v0-3-0-v0-4-0-2016-05-03-" data-ice="link">0.4.0 (2016-05-03)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-3-0-https-github-com-ngrx-router-compare-v0-2-4-v0-3-0-2016-04-26-" data-ice="link">0.3.0 (2016-04-26)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-4-https-github-com-ngrx-router-compare-v0-2-2-v0-2-4-2016-04-22-" data-ice="link">0.2.4 (2016-04-22)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-2-https-github-com-ngrx-router-compare-v0-2-1-v0-2-2-2016-04-14-" data-ice="link">0.2.2 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-1-https-github-com-ngrx-router-compare-v0-2-0-v0-2-1-2016-04-14-" data-ice="link">0.2.1 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/changelog.html#-0-2-0-https-github-com-ngrx-router-compare-v0-1-1-v0-2-0-2016-04-14-" data-ice="link">0.2.0 (2016-04-14)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#code-refactoring" data-ice="link">Code Refactoring</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-1-1-https-github-com-ngrx-router-compare-v0-0-7-v0-1-1-2016-04-06-" data-ice="link">0.1.1 (2016-04-06)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#breaking-changes" data-ice="link">BREAKING CHANGES</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-7-https-github-com-ngrx-router-compare-v0-0-6-v0-0-7-2016-04-04-" data-ice="link">0.0.7 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-6-https-github-com-ngrx-router-compare-v0-0-5-v0-0-6-2016-04-04-" data-ice="link">0.0.6 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-5-https-github-com-ngrx-router-compare-v0-0-4-v0-0-5-2016-04-04-" data-ice="link">0.0.5 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-4-https-github-com-ngrx-router-compare-v0-0-3-v0-0-4-2016-04-04-" data-ice="link">0.0.4 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-3-https-github-com-ngrx-router-compare-v0-0-2-v0-0-3-2016-04-04-" data-ice="link">0.0.3 (2016-04-04)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-2-https-github-com-ngrx-router-compare-v0-0-1-v0-0-2-2016-04-01-" data-ice="link">0.0.2 (2016-04-01)</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/changelog.html#-0-0-1-https-github-com-ngrx-router-compare-c899754-v0-0-1-2016-04-01-" data-ice="link">0.0.1 (2016-04-01)</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#bug-fixes" data-ice="link">Bug Fixes</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/changelog.html#features" data-ice="link">Features</a></li>
+</ul>
+  </div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
