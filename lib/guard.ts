@@ -17,7 +17,6 @@ import 'rxjs/add/operator/every';
 import { Observable } from 'rxjs/Observable';
 import { Inject, Injectable, Provider, OpaqueToken, Injector, ReflectiveInjector } from '@angular/core';
 
-import { createProviderFactory } from './util';
 import { Route } from './route';
 import { TRAVERSAL_HOOKS, TraversalCandidate } from './route-traverser';
 import { Hook } from './hooks';

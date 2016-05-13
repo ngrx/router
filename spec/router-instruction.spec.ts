@@ -1,14 +1,13 @@
 import 'rxjs/add/operator/withLatestFrom';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { ReflectiveInjector, provide, NgZone } from '@angular/core';
+import { ReflectiveInjector, provide, NgZone, createNgZone } from '@angular/core';
 import { LocationStrategy } from '@angular/common';
 import { MockLocationStrategy } from '@angular/common/testing';
 
 import { RouteTraverser } from '../lib/route-traverser';
 import { Router, ROUTER_PROVIDERS } from '../lib/router';
 import { RouterInstruction, ROUTER_INSTRUCTION_PROVIDERS } from '../lib/router-instruction';
-import { ZONE_OPERATOR_PROVIDERS } from '../lib/zone';
 import { Match } from '../lib/route-traverser';
 
 
@@ -45,7 +44,6 @@ describe('Router Instruction', function() {
     const injector = ReflectiveInjector.resolveAndCreate([
       ROUTER_PROVIDERS,
       ROUTER_INSTRUCTION_PROVIDERS,
-      ZONE_OPERATOR_PROVIDERS,
       provide(RouteTraverser, { useValue: mockTraverser }),
       provide(LocationStrategy, { useClass: MockLocationStrategy }),
       provide(NgZone, { useValue: mockZone })

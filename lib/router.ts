@@ -3,12 +3,12 @@
  * It exposes location updates as a BehaviorSubject, letting the router
  * observe location changes.
  */
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subscriber } from 'rxjs/Subscriber';
 import { LocationStrategy, UrlChangeEvent, PlatformLocation } from '@angular/common';
 import { BrowserPlatformLocation } from '@angular/platform-browser';
 import { Injectable, Inject, Provider, provide } from '@angular/core';
 import { stringify as stringifyQueryParams } from 'query-string';
+import { SyncSubject } from '@ngrx/core/SyncSubject';
 
 export interface LocationChange {
   path: string;
@@ -16,17 +16,15 @@ export interface LocationChange {
 }
 
 @Injectable()
-export class Router extends ReplaySubject<LocationChange> {
+export class Router extends SyncSubject<LocationChange> {
   private _baseHref: string;
 
   constructor(public platformStrategy: LocationStrategy) {
-    super(1);
+    super({ path: _path(platformStrategy), type: 'push' });
 
     platformStrategy.onPopState(event => this._update('pop'));
 
-    const browserBaseHref = this.platformStrategy.getBaseHref();
-    this._baseHref = stripTrailingSlash(stripIndexHtml(browserBaseHref));
-    this._update('push');
+    this._baseHref = _getBaseHref(platformStrategy);
   }
 
   private _update(type: 'push' | 'pop' | 'replace') {
@@ -37,7 +35,7 @@ export class Router extends ReplaySubject<LocationChange> {
    * Returns the normalized URL path.
    */
   path(): string {
-    return this.normalize(this.platformStrategy.path());
+    return _path(this.platformStrategy);
   }
 
   /**
@@ -45,7 +43,7 @@ export class Router extends ReplaySubject<LocationChange> {
    * trailing slashes
    */
   normalize(url: string): string {
-    return stripTrailingSlash(_stripBaseHref(this._baseHref, stripIndexHtml(url)));
+    return _normalize(this._baseHref, url);
   }
 
   /**
@@ -58,7 +56,7 @@ export class Router extends ReplaySubject<LocationChange> {
     if (url.length > 0 && !url.startsWith('/')) {
       url = '/' + url;
     }
-    return this.platformStrategy.prepareExternalUrl(url + normalizeQueryParams(normalizeQuery(query)));
+    return this.platformStrategy.prepareExternalUrl(url + _normalizeQueryParams(_normalizeQuery(query)));
   }
 
   /**
@@ -66,7 +64,7 @@ export class Router extends ReplaySubject<LocationChange> {
    * new item onto the platform's history.
    */
   go(path: string, query: any = ''): void {
-    this.platformStrategy.pushState(null, '', path, normalizeQuery(query));
+    this.platformStrategy.pushState(null, '', path, _normalizeQuery(query));
     this._update('push');
   }
 
@@ -75,7 +73,7 @@ export class Router extends ReplaySubject<LocationChange> {
    * the top item on the platform's history stack.
    */
   replace(path: string, query: any = ''): void {
-    this.platformStrategy.replaceState(null, '', path, normalizeQuery(query));
+    this.platformStrategy.replaceState(null, '', path, _normalizeQuery(query));
     this._update('replace');
   }
 
@@ -104,6 +102,19 @@ export class Router extends ReplaySubject<LocationChange> {
   }
 }
 
+function _path(location: LocationStrategy): string {
+  return _normalize(_getBaseHref(location), location.path());
+}
+
+function _normalize(baseHref: string, url: string): string {
+  return _stripTrailingSlash(_stripBaseHref(baseHref, _stripIndexHtml(url)));
+}
+
+function _getBaseHref(platformStrategy): string {
+  const browserBaseHref = platformStrategy.getBaseHref();
+  return _stripTrailingSlash(_stripIndexHtml(browserBaseHref));
+}
+
 function _stripBaseHref(baseHref: string, url: string): string {
   if (baseHref.length > 0 && url.startsWith(baseHref)) {
     return url.substring(baseHref.length);
@@ -111,7 +122,7 @@ function _stripBaseHref(baseHref: string, url: string): string {
   return url;
 }
 
-function stripIndexHtml(url: string): string {
+function _stripIndexHtml(url: string): string {
   if (/\/index.html$/g.test(url)) {
     // '/index.html'.length == 11
     return url.substring(0, url.length - 11);
@@ -119,18 +130,18 @@ function stripIndexHtml(url: string): string {
   return url;
 }
 
-function stripTrailingSlash(url: string): string {
+function _stripTrailingSlash(url: string): string {
   if (/\/$/g.test(url)) {
     url = url.substring(0, url.length - 1);
   }
   return url;
 }
 
-function normalizeQuery(query: any) {
+function _normalizeQuery(query: any) {
   return typeof query === 'string' ? query : stringifyQueryParams(query);
 }
 
-function normalizeQueryParams(params: string): string {
+function _normalizeQueryParams(params: string): string {
   return (params.length > 0 && params.substring(0, 1) !== '?') ? ('?' + params) : params;
 }
 

@@ -8,12 +8,12 @@ import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/observeOn';
+import '@ngrx/core/add/operator/enterZone';
 import { Observable } from 'rxjs/Observable';
 import { asap } from 'rxjs/scheduler/asap';
-import { Provider, Injector, OpaqueToken, Inject, Optional, Injectable } from '@angular/core';
+import { Provider, Injector, OpaqueToken, Inject, Optional, Injectable, NgZone } from '@angular/core';
 import { parse as parseQueryString } from 'query-string';
 
-import { ZoneOperator } from './zone';
 import { Router, LocationChange } from './router';
 import { Routes, Route, ROUTES } from './route';
 import { RouteTraverser, Match } from './route-traverser';
@@ -31,7 +31,7 @@ export class RouterInstructionFactory {
   constructor(
     @Inject(LOCATION_CHANGES) private _locationChanges$: Observable<LocationChange>,
     private _traverser: RouteTraverser,
-    private _zoneOperator: ZoneOperator<Match>,
+    private _ngZone: NgZone,
     @Optional() @Inject(ROUTER_HOOKS)
       private _routerHooks: Hook<LocationChange>[] = [],
     @Optional() @Inject(INSTRUCTION_HOOKS)
@@ -46,7 +46,7 @@ export class RouterInstructionFactory {
       .switchMap(change => this._traverser.find(change))
       .filter(match => !!match)
       .let(composeHooks(this._instructionHooks))
-      .lift(this._zoneOperator)
+      .enterZone(this._ngZone)
       .publishReplay(1)
       .refCount();
   }

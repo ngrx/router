@@ -28,7 +28,6 @@
     "./route.spec.ts",
     "./router-instruction.spec.ts",
     "./router.spec.ts",
-    "./util.spec.ts",
     "../typings/main.d.ts",
     "../manual-typings/path-to-regexp.d.ts"
   ],

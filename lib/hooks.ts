@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { compose } from './util';
+import { compose } from '@ngrx/core/compose';
 
 export interface Hook<T> {
   apply(input$: Observable<T>): Observable<T>;

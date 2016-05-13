@@ -11,7 +11,6 @@ import { MATCH_ROUTE_PROVIDERS } from './route-traverser';
 import { COMPONENT_RENDERER_PROVIDERS } from './component-renderer';
 import { PARAMS_PROVIDERS } from './params';
 import { RESOURCE_LOADER_PROVIDERS } from './resource-loader';
-import { ZONE_OPERATOR_PROVIDERS } from './zone';
 
 // Directives
 import { LinkTo } from './link-to';
@@ -28,8 +27,7 @@ export const ROUTER_PROVIDERS = [
   REDIRECT_PROVIDERS,
   RESOURCE_LOADER_PROVIDERS,
   ROUTER_INSTRUCTION_PROVIDERS,
-  ROUTER_SERVICE_PROVIDERS,
-  ZONE_OPERATOR_PROVIDERS
+  ROUTER_SERVICE_PROVIDERS
 ];
 
 // Export all router directives
