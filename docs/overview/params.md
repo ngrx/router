@@ -46,7 +46,7 @@ To demonstrate how to work around this, lets take the above `PostPage` component
 
 ```ts
 import { Observable } from 'rxjs/Observable';
-import { Http } from 'angular2/http';
+import { Http } from '@angular/http';
 import { RouteParams, Router } from '@ngrx/router';
 
 @Component({

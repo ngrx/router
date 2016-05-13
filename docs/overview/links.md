@@ -5,7 +5,7 @@
 In order to link between routes, use the `linkTo` directive along with the full path of the route.
 
 ```ts
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app',

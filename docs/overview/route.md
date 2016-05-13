@@ -6,7 +6,7 @@ Route configuration is a set of rules the Router uses when trying to match the U
 To demonstrate, lets write a couple of components for a simple blog web app:
 
 ```ts
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app',
@@ -128,7 +128,7 @@ Imagine if you wanted to show a list of posts when the user is just on `/blog`. 
 First we need to write a new `BlogPostsPage` component:
 
 ```ts
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'blog-posts-page',
