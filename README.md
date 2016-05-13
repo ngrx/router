@@ -9,10 +9,10 @@ This is an alternative router for Angular 2 focused on providing a simple, react
 Please note that we are currently pre-v1.0. While we believe the core of the router is solid, you can expect a few breaking changes as we work towards a beta release. These early releases are meant to gather feedback from the community and to help with the direction of the router.
 
 ### Installation
-Install @ngrx/router into your Angular 2 project via npm:
+Install @ngrx/router and @ngrx/core into your Angular 2 project via npm:
 
 ```
-npm install @ngrx/router --save
+npm install @ngrx/router @ngrx/core --save
 ```
 
 ### Routing Setup
