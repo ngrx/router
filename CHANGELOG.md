@@ -237,7 +237,7 @@ class App {
 
 ### BREAKING CHANGES
 
-* AsyncConfig: Before loadComponent, loadChildren, and loadIndexRoute used a callback to handle async loading
+* AsyncConfig: Before loadComponent, loadChildren, and loadIndex used a callback to handle async loading
 
   of code. These must be replaced with promise-returning functions.
 
@@ -255,7 +255,7 @@ class App {
 
       System.import('./my-index-route', __moduleName)
 
-        .then(module => done(module.indexRoute));
+        .then(module => done(module.index));
 
     },
 
@@ -291,7 +291,7 @@ class App {
 
     loadIndex: () => System.import('./my-index-route', __moduleName)
 
-      .then(module => module.indexRoute),
+      .then(module => module.index),
 
 
 
