@@ -1,12 +1,12 @@
 # @ngrx/router
 ### Reactive Router for Angular 2
-[![Join the chat at https://gitter.im/ngrx/store](https://badges.gitter.im/ngrx/store.svg)](https://gitter.im/ngrx/store?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/ngrx/router](https://badges.gitter.im/ngrx/router.svg)](https://gitter.im/ngrx/router?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm version](https://badge.fury.io/js/%40ngrx%2Frouter.svg)](https://badge.fury.io/js/%40ngrx%2Frouter)
 [![Build Status](https://codeship.com/projects/68a711c0-df45-0133-c764-764018ced76c/status?branch=master)](https://codeship.com/projects/144986)
 
 This is an alternative router for Angular 2 focused on providing a simple, reactive API built to scale for large applications.
 
-Please note that we are currently pre-v1.0. While we believe the core of the router is solid, you can expect a few breaking changes as we work towards a beta release. These early releases are meant to gather feedback from the community and to help with the direction of the router.
+Please note that we are currently in _beta_. We believe the core of the router is solid and we do not expect anymore breaking changes to the API.
 
 ### Installation
 Install @ngrx/router and @ngrx/core into your Angular 2 project via npm:
