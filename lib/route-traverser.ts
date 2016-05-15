@@ -101,12 +101,6 @@ export class RouteTraverser {
   ): Observable<Match> {
     const pattern = route.path || '';
 
-    if ( pattern.charAt(0) === '/' ) {
-      remainingPathname = pathname;
-      paramNames = [];
-      paramValues = [];
-    }
-
     return Observable.of(route)
       .filter(() => remainingPathname !== null)
       .do(() => {
@@ -182,22 +176,3 @@ export class RouteTraverser {
 export const MATCH_ROUTE_PROVIDERS = [
   new Provider(RouteTraverser, { useClass: RouteTraverser })
 ];
-
-
-export function assignParams(paramNames: string[], paramValues: string[]) {
-  return paramNames.reduce(function (params, paramName, index) {
-    const paramValue = paramValues && paramValues[index];
-
-    if ( Array.isArray(params[paramName]) ) {
-      params[paramName].push(paramValue);
-    }
-    else if (paramName in params) {
-      params[paramName] = [ params[paramName], paramValue ];
-    }
-    else {
-      params[paramName] = paramValue;
-    }
-
-    return params;
-  }, {});
-}
