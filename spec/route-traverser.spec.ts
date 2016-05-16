@@ -42,7 +42,7 @@ describe('RouteTraverser', function() {
                   path: '/profile'
                 },
                 PostRoute = {
-                  path: ':postID'
+                  path: '/:postID'
                 }
               ]
             },
@@ -66,7 +66,7 @@ describe('RouteTraverser', function() {
       path: '/(optional)?',
       children: [
         OptionalRouteChild = {
-          path: 'child'
+          path: '/child'
         }
       ]
     },
@@ -346,19 +346,6 @@ describe('RouteTraverser', function() {
 
   describe('synchronous route config', function() {
     describeRoutes();
-
-    xdescribe('when the location matches a nested absolute route', function() {
-      it('matches the correct routes', function(done) {
-        traverser
-          .find(change('/team'))
-          .subscribe(match => {
-            expect(match).toBeDefined();
-            expect(match.routes).toEqual([ RootRoute, UsersRoute, TeamRoute ]);
-
-            done();
-          });
-      });
-    });
   });
 
   describe('asynchronous route config', function() {
