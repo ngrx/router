@@ -18,6 +18,7 @@
     "./component-renderer.spec.ts",
     "./guard.spec.ts",
     "./index.spec.ts",
+    "./integration/guard.spec.ts",
     "./link-active.spec.ts",
     "./link-to.spec.ts",
     "./match-pattern.spec.ts",
