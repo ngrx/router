@@ -1,3 +1,18 @@
+<a name="1.0.0-beta.1"></a>
+# [1.0.0-beta.1](https://github.com/ngrx/router/compare/v1.0.0-beta.0...v1.0.0-beta.1) (2016-05-19)
+
+
+### Bug Fixes
+
+* **Guard:** Guards correctly cancel the in-flight navigation([8cdc425](https://github.com/ngrx/router/commit/8cdc425))
+
+
+### Features
+
+* **RouteTraverser:** Allow forward slash in nested route paths ([#108](https://github.com/ngrx/router/issues/108))([da70364](https://github.com/ngrx/router/commit/da70364))
+
+
+
 <a name="1.0.0-beta.0"></a>
 # [1.0.0-beta.0](https://github.com/ngrx/router/compare/v0.4.0...v1.0.0-beta.0) (2016-05-13)
 
