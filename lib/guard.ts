@@ -14,6 +14,8 @@ import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/every';
+import 'rxjs/add/operator/observeOn';
+import { async } from 'rxjs/scheduler/async';
 import { Observable } from 'rxjs/Observable';
 import { Inject, Injectable, Provider, OpaqueToken, Injector, ReflectiveInjector } from '@angular/core';
 
@@ -48,6 +50,7 @@ export class GuardHook implements Hook<TraversalCandidate> {
         const activated = guards.map(guard => guard.protectRoute(candidate));
 
         return Observable.merge(...activated)
+          .observeOn(async)
           .every(value => !!value)
           .map(passed => {
             if ( passed ) {
