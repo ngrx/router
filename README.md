@@ -102,6 +102,7 @@ That's it! You are ready to begin taking advantage of reactive routing!
 
 ### Documentation
 
+* [Location Strategy](./docs/overview/location-strategy.md)
 * [Route Configuration](./docs/overview/route.md)
 * [Route Links](./docs/overview/links.md)
 * [Redirects](./docs/overview/redirect.md)
