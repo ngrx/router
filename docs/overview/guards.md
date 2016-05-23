@@ -59,7 +59,7 @@ const routes: Routes = [
     guards: [ AuthGuard ],
     loadComponent: () => System.import('app/pages/account')
       .then(module => module.AccountPage),
-    loadChildren: () => System.import('app/routes/account'))
+    loadChildren: () => System.import('app/routes/account')
       .then(module => module.accountRoutes),
   }
 ]
