@@ -89,7 +89,7 @@ class AuthGuard implements Guard {
       .map(() => true)
       // If request fails, catch the error and redirect
       .catch(() => {
-        this._router.redirect('/400');
+        this._router.go('/400');
 
         return Observable.of(false);
       });
