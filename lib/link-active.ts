@@ -30,13 +30,16 @@ export interface LinkActiveOptions {
    @Input('linkActive') activeClass: string = 'active';
    @Input() activeOptions: LinkActiveOptions = { exact: true };
    private _sub: any;
+   private _linksSubscribed: {link: LinkTo, subscription: any}[] = [];
 
    constructor(
      @Query(LinkTo) public links: QueryList<LinkTo>,
      public element: ElementRef,
      public router$: Router,
      public renderer: Renderer
-   ) {}
+   ) {
+     this.links.changes.subscribe(_ => this.subscribeLinks());
+   }
 
    ngAfterViewInit() {
      this._sub = this.router$
@@ -63,9 +66,46 @@ export interface LinkActiveOptions {
      });
    }
 
+   subscribeLinks() {
+     let newList: any[] = [];
+     for (let i = 0; i < this.links.length; i++) {
+       let link: LinkTo = this.links.toArray()[i];
+       let linkSub = this.findLinkSubscription(link);
+       if (linkSub !== null) {
+         this._linksSubscribed.splice(this._linksSubscribed.indexOf(linkSub), 1);
+       }
+       else {
+         linkSub = {
+           link: link,
+           subscription: link.hrefUpdated.subscribe(_ => this.checkActive(this.router$.prepareExternalUrl(this.router$.path() || '/')))
+         };
+       }
+       newList.push(linkSub);
+     }
+
+     for (let i = 0; i < this._linksSubscribed.length; i++) {
+       this._linksSubscribed[i].subscription.unsubscribe();
+     }
+
+     this._linksSubscribed = newList;
+   }
+
+   findLinkSubscription (link: LinkTo) {
+     for (let i = 0; i < this._linksSubscribed.length; i++) {
+       if (this._linksSubscribed[i].link === link) {
+         return this._linksSubscribed[i];
+       }
+     }
+
+     return null;
+   }
+
    ngOnDestroy() {
      if (this._sub) {
        this._sub.unsubscribe();
+     }
+     for (let i = 0; i < this._linksSubscribed.length; i++) {
+       this._linksSubscribed[i].subscription.unsubscribe();
      }
    }
  }

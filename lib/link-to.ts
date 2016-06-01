@@ -1,4 +1,4 @@
-import { Directive, HostBinding, HostListener, Input } from  '@angular/core';
+import { Directive, HostBinding, HostListener, Input, Output, EventEmitter } from  '@angular/core';
 import { Router } from './router';
 
 /**
@@ -25,6 +25,8 @@ export class LinkTo {
     this._updateHref();
   }
 
+  @Output() hrefUpdated: EventEmitter<string> = new EventEmitter<string>();
+
   private _href: string;
   private _query: string | Object;
 
@@ -47,6 +49,7 @@ export class LinkTo {
     let path = this._cleanUpHref(this._href);
 
     this.linkHref = this._router.prepareExternalUrl(path, this._query);
+    this.hrefUpdated.emit(this.linkHref);
   }
 
   /**
