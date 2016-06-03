@@ -110,3 +110,4 @@ That's it! You are ready to begin taking advantage of reactive routing!
 * [Route and Query Parameters](./docs/overview/params.md)
 * [Guarding Routes](./docs/overview/guards.md)
 * [SystemJS Configuration](./docs/overview/systemjs.md)
+* [Angular CLI Configuration](./docs/overview/systemjs.md#angular-cli-configuration)
