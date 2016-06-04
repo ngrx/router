@@ -62,7 +62,7 @@ export class PostPage {
 
   constructor(params$: RouteParams, http: Http, router: Router) {
     // Listen for the ID to change
-    this.post$ = params$.pluck('id')
+    this.post$ = params$.pluck<string>('id')
       // only update if `id` changes
       .distinctUntilChanged()
       // Request the post from the server when the ID updates
