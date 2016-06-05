@@ -15,7 +15,7 @@ export class PostPage {
   id$: Observable<string>;
 
   constructor(routeParams$: RouteParams) {
-    this.id$ = routeParams$.pluck('id');
+    this.id$ = routeParams$.pluck<string>('id');
   }
 }
 ```
@@ -34,7 +34,7 @@ export class SearchPostsPage {
   search$: Observable<string>;
 
   constructor(queryParams$: QueryParams) {
-    this.search$ = queryParams$.pluck('search');
+    this.search$ = queryParams$.pluck<string>('search');
   }
 }
 ```
