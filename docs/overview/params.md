@@ -15,7 +15,7 @@ export class PostPage {
   id$: Observable<string>;
 
   constructor(routeParams$: RouteParams) {
-    this.id$ = routeParams$.pluck('id');
+    this.id$ = routeParams$.pluck<string>('id');
   }
 }
 ```
@@ -34,7 +34,7 @@ export class SearchPostsPage {
   search$: Observable<string>;
 
   constructor(queryParams$: QueryParams) {
-    this.search$ = queryParams$.pluck('search');
+    this.search$ = queryParams$.pluck<string>('search');
   }
 }
 ```
@@ -62,7 +62,7 @@ export class PostPage {
 
   constructor(params$: RouteParams, http: Http, router: Router) {
     // Listen for the ID to change
-    this.post$ = params$.pluck('id')
+    this.post$ = params$.pluck<string>('id')
       // only update if `id` changes
       .distinctUntilChanged()
       // Request the post from the server when the ID updates
