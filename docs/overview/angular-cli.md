@@ -1,5 +1,5 @@
 # Angular CLI Configuration
-`Angular-CLI` is a cli for making Angular 2 applications. In order to integrate `ngrx/router` into a CLI project, we must install the ngrx/router and it's dependencies using NPM and edit the CLI project configuratio so that the CLI project understands where to find it.
+`Angular-CLI` is a CLI for making Angular 2 applications. In order to integrate `ngrx/router` into a CLI project we must install the ngrx/router and it's dependencies using NPM and edit the CLI project configuration so that the CLI project knows where to look for the ngrx/router.
 
 ## Installation
 `npm install @ngrx/router @ngrx/core --save`
