@@ -79,9 +79,7 @@ describe('Link Active', () => {
   })));
 
   it('should react to changes to the linkTo parameter', fakeAsync(inject([TestComponentBuilder, Router], (tcb, router$) => {
-    router$.next({
-      path: '/page'
-    });
+    router$.go('/page');
 
     return compile(tcb, `
         <a id="page" linkActive="active" [linkTo]="link1">Page</a>
