@@ -3,12 +3,15 @@
 
 ### Setup
 
-Below is an example of a SystemJS config which maps  `@ngrx/router` to its npm package folder along with its external dependencies including `path-to-regexp`, `isarray`, `query-string` and `strict-uri-encode`. If you have an existing SystemJS config, just add `@ngrx/router` sections to your configuration.
+Below is an example of a SystemJS config which maps  `@ngrx/router` to its npm package folder along with its external dependencies including `@ngrx/core`, `path-to-regexp`, `isarray`, `query-string`, `strict-uri-encode` and `object-assign`. If you have an existing SystemJS config, just add `@ngrx/router` sections to your configuration.
 
 ```js
 
 System.config({
-  map: {    
+  map: {
+    // @ngrx/core
+    '@ngrx/core': 'node_modules/@ngrx/core',
+
     // @ngrx/router
     '@ngrx/router': 'node_modules/@ngrx/router',
 
@@ -16,10 +19,17 @@ System.config({
     'path-to-regexp': 'node_modules/path-to-regexp',
     'isarray': 'node_modules/isarray',
     'query-string': 'node_modules/query-string',
-    'strict-uri-encode': 'node_modules/strict-uri-encode'
+    'strict-uri-encode': 'node_modules/strict-uri-encode',
+    'object-assign': 'node_modules/object-assign'
   },
   //packages defines our app package
   packages: {    
+    // @ngrx/core package
+    '@ngrx/core': {
+      main: 'index.js',
+      defaultExtension: 'js'
+    },
+
     // @ngrx/router package
     '@ngrx/router': {
       main: 'index.js',
@@ -40,6 +50,10 @@ System.config({
       defaultExtension: 'js'
     },  
     'strict-uri-encode': {
+      main: 'index.js',
+      defaultExtension: 'js'
+    },  
+    'object-assign': {
       main: 'index.js',
       defaultExtension: 'js'
     }

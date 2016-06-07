@@ -59,6 +59,6 @@ export { PRE_RENDER_HOOKS, POST_RENDER_HOOKS, RenderInstruction } from './compon
 export { Routes, Route, IndexRoute } from './route';
 export { TRAVERSAL_HOOKS, TraversalCandidate, Match } from './route-traverser';
 export { LinkTo } from './link-to';
-export { LinkActive, LinkActiveOptions } from './link-active';
+export { LinkActive, LinkActiveOptions, LINK_ACTIVE_OPTIONS } from './link-active';
 export { RouteView } from './route-view';
 export { Hook } from './hooks';

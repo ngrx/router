@@ -57,3 +57,15 @@ In order to keep a parent link active when the child path is active, use the `ac
   <a linkActive="active red" linkTo="/blogs/pages/1">Page 1</a>
 </subnav>
 ```
+
+## Default Link Active Options
+
+To override the default `activeOptions` for the `linkActive` directive, provide the `LINK_ACTIVE_OPTIONS` token in the bootstrap array of the application.
+
+```ts
+import {LINK_ACTIVE_OPTIONS} from '@ngrx/router';
+
+bootstrap(App, [
+  provide(LINK_ACTIVE_OPTIONS, { useValue: { exact: false } })
+])
+```

@@ -16,7 +16,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { LinkTo } from '../lib/link-to';
-import { LinkActive } from '../lib/link-active';
+import { LinkActive, LINK_ACTIVE_OPTIONS } from '../lib/link-active';
 import { ROUTER_PROVIDERS, Router } from '../lib/router';
 
 @Component({
@@ -182,6 +182,54 @@ describe('Link Active', () => {
           let link: Element = compiled.querySelector('a');
 
           expect(link.getAttribute('class')).toEqual('active');
+        });
+    })));
+  });
+
+  describe('With Default Link Active Options', () => {
+    beforeEachProviders(() => [
+      ROUTER_PROVIDERS,
+      provide(LocationStrategy, { useClass: MockLocationStrategy }),
+      provide(LINK_ACTIVE_OPTIONS, { useValue: { exact: false } })
+    ]);
+
+    it('should allow override of default LinkActiveOptions', async(inject([TestComponentBuilder, Router], (tcb, router$) => {
+      router$.next({
+        path: '/pages/page2'
+      });
+
+      return compile(tcb, `
+            <a id="pages" linkActive="active" linkTo="/pages">Pages</a><br>
+            <a id="page2" linkActive="active" linkTo="/pages/page2">Page 2</a><br>
+        `)
+        .then((fixture) => {
+          fixture.detectChanges();
+          let compiled = fixture.debugElement.nativeElement;
+          let pagesLink: Element = compiled.querySelector('#pages');
+          let page2Link: Element = compiled.querySelector('#page2');
+
+          expect(pagesLink.getAttribute('class')).toEqual('active');
+          expect(page2Link.getAttribute('class')).toEqual('active');
+        });
+    })));
+
+    it('should allow local override of default LinkActiveOptions', async(inject([TestComponentBuilder, Router], (tcb, router$) => {
+      router$.next({
+        path: '/pages/page2'
+      });
+
+      return compile(tcb, `
+            <a id="pages" linkActive="active" linkTo="/pages" [activeOptions]="{ exact: true }">Pages</a><br>
+            <a id="page2" linkActive="active" linkTo="/pages/page2">Page 2</a><br>
+        `)
+        .then((fixture) => {
+          fixture.detectChanges();
+          let compiled = fixture.debugElement.nativeElement;
+          let pagesLink: Element = compiled.querySelector('#pages');
+          let page2Link: Element = compiled.querySelector('#page2');
+
+          expect(pagesLink.getAttribute('class')).not.toEqual('active');
+          expect(page2Link.getAttribute('class')).toEqual('active');
         });
     })));
   });
