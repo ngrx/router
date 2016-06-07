@@ -40,7 +40,7 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
    @Input('linkActive') activeClass: string = 'active';
    @Input() activeOptions: LinkActiveOptions;
    private _activeOptions: LinkActiveOptions = { exact: true };
-   private _sub: any;
+   private _routerSub: any;
    private _linksSub: any;
 
    constructor(
@@ -66,7 +66,7 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
        this._activeOptions = this.activeOptions;
      }
 
-     this._sub = this.router$
+     this._routerSub = this.router$
      .map(({path}) => this.router$.prepareExternalUrl(path || '/'))
      .subscribe(path => {
        this.checkActive(path);
