@@ -6,7 +6,9 @@ import {
   iit,
   async,
   inject,
-  expect
+  expect,
+  fakeAsync,
+  tick
 } from '@angular/core/testing';
 import { MockLocationStrategy, SpyLocation } from '@angular/common/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
@@ -76,7 +78,7 @@ describe('Link Active', () => {
       });
   })));
 
-  it('should react to changes to the linkTo parameter', async(inject([TestComponentBuilder, Router], (tcb, router$) => {
+  it('should react to changes to the linkTo parameter', fakeAsync(inject([TestComponentBuilder, Router], (tcb, router$) => {
     router$.next({
       path: '/page'
     });
@@ -93,6 +95,7 @@ describe('Link Active', () => {
         component.link1 = '/page';
         component.link2 = '/other';
         fixture.detectChanges();
+        tick();
 
         expect(linkPage.getAttribute('class')).toEqual('active');
         expect(linkOther.getAttribute('class')).not.toEqual('active');
@@ -100,6 +103,7 @@ describe('Link Active', () => {
         component.link1 = '/other';
         component.link2 = '/page';
         fixture.detectChanges();
+        tick();
 
         expect(linkPage.getAttribute('class')).not.toEqual('active');
         expect(linkOther.getAttribute('class')).toEqual('active');
