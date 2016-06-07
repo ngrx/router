@@ -4,6 +4,7 @@ import {
   ElementRef,
   Input,
   OnDestroy,
+  OnInit,
   Query,
   QueryList,
   Renderer,
@@ -13,6 +14,8 @@ import {
 } from '@angular/core';
 import { LinkTo } from './link-to';
 import { Router } from './router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/mergeAll';
 
 export interface LinkActiveOptions {
   exact: boolean;
@@ -33,11 +36,12 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
  * </ol>
  */
  @Directive({ selector: '[linkActive]' })
- export class LinkActive implements AfterViewInit, OnDestroy {
+ export class LinkActive implements AfterViewInit, OnInit, OnDestroy {
    @Input('linkActive') activeClass: string = 'active';
    @Input() activeOptions: LinkActiveOptions;
-   private _sub: any;
    private _activeOptions: LinkActiveOptions = { exact: true };
+   private _sub: any;
+   private _linksSub: any;
 
    constructor(
      @Query(LinkTo) public links: QueryList<LinkTo>,
@@ -48,6 +52,12 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
      @Inject(LINK_ACTIVE_OPTIONS)
       private defaultActiveOptions: LinkActiveOptions
    ) {}
+
+   ngOnInit () {
+     this.links.changes.subscribe(_ => {
+       this.subscribeLinks();
+     });
+   }
 
    ngAfterViewInit() {
      if (this.defaultActiveOptions && !this.activeOptions) {
@@ -81,45 +91,27 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
    }
 
    subscribeLinks() {
-     let newList: any[] = [];
-     for (let i = 0; i < this.links.length; i++) {
-       let link: LinkTo = this.links.toArray()[i];
-       let linkSub = this.findLinkSubscription(link);
-       if (linkSub !== null) {
-         this._linksSubscribed.splice(this._linksSubscribed.indexOf(linkSub), 1);
-       }
-       else {
-         linkSub = {
-           link: link,
-           subscription: link.hrefUpdated.subscribe(_ => this.checkActive(this.router$.prepareExternalUrl(this.router$.path() || '/')))
-         };
-       }
-       newList.push(linkSub);
+     if (this._linksSub) {
+       this._linksSub.unsubscribe();
      }
 
-     for (let i = 0; i < this._linksSubscribed.length; i++) {
-       this._linksSubscribed[i].subscription.unsubscribe();
-     }
+     let observables = this.links.map(link => {
+       return link.hrefUpdated;
+     });
 
-     this._linksSubscribed = newList;
-   }
-
-   findLinkSubscription (link: LinkTo) {
-     for (let i = 0; i < this._linksSubscribed.length; i++) {
-       if (this._linksSubscribed[i].link === link) {
-         return this._linksSubscribed[i];
-       }
-     }
-
-     return null;
+     this._linksSub = Observable.from(observables)
+       .mergeAll()
+       .subscribe(_ => {
+         this.checkActive(this.router$.prepareExternalUrl(this.router$.path() || '/'));
+       });
    }
 
    ngOnDestroy() {
-     if (this._sub) {
-       this._sub.unsubscribe();
+     if (this._routerSub) {
+       this._routerSub.unsubscribe();
      }
-     for (let i = 0; i < this._linksSubscribed.length; i++) {
-       this._linksSubscribed[i].subscription.unsubscribe();
+     if (this._linksSub) {
+       this._linksSub.unsubscribe();
      }
    }
  }
