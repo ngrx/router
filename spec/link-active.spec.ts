@@ -6,7 +6,9 @@ import {
   iit,
   async,
   inject,
-  expect
+  expect,
+  fakeAsync,
+  tick
 } from '@angular/core/testing';
 import { MockLocationStrategy, SpyLocation } from '@angular/common/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
@@ -24,7 +26,10 @@ import { ROUTER_PROVIDERS, Router } from '../lib/router';
   template: '',
   directives: [LinkTo, LinkActive]
 })
-class TestComponent {}
+class TestComponent {
+  public link1: string;
+  public link2: string;
+}
 
 const compile = (tcb: TestComponentBuilder, template: string = '') => {
   return tcb
@@ -70,6 +75,36 @@ describe('Link Active', () => {
 
         fixture.detectChanges();
         expect(link.getAttribute('class')).toEqual('active');
+      });
+  })));
+
+  it('should react to changes to the linkTo parameter', fakeAsync(inject([TestComponentBuilder, Router], (tcb, router$) => {
+    router$.go('/page');
+
+    return compile(tcb, `
+        <a id="page" linkActive="active" [linkTo]="link1">Page</a>
+        <a id="other" linkActive="active" [linkTo]="link2">Other</a>`)
+      .then((fixture) => {
+        let component = fixture.componentInstance as TestComponent;
+        let compiled = fixture.debugElement.nativeElement;
+        let linkPage: Element = compiled.querySelector('a#page');
+        let linkOther: Element = compiled.querySelector('a#other');
+
+        component.link1 = '/page';
+        component.link2 = '/other';
+        fixture.detectChanges();
+        tick();
+
+        expect(linkPage.getAttribute('class')).toEqual('active');
+        expect(linkOther.getAttribute('class')).not.toEqual('active');
+
+        component.link1 = '/other';
+        component.link2 = '/page';
+        fixture.detectChanges();
+        tick();
+
+        expect(linkPage.getAttribute('class')).not.toEqual('active');
+        expect(linkOther.getAttribute('class')).toEqual('active');
       });
   })));
 
