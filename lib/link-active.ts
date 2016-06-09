@@ -4,6 +4,7 @@ import {
   ElementRef,
   Input,
   OnDestroy,
+  OnInit,
   Query,
   QueryList,
   Renderer,
@@ -13,6 +14,8 @@ import {
 } from '@angular/core';
 import { LinkTo } from './link-to';
 import { Router } from './router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/mergeAll';
 
 export interface LinkActiveOptions {
   exact: boolean;
@@ -33,11 +36,12 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
  * </ol>
  */
  @Directive({ selector: '[linkActive]' })
- export class LinkActive implements AfterViewInit, OnDestroy {
+ export class LinkActive implements AfterViewInit, OnInit, OnDestroy {
    @Input('linkActive') activeClass: string = 'active';
    @Input() activeOptions: LinkActiveOptions;
-   private _sub: any;
    private _activeOptions: LinkActiveOptions = { exact: true };
+   private _routerSub: any;
+   private _linksSub: any;
 
    constructor(
      @Query(LinkTo) public links: QueryList<LinkTo>,
@@ -49,6 +53,12 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
       private defaultActiveOptions: LinkActiveOptions
    ) {}
 
+   ngOnInit () {
+     this.links.changes.subscribe(_ => {
+       this.subscribeLinks();
+     });
+   }
+
    ngAfterViewInit() {
      if (this.defaultActiveOptions && !this.activeOptions) {
        this._activeOptions = this.defaultActiveOptions;
@@ -56,7 +66,7 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
        this._activeOptions = this.activeOptions;
      }
 
-     this._sub = this.router$
+     this._routerSub = this.router$
      .map(({path}) => this.router$.prepareExternalUrl(path || '/'))
      .subscribe(path => {
        this.checkActive(path);
@@ -80,9 +90,28 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
      });
    }
 
+   subscribeLinks() {
+     if (this._linksSub) {
+       this._linksSub.unsubscribe();
+     }
+
+     let observables = this.links.map(link => {
+       return link.hrefUpdated;
+     });
+
+     this._linksSub = Observable.from(observables)
+       .mergeAll()
+       .subscribe(_ => {
+         this.checkActive(this.router$.prepareExternalUrl(this.router$.path() || '/'));
+       });
+   }
+
    ngOnDestroy() {
-     if (this._sub) {
-       this._sub.unsubscribe();
+     if (this._routerSub) {
+       this._routerSub.unsubscribe();
+     }
+     if (this._linksSub) {
+       this._linksSub.unsubscribe();
      }
    }
  }

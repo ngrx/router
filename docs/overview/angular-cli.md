@@ -39,7 +39,7 @@ The `map` and `packages` constants must be updated in the `system-config.ts` fil
 const map: any = {
   /* ngrx/router begin */ 
   '@ngrx': 'vendor/@ngrx',
-  'path-to-regexp": "vendor/path-to-regexp',
+  'path-to-regexp': 'vendor/path-to-regexp',
   'isarray': 'vendor/isarray',
   'query-string': 'vendor/query-string',
   'strict-uri-encode': 'vendor/strict-uri-encode',
