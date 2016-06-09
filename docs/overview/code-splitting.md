@@ -67,3 +67,35 @@ export const routes: Routes = [
   }
 ];
 ```
+
+### Async with SystemJs
+Using SystemJs's System.import, we can lazy load child routes using the following
+```
+export const routes = [
+  {
+    path: '/',
+    component: Home
+  },
+  {
+    path: '/away',
+    component: Away
+  },
+  { path: '/lazy1', //Lazy Main holds  <router-view> where the components are rendered
+    loadComponent: ()=> System.import('src/LazyMain')
+        .then(module => module.LazyMainComponent),
+    index:{ //Index is the Landing Page for the parent
+        loadComponent: ()=> System.import('src/LazyIndex')
+        .then(module => module.LazyIndexComponent),
+    },
+    children:[
+        { //Children are also lazy loaded.
+          path: '/lazyChild'
+          loadComponent: ()=> System.import('src/LazyChild')
+            .then(module => module.LazyChildComponent)
+        }
+      ]
+   }
+  }
+];
+```
+http://plnkr.co/edit/V95NsAtHOojQolGGk6c8?p=preview
