@@ -49,6 +49,33 @@ export const blogRoutes: Routes = [
 ];
 ```
 
+If you're using SystemJs instead of webPack use System.import, to lazy load child routes using the following
+
+In routes.ts
+```
+import { Routes } from '@ngrx/router';
+export const routes: Routes = [
+ {
+    path: '/',
+    component: HomePageComponent
+  },
+  { path: '/blog', 
+    loadComponent: ()=> System.import('src/blog-main')
+        .then(module => module.BlogMainComponent),
+    index:{ 
+        loadComponent: ()=> System.import('src/blog-index')
+        .then(module => module.BlogIndexComponent),
+    },
+    children:[
+        { 
+          path: '/post',
+          loadComponent: ()=> System.import('src/blog-post')
+            .then(module => module.BlogPostComponent)
+        }
+      ]
+  }
+```
+
 Now our router will load route configuration and components as needed. This can have a dramatic impact on the amount of code your users will need to download up front in order to run your application.
 
 ## Named Routes
@@ -68,34 +95,4 @@ export const routes: Routes = [
 ];
 ```
 
-### Async with SystemJs
-Using SystemJs's System.import, we can lazy load child routes using the following
-```
-export const routes = [
-  {
-    path: '/',
-    component: Home
-  },
-  {
-    path: '/away',
-    component: Away
-  },
-  { path: '/lazy1', //Lazy Main holds  <router-view> where the components are rendered
-    loadComponent: ()=> System.import('src/LazyMain')
-        .then(module => module.LazyMainComponent),
-    index:{ //Index is the Landing Page for the parent
-        loadComponent: ()=> System.import('src/LazyIndex')
-        .then(module => module.LazyIndexComponent),
-    },
-    children:[
-        { //Children are also lazy loaded.
-          path: '/lazyChild'
-          loadComponent: ()=> System.import('src/LazyChild')
-            .then(module => module.LazyChildComponent)
-        }
-      ]
-   }
-  }
-];
-```
-http://plnkr.co/edit/V95NsAtHOojQolGGk6c8?p=preview
+
