@@ -1,6 +1,8 @@
 # Route and Query Params
 The Router exposes route and query parameters using observable services.
 
+**Route Params** are required parameters provided through the route `path` in the [Route Configuration](../route.md).
+
 Using `RouteParams`:
 ```ts
 import { RouteParams } from '@ngrx/router';
@@ -19,6 +21,8 @@ export class PostPage {
   }
 }
 ```
+
+**Query Params** are optional parameters provided through the URL query string `?search=Angular` that don't trigger a reload when changed.
 
 Using `QueryParams`:
 ```ts
