@@ -50,6 +50,8 @@ class AuthGuard implements Guard {
 }
 ```
 
+Guards are run on each potential route match candidate and a top level path of `/` is always considered a candidate. In your guard, you can use the `TraversalCandidate` property `isTerminal` to determine whether the candidate route is the last path in the traversal process and to not run the guard there.
+
 To use this guard first we have to add it to the route's guards:
 
 ```ts
