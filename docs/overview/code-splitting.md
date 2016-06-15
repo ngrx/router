@@ -49,6 +49,35 @@ export const blogRoutes: Routes = [
 ];
 ```
 
+If you're using SystemJs instead of webPack use System.import, to lazy load child routes using the following
+
+In `routes.ts`
+```ts
+import { Routes } from '@ngrx/router';
+
+export const routes: Routes = [
+  {
+    path: '/',
+    component: HomePageComponent
+  },
+  {
+    path: '/blog', 
+    loadComponent: () => System.import('src/blog-main')
+        .then(module => module.BlogMainComponent),
+    index:{ 
+      loadComponent: () => System.import('src/blog-index')
+         .then(module => module.BlogIndexComponent)
+    },
+    children: [
+        { 
+          path: '/post',
+          loadComponent: () => System.import('src/blog-post')
+            .then(module => module.BlogPostComponent)
+        }
+      ]
+  }
+```
+
 Now our router will load route configuration and components as needed. This can have a dramatic impact on the amount of code your users will need to download up front in order to run your application.
 
 ## Named Routes
@@ -67,3 +96,5 @@ export const routes: Routes = [
   }
 ];
 ```
+
+
