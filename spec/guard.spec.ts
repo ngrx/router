@@ -26,7 +26,7 @@ describe('Guard Middleware', function() {
     isTerminal = false,
     locationChange = { type: 'push', path: '/' }
   ): Observable<TraversalCandidate> {
-    return Observable.of({ route, routeParams, queryParams, isTerminal, locationChange });
+    return Observable.of(<TraversalCandidate>{ route, routeParams, queryParams, isTerminal, locationChange });
   }
 
   beforeEach(function() {
