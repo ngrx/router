@@ -27,6 +27,7 @@ export class PostPage {
 Using `QueryParams`:
 ```ts
 import { QueryParams } from '@ngrx/router';
+// import 'rxjs/add/operator/pluck'; // You may need to import the pluck operator
 
 @Component({
   selector: 'search-posts-page',
@@ -40,6 +41,11 @@ export class SearchPostsPage {
   constructor(queryParams$: QueryParams) {
     this.search$ = queryParams$.pluck<string>('search');
   }
+  
+  // Log out the param
+  this.search$.subscribe(search => {
+    console.log(search);
+  });
 }
 ```
 
