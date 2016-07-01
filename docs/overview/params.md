@@ -6,6 +6,7 @@ The Router exposes route and query parameters using observable services.
 Using `RouteParams`:
 ```ts
 import { RouteParams } from '@ngrx/router';
+import 'rxjs/add/operator/pluck';
 
 @Component({
   selector: 'post-page',
@@ -27,6 +28,7 @@ export class PostPage {
 Using `QueryParams`:
 ```ts
 import { QueryParams } from '@ngrx/router';
+import 'rxjs/add/operator/pluck';
 
 @Component({
   selector: 'search-posts-page',
