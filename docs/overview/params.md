@@ -6,6 +6,8 @@ The Router exposes route and query parameters using observable services.
 Using `RouteParams`:
 ```ts
 import { RouteParams } from '@ngrx/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/pluck';
 
 @Component({
   selector: 'post-page',
@@ -19,6 +21,13 @@ export class PostPage {
   constructor(routeParams$: RouteParams) {
     this.id$ = routeParams$.pluck<string>('id');
   }
+  
+  // Log out the param
+  ngOnInit() {
+    this.id$.subscribe(id => {
+      console.log(id);
+    });
+  }
 }
 ```
 
@@ -27,7 +36,8 @@ export class PostPage {
 Using `QueryParams`:
 ```ts
 import { QueryParams } from '@ngrx/router';
-// import 'rxjs/add/operator/pluck'; // You may need to import the pluck operator
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/pluck';
 
 @Component({
   selector: 'search-posts-page',
@@ -43,9 +53,11 @@ export class SearchPostsPage {
   }
   
   // Log out the param
-  this.search$.subscribe(search => {
-    console.log(search);
-  });
+  ngOnInit() {
+    this.search$.subscribe(search => {
+      console.log(search);
+    });
+  }
 }
 ```
 
