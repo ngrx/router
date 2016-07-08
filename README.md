@@ -105,6 +105,7 @@ That's it! You are ready to begin taking advantage of reactive routing!
 * [Route Configuration](./docs/overview/route.md)
 * [Route Links](./docs/overview/links.md)
 * [Router Navigation](./docs/overview/navigation.md)
+* [Listening For Location Change](./docs/overview/location-change.md)
 * [Redirects](./docs/overview/redirect.md)
 * [Code Splitting](./docs/overview/code-splitting.md)
 * [Route and Query Parameters](./docs/overview/params.md)
