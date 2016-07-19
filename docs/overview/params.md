@@ -1,7 +1,7 @@
 # Route and Query Params
 The Router exposes route and query parameters using observable services.
 
-**Route Params** are required parameters provided through the route `path` in the [Route Configuration](../route.md).
+**Route Params** are required parameters provided through the route `path` in the [Route Configuration](./route.md).
 
 Using `RouteParams`:
 ```ts
