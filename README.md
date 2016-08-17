@@ -1,8 +1,10 @@
 # @ngrx/router
 
-**This project is DEPRECATED** 
+**This project is DEPRECATED**
 
-The [Angular 2 Router](https://angular.io/docs/ts/latest/guide/router.html) was inspired by the ngrx/router, shares a familiar API and will be updated going forward. The ngrx/router may continue to live on as a framework agnostic router with more experimental features. A migration document will be added to help those migrate from ngrx/router to the angular/router.
+The [Angular 2 Router](https://angular.io/docs/ts/latest/guide/router.html) was inspired by the ngrx/router, shares a familiar API and will be updated going forward. The ngrx/router may continue to live on as a framework agnostic router with more experimental features.
+
+[Migration Guide to Angular Router](./docs/overview/migration.md)
 
 ### Reactive Router for Angular 2
 [![Join the chat at https://gitter.im/ngrx/router](https://badges.gitter.im/ngrx/router.svg)](https://gitter.im/ngrx/router?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
