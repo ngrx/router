@@ -42,7 +42,7 @@ const routes: Routes = [
 ]
 ```
 
-```
+```ts
 @NgModule({
   providers: [
     provideRouter(routes)
@@ -53,7 +53,7 @@ export class AppModule {}
 
 ### @angular/router
 
-```
+```ts
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
@@ -105,13 +105,13 @@ To switch to the `HashLocationStrategy`
 
 @ngrx/router
 
-```
+```ts
 provideRouter(routes, HashLocationStrategy)
 ```
 
 @angular/router
 
-```
+```ts
 RouterModule.forRoot(routes, { useHash: true })
 ```
 
@@ -143,7 +143,7 @@ route-view (named) | `<route-view name="test"></route-view>` | `<router-outlet n
 
 @ngrx/router only has one set of route parameters for all components.
 
-```
+```ts
 import { RouteParams } from '@ngrx/router';
 import { Observable } from 'rxjs/Observable';
 
@@ -160,7 +160,7 @@ export class RouteComponent {
 
 @angular/router has an `ActivatedRoute` with parameters specific to each route component.
 
-```
+```ts
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
@@ -179,7 +179,7 @@ export class RouteComponent {
 
 @ngrx/router
 
-```
+```ts
 import { QueryParams } from '@ngrx/router';
 import { Observable } from 'rxjs/Observable';
 
@@ -196,7 +196,7 @@ export class RouteComponent {
 
 @angular/router has an `ActivatedRoute` with the query parameters global across all routes.
 
-```
+```ts
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
@@ -217,12 +217,12 @@ export class RouteComponent {
 
 Route configuration
 
-```
+```ts
 { path: 'route', component: RouteComponent, guards: [AuthGuard] }
 ```
 
 Guard
-```
+```ts
 import { Injectable } from '@angular/core';
 import { Guard, Router } from '@ngrx/router';
 import { Http } from '@angular/http';
@@ -248,12 +248,12 @@ class AuthGuard implements Guard {
 
 Route configuration
 
-```
+```ts
 { path: 'route', component: RouteComponent, canActivate: [AuthGuard] }
 ```
 
 Guard
-```
+```ts
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { Http } from '@angular/http';
