@@ -124,7 +124,7 @@ linkTo | `<a [linkTo]="'/path' + id">Link</a>` | `<a [routerLink]="['/path', id]
 queryParams | `<a linkTo="/path" [queryParams]="{ page: 1 }">Link</a>` | `<a routerLink="/path" [queryParams]="{ page: 1 }">Link</a>`
 fragment | `N/A` | `<a routerLink="/path" fragment="anchor">Link</a>`
 linkActive | `<a linkActive="active">Link</a>` | `<a routerLinkActive="active">Link</a>`
-linkActiveOptions | `<a [linkActiveOptions]="{ exact: true }">Link</a>` | `<a [routerlinkActiveOptions]="{ exact: true }">Link</a>`
+linkActiveOptions | `<a [linkActiveOptions]="{ exact: true }">Link</a>` | `<a [routerLinkActiveOptions]="{ exact: true }">Link</a>`
 route-view | `<route-view></route-view>` | `<router-outlet></router-outlet>`
 route-view (named) | `<route-view name="test"></route-view>` | `<router-outlet name="test"></router-outlet>`
 
