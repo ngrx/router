@@ -146,6 +146,7 @@ route-view (named) | `<route-view name="test"></route-view>` | `<router-outlet n
 ```ts
 import { RouteParams } from '@ngrx/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/pluck';
 
 @Component({
   template: `{{ id$ | async }}`
@@ -163,6 +164,7 @@ export class RouteComponent {
 ```ts
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/pluck';
 
 @Component({
   template: `{{ id$ | async }}`
@@ -182,6 +184,7 @@ export class RouteComponent {
 ```ts
 import { QueryParams } from '@ngrx/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/pluck';
 
 @Component({
   template: `{{ id$ | async }}`
@@ -199,6 +202,7 @@ export class RouteComponent {
 ```ts
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/pluck';
 
 @Component({
   template: `{{ id$ | async }}`
