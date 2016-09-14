@@ -7,7 +7,6 @@ The [Angular 2 Router](https://angular.io/docs/ts/latest/guide/router.html) was 
 [Migration Guide to Angular Router](./docs/overview/migration.md)
 
 ### Reactive Router for Angular 2
-[![Join the chat at https://gitter.im/ngrx/router](https://badges.gitter.im/ngrx/router.svg)](https://gitter.im/ngrx/router?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![npm version](https://badge.fury.io/js/%40ngrx%2Frouter.svg)](https://badge.fury.io/js/%40ngrx%2Frouter)
 
 This is an alternative router for Angular 2 focused on providing a simple, reactive API built to scale for large applications.
