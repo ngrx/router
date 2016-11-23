@@ -60,3 +60,30 @@ System.config({
   }
 });
 ```
+Also in angular-cli-build.js need to add  '@ngrx/**/*.js'
+
+```
+var Angular2App = require('angular-cli/lib/broccoli/angular2-app');
+
+module.exports = function(defaults) {
+  return new Angular2App(defaults, {
+   sassCompiler: {
+      includePaths: [
+        'src/app/styles'
+      ]
+    },
+    vendorNpmFiles: [
+      'systemjs/dist/system-polyfills.js',
+      'systemjs/dist/system.src.js',
+      'zone.js/dist/*.js',
+      'es6-shim/es6-shim.js',
+      'reflect-metadata/*.js',
+      'rxjs/**/*.js',
+      '@angular/**/*.js',
+      '@angular2-material/**/*.js',
+      'moment/moment.js',
+      '@ngrx/**/*.js'
+    ]
+  });
+};
+
