@@ -13,6 +13,8 @@ This is an alternative router for Angular 2 focused on providing a simple, react
 
 Please note that we are currently in _beta_. We believe the core of the router is solid and we do not expect anymore breaking changes to the API.
 
+If you want to know **benefits / difference** between **component router** and **ngrx/router**, read @brandonroberts's explanation on [Gitter](https://gitter.im/ngrx/store?at=5710e4fc5cd40114649b9399). More comprehensive coming after 1.0 release.
+
 ### Installation
 Install @ngrx/router and @ngrx/core into your Angular 2 project via npm:
 
